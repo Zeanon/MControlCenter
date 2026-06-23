@@ -934,7 +934,7 @@
               </property>
               <widget class="QWidget" name="tabWidgetPage1">
                <attribute name="title">
-                <string>Fan 1 speed</string>
+                <string>CPU Fan</string>
                </attribute>
                <layout class="QGridLayout" name="_2">
                 <item row="2" column="3">
@@ -1337,7 +1337,7 @@
               </widget>
               <widget class="QWidget" name="tabWidgetPage2">
                <attribute name="title">
-                <string>Fan 2 speed</string>
+                <string>GPU Fan</string>
                </attribute>
                <layout class="QGridLayout" name="gridLayout_4">
                 <item row="0" column="3">
