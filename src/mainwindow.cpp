@@ -400,6 +400,7 @@ void MainWindow::updateFan2Speed() {
     } else {
         ui->fan2ValueLabel->setVisible(false);
         ui->gpuFanLabel->setVisible(false);
+        ui->fanControlTabWidget->setTabEnabled(1, false);
     }
 }
 
