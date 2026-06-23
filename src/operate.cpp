@@ -175,7 +175,7 @@ int Operate::getFan1Speed() const {
     int value1 = helper.getValue(fan1Address - 1);
     int value = (value1 << 8) | value0;
     if (value > 0)
-        return 470000 / value;
+        return 480000 / value;
     return value;
 }
 
@@ -189,7 +189,7 @@ std::optional<int> Operate::getFan2Speed() const {
         return std::nullopt;
     int value = (value1.value() << 8) | value0.value();
     if (value > 0)
-        return 470000 / value;
+        return 480000 / value;
     return value;
 }
 
