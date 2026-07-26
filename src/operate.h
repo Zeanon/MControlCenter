@@ -56,7 +56,7 @@ public:
     [[nodiscard]] bool loadEcSysModule() const;
     [[nodiscard]] bool updateEcData() const;
     void updateEcDataAsync() const;
-    [[nodiscard]] bool doProbe() const;
+    bool doProbe() const;
     [[nodiscard]] std::string getEcVersion() const;
     [[nodiscard]] std::string getEcBuild() const;
     [[nodiscard]] int getBatteryCharge() const;

@@ -1,115 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="pt_PT" sourcelanguage="en_US">
+<TS version="2.1" language="zh_CN" sourcelanguage="en_US">
 <context>
     <name>MainWindow</name>
     <message>
         <source>EC Version:</source>
-        <translation>Versão do EC:</translation>
+        <translation>EC 版本：</translation>
     </message>
     <message>
         <source>EC Build:</source>
-        <translation>Compilação do EC:</translation>
+        <translation>EC 内部版本号：</translation>
     </message>
     <message>
         <source>Battery charge:</source>
-        <translation>Carga da bateria:</translation>
+        <translation>电池电量：</translation>
     </message>
     <message>
         <source>Battery threshold:</source>
-        <translation>Limite da bateria:</translation>
+        <translation>充电上限：</translation>
     </message>
     <message>
         <source>CPU temp:</source>
-        <translation>Temperatura da CPU:</translation>
+        <translation>CPU 温度：</translation>
     </message>
     <message>
         <source>GPU temp:</source>
-        <translation>Temperatura da GPU:</translation>
+        <translation>GPU 温度：</translation>
     </message>
     <message>
         <source>Cooler Boost</source>
-        <translation>Impulsionar Ventoinha</translation>
+        <translation>启用 Cooler Boost</translation>
     </message>
     <message>
         <source>Battery</source>
-        <translation>Bateria</translation>
+        <translation>电池</translation>
     </message>
     <message>
         <source>Best for Mobility</source>
-        <translation>Melhor para Mobilidade</translation>
+        <translation>最长续航</translation>
     </message>
     <message>
         <source>Balanced</source>
-        <translation>Equilibrado</translation>
+        <translation>平衡保养</translation>
     </message>
     <message>
         <source>Charge the battery when under 70%, stop at 80%</source>
-        <translation>Carregar a bateria quando estiver abaixo de 70%, parar a 80%</translation>
+        <translation>电量低于 70% 开始充电，充至 80% 停止</translation>
     </message>
     <message>
         <source>Best for battery</source>
-        <translation>Melhor para a bateria</translation>
+        <translation>最佳保养</translation>
     </message>
     <message>
         <source>Charge the battery when under 50%, stop at 60%</source>
-        <translation>Carregar a bateria quando estiver abaixo de 50%, parar a 60%</translation>
+        <translation>电量低于 50% 开始充电，充至 60% 停止</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation>Personalizado</translation>
+        <translation>自定义上限</translation>
     </message>
     <message>
         <source>Always on</source>
-        <translation>Sempre ligado</translation>
+        <translation>始终开启</translation>
     </message>
     <message>
         <source>Auto turn off in 10 sec</source>
-        <translation>Desligar automáticamente em 10 segundos</translation>
+        <translation>10 秒后熄灭</translation>
     </message>
     <message>
         <source>WebCam</source>
-        <translation>Câmara de Web</translation>
+        <translation>启用内置摄像头</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation>Depurar</translation>
+        <translation>调试</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>Sobre</translation>
+        <translation>关于</translation>
     </message>
     <message>
         <source>Version:</source>
-        <translation>Versão:</translation>
+        <translation>版本：</translation>
     </message>
     <message>
         <source>Charging status:</source>
-        <translation>Estado do carregamento:</translation>
+        <translation>充电状态：</translation>
     </message>
     <message>
         <source>Charging</source>
-        <translation>A carregar</translation>
+        <translation>正在充电</translation>
     </message>
     <message>
         <source>Discharging</source>
-        <translation>A descarregar</translation>
+        <translation>正在放电</translation>
     </message>
     <message>
         <source>Not charging</source>
-        <translation>Não está a carregar</translation>
+        <translation>未充电</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation>Desconhecido</translation>
+        <translation>未知</translation>
     </message>
     <message>
         <source>Swap FN and Super buttons</source>
-        <translation>Trocar as teclas FN e Super</translation>
+        <translation>交换 FN 与 Super 键（Windows 徽标键）功能</translation>
     </message>
     <message>
         <source>Fully charged</source>
-        <translation>Totalmente carregada</translation>
+        <translation>电池已充满</translation>
     </message>
     <message>
         <source>rpm</source>
@@ -117,59 +117,59 @@
     </message>
     <message>
         <source>Mode</source>
-        <translation>Modo</translation>
+        <translation>工作模式</translation>
     </message>
     <message>
         <source>Silent</source>
-        <translation>Silencioso</translation>
+        <translation>安静模式</translation>
     </message>
     <message>
         <source>Super Battery</source>
-        <translation>Super Bateria</translation>
+        <translation>节能模式</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation>Aplicar</translation>
+        <translation>应用</translation>
     </message>
     <message>
         <source>Show</source>
-        <translation>Mostrar</translation>
+        <translation>显示面板</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation>Sair</translation>
+        <translation>退出</translation>
     </message>
     <message>
         <source>Charge limit</source>
-        <translation>Limite de carga</translation>
+        <translation>充电上限</translation>
     </message>
     <message>
         <source>Auto</source>
-        <translation>Automático</translation>
+        <translation>自动</translation>
     </message>
     <message>
         <source>Basic</source>
-        <translation>Básico</translation>
+        <translation>基础</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Avançado</translation>
+        <translation>高级（手动）</translation>
     </message>
     <message>
         <source>Cooling</source>
-        <translation>Arrefecimento</translation>
+        <translation>冷却选项</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation>Repor</translation>
+        <translation>复位</translation>
     </message>
     <message>
         <source>Fan control</source>
-        <translation>Controlo de ventoinha</translation>
+        <translation>风扇控制</translation>
     </message>
     <message>
         <source>Enable advanced fan control</source>
-        <translation>Activar controlo avançado da ventoinha</translation>
+        <translation>启用高级风扇控制</translation>
     </message>
     <message>
         <source>Overview</source>
@@ -233,7 +233,7 @@
     </message>
     <message>
         <source>Charge the battery when under 90%, stop at 100%</source>
-        <translation type="unfinished">Carregar a bateria quando estiver abaixo de 50%, parar a 60% {90%?} {100%?}</translation>
+        <translation type="unfinished">电量低于 50% 开始充电，充至 60% 停止 {90%?} {100%?}</translation>
     </message>
     <message>
         <source>Keyboard Backlight</source>

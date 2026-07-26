@@ -1,219 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="pt_PT" sourcelanguage="en_US">
+<TS version="2.1" language="vi_VN" sourcelanguage="en_US">
 <context>
     <name>MainWindow</name>
     <message>
         <source>EC Version:</source>
-        <translation>Versão do EC:</translation>
+        <translation>Phiên bản EC:</translation>
     </message>
     <message>
         <source>EC Build:</source>
-        <translation>Compilação do EC:</translation>
+        <translation>Bản dựng EC:</translation>
     </message>
     <message>
         <source>Battery charge:</source>
-        <translation>Carga da bateria:</translation>
+        <translation>Sạc pin:</translation>
     </message>
     <message>
         <source>Battery threshold:</source>
-        <translation>Limite da bateria:</translation>
+        <translation>Ngưỡng pin:</translation>
     </message>
     <message>
         <source>CPU temp:</source>
-        <translation>Temperatura da CPU:</translation>
+        <translation>Nhiệt độ CPU:</translation>
     </message>
     <message>
         <source>GPU temp:</source>
-        <translation>Temperatura da GPU:</translation>
+        <translation>Nhiệt độ GPU:</translation>
     </message>
     <message>
         <source>Cooler Boost</source>
-        <translation>Impulsionar Ventoinha</translation>
+        <translation>Cooler Boost</translation>
     </message>
     <message>
         <source>Battery</source>
-        <translation>Bateria</translation>
+        <translation>Pin</translation>
     </message>
     <message>
         <source>Best for Mobility</source>
-        <translation>Melhor para Mobilidade</translation>
+        <translation>Tốt nhất cho di động</translation>
     </message>
     <message>
         <source>Balanced</source>
-        <translation>Equilibrado</translation>
+        <translation>Cân bằng</translation>
     </message>
     <message>
         <source>Charge the battery when under 70%, stop at 80%</source>
-        <translation>Carregar a bateria quando estiver abaixo de 70%, parar a 80%</translation>
+        <translation>Sạc khi pin dưới 70%, dừng khi đạt 80%</translation>
     </message>
     <message>
         <source>Best for battery</source>
-        <translation>Melhor para a bateria</translation>
+        <translation>Tốt nhất cho pin</translation>
     </message>
     <message>
         <source>Charge the battery when under 50%, stop at 60%</source>
-        <translation>Carregar a bateria quando estiver abaixo de 50%, parar a 60%</translation>
+        <translation>Sạc khi pin dưới 50%, dừng khi đạt 60%</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation>Personalizado</translation>
+        <translation>Tùy chỉnh</translation>
     </message>
     <message>
         <source>Always on</source>
-        <translation>Sempre ligado</translation>
+        <translation>Luôn bật</translation>
     </message>
     <message>
         <source>Auto turn off in 10 sec</source>
-        <translation>Desligar automáticamente em 10 segundos</translation>
+        <translation>Tự động tắt sau 10 giây</translation>
     </message>
     <message>
         <source>WebCam</source>
-        <translation>Câmara de Web</translation>
+        <translation>Webcam</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation>Depurar</translation>
+        <translation>Sửa lỗi</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>Sobre</translation>
+        <translation>Về</translation>
     </message>
     <message>
         <source>Version:</source>
-        <translation>Versão:</translation>
+        <translation>Phiên bản:</translation>
     </message>
     <message>
         <source>Charging status:</source>
-        <translation>Estado do carregamento:</translation>
+        <translation>Trạng thái sạc:</translation>
     </message>
     <message>
         <source>Charging</source>
-        <translation>A carregar</translation>
+        <translation>Đang sạc</translation>
     </message>
     <message>
         <source>Discharging</source>
-        <translation>A descarregar</translation>
+        <translation>Rút sạc</translation>
     </message>
     <message>
         <source>Not charging</source>
-        <translation>Não está a carregar</translation>
+        <translation>Không sạc</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation>Desconhecido</translation>
+        <translation>Không rõ</translation>
     </message>
     <message>
         <source>Swap FN and Super buttons</source>
-        <translation>Trocar as teclas FN e Super</translation>
+        <translation>Chuyển đổi giữa nút Fn và Super (Windows)</translation>
     </message>
     <message>
         <source>Fully charged</source>
-        <translation>Totalmente carregada</translation>
+        <translation>Đã sạc đầy</translation>
     </message>
     <message>
         <source>rpm</source>
-        <translation>rpm</translation>
+        <translation>vòng/phút</translation>
     </message>
     <message>
         <source>Mode</source>
-        <translation>Modo</translation>
+        <translation>Chế độ</translation>
     </message>
     <message>
         <source>Silent</source>
-        <translation>Silencioso</translation>
+        <translation>Im lặng</translation>
     </message>
     <message>
         <source>Super Battery</source>
-        <translation>Super Bateria</translation>
+        <translation>Siêu tiết kiệm pin</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation>Aplicar</translation>
+        <translation>Áp dụng</translation>
     </message>
     <message>
         <source>Show</source>
-        <translation>Mostrar</translation>
+        <translation>Hiển thị</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation>Sair</translation>
+        <translation>Thoát</translation>
     </message>
     <message>
         <source>Charge limit</source>
-        <translation>Limite de carga</translation>
+        <translation>Giới hạn sạc</translation>
     </message>
     <message>
         <source>Auto</source>
-        <translation>Automático</translation>
+        <translation>Tự động</translation>
     </message>
     <message>
         <source>Basic</source>
-        <translation>Básico</translation>
+        <translation>Cơ bản</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Avançado</translation>
+        <translation>Nâng cao</translation>
     </message>
     <message>
         <source>Cooling</source>
-        <translation>Arrefecimento</translation>
+        <translation>Tản nhiệt</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation>Repor</translation>
+        <translation>Cài đặt lại</translation>
     </message>
     <message>
         <source>Fan control</source>
-        <translation>Controlo de ventoinha</translation>
+        <translation>Điều khiển quạt</translation>
     </message>
     <message>
         <source>Enable advanced fan control</source>
-        <translation>Activar controlo avançado da ventoinha</translation>
+        <translation>Bật điều khiển quạt nâng cao</translation>
     </message>
     <message>
         <source>Overview</source>
-        <translation type="unfinished"></translation>
+        <translation>Tổng quan</translation>
     </message>
     <message>
         <source>The middle spot between fan noise and power usage</source>
-        <translation type="unfinished"></translation>
+        <translation>Cân bằng giữa tiếng ổn quạt và năng lượng sử dụng</translation>
     </message>
     <message>
         <source>Low fan noise and moderate power usage</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiếng ổn quạt thấp và năng lượng sử dụng vừa phải</translation>
     </message>
     <message>
         <source>Limits performance and turns off fans at lower temperatures</source>
-        <translation type="unfinished"></translation>
+        <translation>Giới hạn cấu hình và tắt quạt khi nhiệt độ thấp</translation>
     </message>
     <message>
         <source>USB Power</source>
-        <translation type="unfinished"></translation>
+        <translation>Nguồn điện USB</translation>
     </message>
     <message>
         <source>FN ⇄ Meta</source>
-        <translation type="unfinished"></translation>
+        <translation>FN ⇄ Meta</translation>
     </message>
     <message>
         <source>Current fan Mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Chế độ quạt hiện tại:</translation>
     </message>
     <message>
         <source>Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Bàn phím</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;MC&lt;/span&gt;ontrol&lt;span style=&quot; font-weight:700;&quot;&gt;C&lt;/span&gt;enter (MCC) is an application that allows you to change the settings of MSI laptops running Linux.&lt;/p&gt;&lt;p&gt;MCC acts as a graphical interface for the &lt;span style=&quot; font-weight:700;&quot;&gt;MSI-EC &lt;/span&gt;driver that already exist in the Linux kernel, if your device is not supported (grey buttons/limited in-app functionality), please visit the msi-ec github page to get help.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;MC&lt;/span&gt;ontrol&lt;span style=&quot; font-weight:700;&quot;&gt;C&lt;/span&gt;enter (MCC) là một ứng dụng cho phép bạn thay đổi cài đặt của máy tính xách tay MSI chạy Linux.&lt;/p&gt;&lt;p&gt;MCC hoạt động như một giao diện đồ họa cho &lt;span style=&quot; font-weight:700;&quot;&gt;MSI-EC &lt;/span&gt;driver đã tồn tại trong kernel Linux, nếu thiết bị của bạn không được hỗ trợ (các nút màu xám/chức năng trong ứng dụng bị giới hạn), vui lòng truy cập trang github msi-ec để được trợ giúp.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>MCC GitHub:</source>
-        <translation type="unfinished"></translation>
+        <translation>MCC Github:</translation>
     </message>
     <message>
         <source>MSI-EC GitHub:</source>
-        <translation type="unfinished"></translation>
+        <translation>MSI-EC Github:</translation>
     </message>
     <message>
         <source>This mode unlocks Advanced fan mode</source>
@@ -233,7 +233,7 @@
     </message>
     <message>
         <source>Charge the battery when under 90%, stop at 100%</source>
-        <translation type="unfinished">Carregar a bateria quando estiver abaixo de 50%, parar a 60% {90%?} {100%?}</translation>
+        <translation type="unfinished">Sạc khi pin dưới 50%, dừng khi đạt 60% {90%?} {100%?}</translation>
     </message>
     <message>
         <source>Keyboard Backlight</source>

@@ -4,10 +4,6 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Info</source>
-        <translation>Bilgi</translation>
-    </message>
-    <message>
         <source>EC Version:</source>
         <translatorcomment>don&apos;t know how to translate this</translatorcomment>
         <translation type="unfinished">EC Version:</translation>
@@ -34,14 +30,6 @@
         <translation>GPU sıcaklığı:</translation>
     </message>
     <message>
-        <source>Fan 1:</source>
-        <translation>Fan 1:</translation>
-    </message>
-    <message>
-        <source>Fan 2:</source>
-        <translation>Fan 2:</translation>
-    </message>
-    <message>
         <source>Cooler Boost</source>
         <translation>Cooler Boost</translation>
     </message>
@@ -50,16 +38,8 @@
         <translation>Pil</translation>
     </message>
     <message>
-        <source>If you mainly use your laptop with adaptor plugged, we suggest you set the charge capacity at a lower percentage (60% or 80%) to prolong your battery lifecycle</source>
-        <translation>Eğer laptopunuzu genelde adaptöre takılı kullanıyorsanız pilinizin ömrünü uzatmak için şarj kapasitesini düşük bir değere (%60 - %80) ayarlamanızı öneriyoruz</translation>
-    </message>
-    <message>
         <source>Best for Mobility</source>
         <translation>Hareket için en iyi</translation>
-    </message>
-    <message>
-        <source>Charge the battery to 100% all the time</source>
-        <translation>Pili her zaman dolana kadar şarj et</translation>
     </message>
     <message>
         <source>Balanced</source>
@@ -82,14 +62,6 @@
         <translation>Özel</translation>
     </message>
     <message>
-        <source>Settings</source>
-        <translation>Ayarlar</translation>
-    </message>
-    <message>
-        <source>Keyboard Backlit</source>
-        <translation>Klavye Işığı</translation>
-    </message>
-    <message>
         <source>Always on</source>
         <translation>Hep açık</translation>
     </message>
@@ -98,16 +70,8 @@
         <translation>10 saniye sonra otomatik kapat</translation>
     </message>
     <message>
-        <source>FN ⇄ Super</source>
-        <translation>FN ⇄ Super</translation>
-    </message>
-    <message>
         <source>WebCam</source>
         <translation>Web Kamerası</translation>
-    </message>
-    <message>
-        <source>USB Power Share</source>
-        <translation>USB Güç Paylaşımı</translation>
     </message>
     <message>
         <source>Debug</source>
@@ -120,10 +84,6 @@
     <message>
         <source>Version:</source>
         <translation>Versiyon:</translation>
-    </message>
-    <message>
-        <source>GitHub:</source>
-        <translation>GitHub:</translation>
     </message>
     <message>
         <source>Charging status:</source>
@@ -146,25 +106,12 @@
         <translation>Bilinmiyor</translation>
     </message>
     <message>
-        <source>Bug tracker:</source>
-        <translatorcomment>not sure on this one</translatorcomment>
-        <translation type="unfinished">Hata takibi:</translation>
-    </message>
-    <message>
-        <source>An application that allows you to change the settings of MSI laptops running Linux</source>
-        <translation>Linux çalıştıran MSI laptopların ayarlarını değiştirmenizi sağlayan bir program</translation>
-    </message>
-    <message>
         <source>Swap FN and Super buttons</source>
         <translation>FN ve Super butonlarını değiştir</translation>
     </message>
     <message>
         <source>Fully charged</source>
         <translation>Tamamen dolu</translation>
-    </message>
-    <message>
-        <source>Fully charged (Discharging)</source>
-        <translation>Tamemen dolu (Boşalıyor)</translation>
     </message>
     <message>
         <source>rpm</source>
@@ -175,14 +122,6 @@
         <translation>Mod</translation>
     </message>
     <message>
-        <source>High Performance</source>
-        <translation>Yüksek Performans</translation>
-    </message>
-    <message>
-        <source>A mode that brings a balance between performance and battery live</source>
-        <translation>Performans ile pil ömrünü dengeleyen bir mod</translation>
-    </message>
-    <message>
         <source>Silent</source>
         <translation>Sessiz</translation>
     </message>
@@ -190,24 +129,6 @@
         <source>Super Battery</source>
         <translatorcomment>I don&apos;t know what this is</translatorcomment>
         <translation type="unfinished">Super Battery</translation>
-    </message>
-    <message>
-        <source>A mode that provides the best system performance for multi-tasking and heavy duty</source>
-        <translatorcomment>how to translate multi-tasking?</translatorcomment>
-        <translation>Aynı anda birden çok görev çalıştıran ve ağır yük taşıyan sistemler için en iyi performansı sağlayan mod</translation>
-    </message>
-    <message>
-        <source>A quiet mode that lowers the fan noise</source>
-        <translation>Fan gürültüsünü azaltan bir sessiz mod</translation>
-    </message>
-    <message>
-        <source>A power-saving mode that lowers the power consumption for basic needs</source>
-        <translation>Temel kullanım için güç kullanımını azaltarak güç tasarrufu sağlayan bir mod</translation>
-    </message>
-    <message>
-        <source>Failed to load the ec_sys kernel module</source>
-        <translatorcomment>leaving this as is since it will be easier to find a solution online if the error is in English</translatorcomment>
-        <translation>Failed to load the ec_sys kernel module</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -226,10 +147,6 @@
         <translation>Şarj limiti</translation>
     </message>
     <message>
-        <source>Fan Mode:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Auto</source>
         <translation type="unfinished"></translation>
     </message>
@@ -242,19 +159,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Choose the mode that best suits your use case</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cooling</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fan 1 speed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fan 2 speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -267,6 +172,144 @@
     </message>
     <message>
         <source>Enable advanced fan control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Overview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The middle spot between fan noise and power usage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Low fan noise and moderate power usage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Limits performance and turns off fans at lower temperatures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>USB Power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FN ⇄ Meta</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current fan Mode:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keyboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;MC&lt;/span&gt;ontrol&lt;span style=&quot; font-weight:700;&quot;&gt;C&lt;/span&gt;enter (MCC) is an application that allows you to change the settings of MSI laptops running Linux.&lt;/p&gt;&lt;p&gt;MCC acts as a graphical interface for the &lt;span style=&quot; font-weight:700;&quot;&gt;MSI-EC &lt;/span&gt;driver that already exist in the Linux kernel, if your device is not supported (grey buttons/limited in-app functionality), please visit the msi-ec github page to get help.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MCC GitHub:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MSI-EC GitHub:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This mode unlocks Advanced fan mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>High Performance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maximum performance at the cost of heat and increased power consumption</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If you mainly use your laptop with the charger plugged most of the time, it is recommended to set the charge capacity at a lower percentage (60% or 80%) to prolong your battery lifecycle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Charge the battery when under 90%, stop at 100%</source>
+        <translation type="unfinished">Pili %50&apos;nin altındayken şarj et, %60&apos;a ulaşınca dur {90%?} {100%?}</translation>
+    </message>
+    <message>
+        <source>Keyboard Backlight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MCC Bug Tracker:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qt version:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MSI-EC Status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Warning&lt;/span&gt;: Writing the wrong values to the wrong addresses &lt;span style=&quot; font-weight:700;&quot;&gt;WILL BRICK YOUR DEVICE!&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Never&lt;/span&gt; write to EC memory without knowing how to do a proper &lt;span style=&quot; font-weight:700;&quot;&gt;BIOS/EC&lt;/span&gt; reset, keep in mind that a reset &lt;span style=&quot; font-weight:700;&quot;&gt;might not&lt;/span&gt; fix the device if the device got bricked/broken. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Follow system&apos;s power profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatic Profile Switching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On Charger:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On Battery:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to load the ec_sys kernel module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fully charged (Discharging)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t connect to UPower to get charger status.
+Make sure that UPower is installed and running then restart the system.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t connect to Power Profiles Daemon.
+Make sure that either Power Profiles Daemon or TuneD is installed and restart the system.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fan 2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fan 1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fan 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fan 2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

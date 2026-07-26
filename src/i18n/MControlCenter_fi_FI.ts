@@ -1,115 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="pt_PT" sourcelanguage="en_US">
+<TS version="2.1" language="en_US" sourcelanguage="en_US">
 <context>
     <name>MainWindow</name>
     <message>
         <source>EC Version:</source>
-        <translation>Versão do EC:</translation>
+        <translation>EC Versio:</translation>
     </message>
     <message>
         <source>EC Build:</source>
-        <translation>Compilação do EC:</translation>
+        <translation>EC Käännös:</translation>
     </message>
     <message>
         <source>Battery charge:</source>
-        <translation>Carga da bateria:</translation>
+        <translation>Akun taso:</translation>
     </message>
     <message>
         <source>Battery threshold:</source>
-        <translation>Limite da bateria:</translation>
+        <translation>Akun Latausraja:</translation>
     </message>
     <message>
         <source>CPU temp:</source>
-        <translation>Temperatura da CPU:</translation>
+        <translation>Prosessorin lämpötila:</translation>
     </message>
     <message>
         <source>GPU temp:</source>
-        <translation>Temperatura da GPU:</translation>
+        <translation>Näytönohjaimen lämpötila:</translation>
     </message>
     <message>
         <source>Cooler Boost</source>
-        <translation>Impulsionar Ventoinha</translation>
+        <translation>Jäähdyttimen tehotila</translation>
     </message>
     <message>
         <source>Battery</source>
-        <translation>Bateria</translation>
+        <translation>Akku</translation>
     </message>
     <message>
         <source>Best for Mobility</source>
-        <translation>Melhor para Mobilidade</translation>
+        <translation>Paras kannettavuuteen</translation>
     </message>
     <message>
         <source>Balanced</source>
-        <translation>Equilibrado</translation>
+        <translation>Tasapainotettu</translation>
     </message>
     <message>
         <source>Charge the battery when under 70%, stop at 80%</source>
-        <translation>Carregar a bateria quando estiver abaixo de 70%, parar a 80%</translation>
+        <translation>Lataa akkua kun varaustaso on alle 70% lopeta lataaminen 80%</translation>
     </message>
     <message>
         <source>Best for battery</source>
-        <translation>Melhor para a bateria</translation>
+        <translation>Paras akulle</translation>
     </message>
     <message>
         <source>Charge the battery when under 50%, stop at 60%</source>
-        <translation>Carregar a bateria quando estiver abaixo de 50%, parar a 60%</translation>
+        <translation>Lataa akkua kun varaustaso on alle 50, lopeta lataaminen 60%</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation>Personalizado</translation>
+        <translation>Muokattu</translation>
     </message>
     <message>
         <source>Always on</source>
-        <translation>Sempre ligado</translation>
+        <translation>Aina päällä</translation>
     </message>
     <message>
         <source>Auto turn off in 10 sec</source>
-        <translation>Desligar automáticamente em 10 segundos</translation>
+        <translation>Sammuta automaattisesti 10 sekunnissa</translation>
     </message>
     <message>
         <source>WebCam</source>
-        <translation>Câmara de Web</translation>
+        <translation>Webkamera</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation>Depurar</translation>
+        <translation>Debuggaus</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>Sobre</translation>
+        <translation>Tietoa</translation>
     </message>
     <message>
         <source>Version:</source>
-        <translation>Versão:</translation>
+        <translation>Versio:</translation>
     </message>
     <message>
         <source>Charging status:</source>
-        <translation>Estado do carregamento:</translation>
+        <translation>Lataustila: </translation>
     </message>
     <message>
         <source>Charging</source>
-        <translation>A carregar</translation>
+        <translation>Lataa</translation>
     </message>
     <message>
         <source>Discharging</source>
-        <translation>A descarregar</translation>
+        <translation>Tyhjenee</translation>
     </message>
     <message>
         <source>Not charging</source>
-        <translation>Não está a carregar</translation>
+        <translation>Ei lataa</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation>Desconhecido</translation>
+        <translation>Tuntematon</translation>
     </message>
     <message>
         <source>Swap FN and Super buttons</source>
-        <translation>Trocar as teclas FN e Super</translation>
+        <translation>Vaihda FN ja super painikkeet</translation>
     </message>
     <message>
         <source>Fully charged</source>
-        <translation>Totalmente carregada</translation>
+        <translation>Täyteen ladattu</translation>
     </message>
     <message>
         <source>rpm</source>
@@ -117,91 +117,91 @@
     </message>
     <message>
         <source>Mode</source>
-        <translation>Modo</translation>
+        <translation>Tila</translation>
     </message>
     <message>
         <source>Silent</source>
-        <translation>Silencioso</translation>
+        <translation>Hiljainen</translation>
     </message>
     <message>
         <source>Super Battery</source>
-        <translation>Super Bateria</translation>
+        <translation>Super-akku</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation>Aplicar</translation>
+        <translation>Käytä</translation>
     </message>
     <message>
         <source>Show</source>
-        <translation>Mostrar</translation>
+        <translation>Näytä</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation>Sair</translation>
+        <translation>Poistu</translation>
     </message>
     <message>
         <source>Charge limit</source>
-        <translation>Limite de carga</translation>
+        <translation>Latausraja</translation>
     </message>
     <message>
         <source>Auto</source>
-        <translation>Automático</translation>
+        <translation>Automaattinen</translation>
     </message>
     <message>
         <source>Basic</source>
-        <translation>Básico</translation>
+        <translation>Perus</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Avançado</translation>
+        <translation>Edistynyt</translation>
     </message>
     <message>
         <source>Cooling</source>
-        <translation>Arrefecimento</translation>
+        <translation>Jäähdytys</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation>Repor</translation>
+        <translation>Nollaa</translation>
     </message>
     <message>
         <source>Fan control</source>
-        <translation>Controlo de ventoinha</translation>
+        <translation>Tuulettimen ohjaus</translation>
     </message>
     <message>
         <source>Enable advanced fan control</source>
-        <translation>Activar controlo avançado da ventoinha</translation>
+        <translation>Aktivoi edistynyt tuulettimen ohjaus</translation>
     </message>
     <message>
         <source>Overview</source>
-        <translation type="unfinished"></translation>
+        <translation>Yleisnäkymä</translation>
     </message>
     <message>
         <source>The middle spot between fan noise and power usage</source>
-        <translation type="unfinished"></translation>
+        <translation>Keskikohta tuulettimen äänessä ja sähkön kulutuksessa</translation>
     </message>
     <message>
         <source>Low fan noise and moderate power usage</source>
-        <translation type="unfinished"></translation>
+        <translation>Matala tuulettimen ääni ja keskitasoinen sähkön käyttö</translation>
     </message>
     <message>
         <source>Limits performance and turns off fans at lower temperatures</source>
-        <translation type="unfinished"></translation>
+        <translation>Rajoittaa tehon ja laittaa tuulettimet pois matalilla lämpötiloilla</translation>
     </message>
     <message>
         <source>USB Power</source>
-        <translation type="unfinished"></translation>
+        <translation>USB virta</translation>
     </message>
     <message>
         <source>FN ⇄ Meta</source>
-        <translation type="unfinished"></translation>
+        <translation>FN ⇄ Meta </translation>
     </message>
     <message>
         <source>Current fan Mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiivinen tuulettimen tila: </translation>
     </message>
     <message>
         <source>Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Näppäimmistö</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;MC&lt;/span&gt;ontrol&lt;span style=&quot; font-weight:700;&quot;&gt;C&lt;/span&gt;enter (MCC) is an application that allows you to change the settings of MSI laptops running Linux.&lt;/p&gt;&lt;p&gt;MCC acts as a graphical interface for the &lt;span style=&quot; font-weight:700;&quot;&gt;MSI-EC &lt;/span&gt;driver that already exist in the Linux kernel, if your device is not supported (grey buttons/limited in-app functionality), please visit the msi-ec github page to get help.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -233,7 +233,7 @@
     </message>
     <message>
         <source>Charge the battery when under 90%, stop at 100%</source>
-        <translation type="unfinished">Carregar a bateria quando estiver abaixo de 50%, parar a 60% {90%?} {100%?}</translation>
+        <translation type="unfinished">Lataa akkua kun varaustaso on alle 50, lopeta lataaminen 60% {90%?} {100%?}</translation>
     </message>
     <message>
         <source>Keyboard Backlight</source>

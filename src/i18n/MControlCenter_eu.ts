@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="pt_PT" sourcelanguage="en_US">
+<TS version="2.1" language="eu_ES" sourcelanguage="en_US">
 <context>
     <name>MainWindow</name>
     <message>
         <source>EC Version:</source>
-        <translation>Versão do EC:</translation>
+        <translation>EC Bertsioa:</translation>
     </message>
     <message>
         <source>EC Build:</source>
-        <translation>Compilação do EC:</translation>
+        <translation>EC Eraikuntza:</translation>
     </message>
     <message>
         <source>Battery charge:</source>
-        <translation>Carga da bateria:</translation>
+        <translation>Bateria karga:</translation>
     </message>
     <message>
         <source>Battery threshold:</source>
-        <translation>Limite da bateria:</translation>
+        <translation>Bateria muga:</translation>
     </message>
     <message>
         <source>CPU temp:</source>
-        <translation>Temperatura da CPU:</translation>
+        <translation>CPU tenp:</translation>
     </message>
     <message>
         <source>GPU temp:</source>
-        <translation>Temperatura da GPU:</translation>
+        <translation>GPU tenp:</translation>
     </message>
     <message>
         <source>Cooler Boost</source>
-        <translation>Impulsionar Ventoinha</translation>
+        <translation>Cooler Boost</translation>
     </message>
     <message>
         <source>Battery</source>
@@ -37,79 +37,79 @@
     </message>
     <message>
         <source>Best for Mobility</source>
-        <translation>Melhor para Mobilidade</translation>
+        <translation>Mugikortasunerako onena</translation>
     </message>
     <message>
         <source>Balanced</source>
-        <translation>Equilibrado</translation>
+        <translation>Orekatua</translation>
     </message>
     <message>
         <source>Charge the battery when under 70%, stop at 80%</source>
-        <translation>Carregar a bateria quando estiver abaixo de 70%, parar a 80%</translation>
+        <translation>Kargatu bateria %70-tik behera dagoenean, %80-ra iristean gelditu</translation>
     </message>
     <message>
         <source>Best for battery</source>
-        <translation>Melhor para a bateria</translation>
+        <translation>Bateriarako onena</translation>
     </message>
     <message>
         <source>Charge the battery when under 50%, stop at 60%</source>
-        <translation>Carregar a bateria quando estiver abaixo de 50%, parar a 60%</translation>
+        <translation>Kargatu bateria %50-tik behera dagoenean, %60-ra iristean gelditu</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation>Personalizado</translation>
+        <translation>Pertsonalizatua</translation>
     </message>
     <message>
         <source>Always on</source>
-        <translation>Sempre ligado</translation>
+        <translation>Beti piztuta</translation>
     </message>
     <message>
         <source>Auto turn off in 10 sec</source>
-        <translation>Desligar automáticamente em 10 segundos</translation>
+        <translation>Automatikoki itzali 10 segundotan</translation>
     </message>
     <message>
         <source>WebCam</source>
-        <translation>Câmara de Web</translation>
+        <translation>Web Kamera</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation>Depurar</translation>
+        <translation>Akatsak bilatu</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>Sobre</translation>
+        <translation>Ezaugarriak</translation>
     </message>
     <message>
         <source>Version:</source>
-        <translation>Versão:</translation>
+        <translation>Bertsioa:</translation>
     </message>
     <message>
         <source>Charging status:</source>
-        <translation>Estado do carregamento:</translation>
+        <translation>Karga egoera:</translation>
     </message>
     <message>
         <source>Charging</source>
-        <translation>A carregar</translation>
+        <translation>Kargatzen</translation>
     </message>
     <message>
         <source>Discharging</source>
-        <translation>A descarregar</translation>
+        <translation>Deskargatzen</translation>
     </message>
     <message>
         <source>Not charging</source>
-        <translation>Não está a carregar</translation>
+        <translation>Ez dago kargatzen</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation>Desconhecido</translation>
+        <translation>Ezezaguna</translation>
     </message>
     <message>
         <source>Swap FN and Super buttons</source>
-        <translation>Trocar as teclas FN e Super</translation>
+        <translation>FN eta Super botoiak trukatu</translation>
     </message>
     <message>
         <source>Fully charged</source>
-        <translation>Totalmente carregada</translation>
+        <translation>Karga beteta</translation>
     </message>
     <message>
         <source>rpm</source>
@@ -117,11 +117,11 @@
     </message>
     <message>
         <source>Mode</source>
-        <translation>Modo</translation>
+        <translation>Modua</translation>
     </message>
     <message>
         <source>Silent</source>
-        <translation>Silencioso</translation>
+        <translation>Isila</translation>
     </message>
     <message>
         <source>Super Battery</source>
@@ -129,47 +129,47 @@
     </message>
     <message>
         <source>Apply</source>
-        <translation>Aplicar</translation>
+        <translation>Aplikatu</translation>
     </message>
     <message>
         <source>Show</source>
-        <translation>Mostrar</translation>
+        <translation>Erakutsi</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation>Sair</translation>
+        <translation>Irten</translation>
     </message>
     <message>
         <source>Charge limit</source>
-        <translation>Limite de carga</translation>
+        <translation>Karga muga</translation>
     </message>
     <message>
         <source>Auto</source>
-        <translation>Automático</translation>
+        <translation>Automatikoa</translation>
     </message>
     <message>
         <source>Basic</source>
-        <translation>Básico</translation>
+        <translation>Oinarrizkoa</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Avançado</translation>
+        <translation>Aurreratua</translation>
     </message>
     <message>
         <source>Cooling</source>
-        <translation>Arrefecimento</translation>
+        <translation>Hoztu</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation>Repor</translation>
+        <translation>Berrezarri</translation>
     </message>
     <message>
         <source>Fan control</source>
-        <translation>Controlo de ventoinha</translation>
+        <translation>Haizagailuaren kontrola</translation>
     </message>
     <message>
         <source>Enable advanced fan control</source>
-        <translation>Activar controlo avançado da ventoinha</translation>
+        <translation>Gaitu aurreratuko haizagailuaren kontrola</translation>
     </message>
     <message>
         <source>Overview</source>
@@ -233,7 +233,7 @@
     </message>
     <message>
         <source>Charge the battery when under 90%, stop at 100%</source>
-        <translation type="unfinished">Carregar a bateria quando estiver abaixo de 50%, parar a 60% {90%?} {100%?}</translation>
+        <translation type="unfinished">Kargatu bateria %50-tik behera dagoenean, %60-ra iristean gelditu {90%?} {100%?}</translation>
     </message>
     <message>
         <source>Keyboard Backlight</source>

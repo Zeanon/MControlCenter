@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="de_DE" sourcelanguage="en_US">
+<TS version="2.1" language="nl_NL" sourcelanguage="en_US">
 <context>
     <name>MainWindow</name>
     <message>
         <source>EC Version:</source>
-        <translation>EC Version:</translation>
+        <translation>EC Versie:</translation>
     </message>
     <message>
         <source>EC Build:</source>
@@ -13,19 +13,19 @@
     </message>
     <message>
         <source>Battery charge:</source>
-        <translation>Batterie Ladung:</translation>
+        <translation>Acculading:</translation>
     </message>
     <message>
         <source>Battery threshold:</source>
-        <translation>Batterie Schwelle:</translation>
+        <translation>Drempel Accu:</translation>
     </message>
     <message>
         <source>CPU temp:</source>
-        <translation>CPU Temperatur:</translation>
+        <translation>CPU temperatuur:</translation>
     </message>
     <message>
         <source>GPU temp:</source>
-        <translation>GPU Temperatur:</translation>
+        <translation>GPU temperatuur:</translation>
     </message>
     <message>
         <source>Cooler Boost</source>
@@ -33,43 +33,43 @@
     </message>
     <message>
         <source>Battery</source>
-        <translation>Batterie</translation>
+        <translation>Accu</translation>
     </message>
     <message>
         <source>Best for Mobility</source>
-        <translation>Am besten für Mobilität</translation>
+        <translation>Beste voor mobiliteit</translation>
     </message>
     <message>
         <source>Balanced</source>
-        <translation>Ausgeglichen</translation>
+        <translation>Gebalanceerd</translation>
     </message>
     <message>
         <source>Charge the battery when under 70%, stop at 80%</source>
-        <translation>Lade die Batterie, wenn sie unter 70% ist, und stoppe das Laden bei 80%</translation>
+        <translation>Laad de accu als deze onder 70% is, stop bij 80%</translation>
     </message>
     <message>
         <source>Best for battery</source>
-        <translation>Am besten für die Batterie</translation>
+        <translation>Beste voor de accu</translation>
     </message>
     <message>
         <source>Charge the battery when under 50%, stop at 60%</source>
-        <translation>Lade die Batterie, wenn sie unter 50% ist, und stoppe das Laden bei 60%</translation>
+        <translation>Laad de accu wanneer deze onder de 50% is, stop bij 60%</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation>Custom</translation>
+        <translation>Aangepast</translation>
     </message>
     <message>
         <source>Always on</source>
-        <translation>Immer angeschaltet</translation>
+        <translation>Altijd aan</translation>
     </message>
     <message>
         <source>Auto turn off in 10 sec</source>
-        <translation>Automatisch in 10 Sekunden ausschalten</translation>
+        <translation>Automatisch in 10 seconden uit</translation>
     </message>
     <message>
         <source>WebCam</source>
-        <translation>Kamera</translation>
+        <translation>Camera</translation>
     </message>
     <message>
         <source>Debug</source>
@@ -77,39 +77,39 @@
     </message>
     <message>
         <source>About</source>
-        <translation>Über</translation>
+        <translation>Over applicatie</translation>
     </message>
     <message>
         <source>Version:</source>
-        <translation>Version:</translation>
+        <translation>Versie:</translation>
     </message>
     <message>
         <source>Charging status:</source>
-        <translation>Lade Status:</translation>
+        <translation>Oplaad Status:</translation>
     </message>
     <message>
         <source>Charging</source>
-        <translation>Laden</translation>
+        <translation>Opladen</translation>
     </message>
     <message>
         <source>Discharging</source>
-        <translation>Entladen</translation>
+        <translation>Ontladen</translation>
     </message>
     <message>
         <source>Not charging</source>
-        <translation>Lädt nicht</translation>
+        <translation>Laad niet op</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation>Unbekannt</translation>
+        <translation>Onbekend</translation>
     </message>
     <message>
         <source>Swap FN and Super buttons</source>
-        <translation>FN und Super Tasten tauschen</translation>
+        <translation>Verwissel de FN en Super knoppen</translation>
     </message>
     <message>
         <source>Fully charged</source>
-        <translation>Vollständig geladen</translation>
+        <translation>Volledig geladen</translation>
     </message>
     <message>
         <source>rpm</source>
@@ -117,31 +117,31 @@
     </message>
     <message>
         <source>Mode</source>
-        <translation>Modus</translation>
+        <translation>Mode</translation>
     </message>
     <message>
         <source>Silent</source>
-        <translation>Leise</translation>
+        <translation>Stil</translation>
     </message>
     <message>
         <source>Super Battery</source>
-        <translation>Batterie sparen</translation>
+        <translation>Extreme accu modus</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation>Anwenden</translation>
+        <translation>Toepassen</translation>
     </message>
     <message>
         <source>Show</source>
-        <translation>Anzeigen</translation>
+        <translation>Toon</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation>Beenden</translation>
+        <translation>Afsluiten</translation>
     </message>
     <message>
         <source>Charge limit</source>
-        <translation>Lade Limit</translation>
+        <translation>Oplaadlimiet</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -149,115 +149,115 @@
     </message>
     <message>
         <source>Basic</source>
-        <translation>Basic</translation>
+        <translation>Basis</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Erweitert</translation>
+        <translation>Geavanceerd</translation>
     </message>
     <message>
         <source>Cooling</source>
-        <translation>Kühlen</translation>
+        <translation>Koelen</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation>Zurücksetzen</translation>
+        <translation>Reset</translation>
     </message>
     <message>
         <source>Fan control</source>
-        <translation>Lüftersteuerung</translation>
+        <translation>Ventilator instellingen</translation>
     </message>
     <message>
         <source>Enable advanced fan control</source>
-        <translation>Aktiviere die erweiterte Lüftersteuerung</translation>
+        <translation>Activeer geavanceerde ventilatorinstellingen</translation>
     </message>
     <message>
         <source>Overview</source>
-        <translation>Übersicht</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The middle spot between fan noise and power usage</source>
-        <translation>Der Mittelpunkt zwischen Lüftergeräusch und Stromverbrauch</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Low fan noise and moderate power usage</source>
-        <translation>Leise Lüftergeräusche und moderater Stromverbrauch</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Limits performance and turns off fans at lower temperatures</source>
-        <translation>Begrenzt die Leistung und schaltet die Lüfter bei niedrigeren Temperaturen ab</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>USB Power</source>
-        <translation>USB-Stromversorgung</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>FN ⇄ Meta</source>
-        <translation>FN ⇄ Meta</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Current fan Mode:</source>
-        <translation>Aktueller Lüftermodus:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Keyboard</source>
-        <translation>Tastatur</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;MC&lt;/span&gt;ontrol&lt;span style=&quot; font-weight:700;&quot;&gt;C&lt;/span&gt;enter (MCC) is an application that allows you to change the settings of MSI laptops running Linux.&lt;/p&gt;&lt;p&gt;MCC acts as a graphical interface for the &lt;span style=&quot; font-weight:700;&quot;&gt;MSI-EC &lt;/span&gt;driver that already exist in the Linux kernel, if your device is not supported (grey buttons/limited in-app functionality), please visit the msi-ec github page to get help.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;MC&lt;/span&gt;ontrol&lt;span style=&quot; font-weight:700;&quot;&gt;C&lt;/span&gt;enter (MCC) ist eine Anwendung, mit der Sie die Einstellungen von MSI-Laptops unter Linux ändern können.&lt;/p&gt;&lt;p&gt;MCC fungiert als grafische Benutzeroberfläche für den &lt;span style=&quot; font-weight:700;&quot;&gt;MSI-EC&lt;/span&gt;-Treiber, der bereits im Linux-Kernel vorhanden ist. Wenn Ihr Gerät nicht unterstützt wird (graue Schaltflächen/eingeschränkte In-App-Funktionalität), besuchen Sie bitte die MSI-EC-GitHub-Seite, um Hilfe zu erhalten.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>MCC GitHub:</source>
-        <translation>MCC GitHub:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>MSI-EC GitHub:</source>
-        <translation>MSI-EC GitHub:</translation>
-    </message>
-    <message>
-        <source>Keyboard Backlight</source>
-        <translation>Tastaturbeleuchtung</translation>
-    </message>
-    <message>
-        <source>MCC Bug Tracker:</source>
-        <translation>MCC Bug Tracker:</translation>
-    </message>
-    <message>
-        <source>MSI-EC Status:</source>
-        <translation>MSI-EC Status:</translation>
-    </message>
-    <message>
-        <source>Qt version:</source>
-        <translation>Qt Version:</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation>-</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>This mode unlocks Advanced fan mode</source>
-        <translation>Dieser Modus schaltet den erweiterten Lüftermodus frei</translation>
-    </message>
-    <message>
-        <source>Charge the battery when under 90%, stop at 100%</source>
-        <translation>Lade die Batterie, wenn sie unter 90% ist, und stoppe das Laden bei 100%</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Warning&lt;/span&gt;: Writing the wrong values to the wrong addresses &lt;span style=&quot; font-weight:700;&quot;&gt;WILL BRICK YOUR DEVICE!&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Never&lt;/span&gt; write to EC memory without knowing how to do a proper &lt;span style=&quot; font-weight:700;&quot;&gt;BIOS/EC&lt;/span&gt; reset, keep in mind that a reset &lt;span style=&quot; font-weight:700;&quot;&gt;might not&lt;/span&gt; fix the device if the device got bricked/broken. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Warnung&lt;/span&gt;: Das Schreiben der falschen Werte an die falschen Adressen &lt;span style=&quot; font-weight:700;&quot;&gt;FÜHRT ZUR BESCHÄDIGUNG IHRES GERÄTS!&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;Schreiben Sie &lt;span style=&quot; font-weight:700;&quot;&gt;niemals&lt;/span&gt; in den EC-Speicher, ohne zu wissen, wie man einen ordnungsgemäßen &lt;span style=&quot; font-weight:700;&quot;&gt;BIOS/EC&lt;/span&gt;-Reset durchführt. Bedenken Sie, dass ein Reset das Gerät  &lt;span style=&quot; font-weight:700;&quot;&gt;möglicherweise nicht&lt;/span&gt; repariert, wenn es beschädigt ist. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>High Performance</source>
-        <translation>Hohe Leistung</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Maximum performance at the cost of heat and increased power consumption</source>
-        <translation>Maximale Leistung auf Kosten von Wärme und erhöhtem Stromverbrauch</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>If you mainly use your laptop with the charger plugged most of the time, it is recommended to set the charge capacity at a lower percentage (60% or 80%) to prolong your battery lifecycle.</source>
-        <translation>Wenn Sie Ihren Laptop überwiegend mit angeschlossenem Ladegerät verwenden, empfiehlt es sich, die Ladekapazität auf einen niedrigeren Prozentsatz (60 % oder 80 %) einzustellen, um die Lebensdauer Ihres Akkus zu verlängern.</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Charge the battery when under 90%, stop at 100%</source>
+        <translation type="unfinished">Laad de accu wanneer deze onder de 50% is, stop bij 60% {90%?} {100%?}</translation>
+    </message>
+    <message>
+        <source>Keyboard Backlight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MCC Bug Tracker:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qt version:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MSI-EC Status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Warning&lt;/span&gt;: Writing the wrong values to the wrong addresses &lt;span style=&quot; font-weight:700;&quot;&gt;WILL BRICK YOUR DEVICE!&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Never&lt;/span&gt; write to EC memory without knowing how to do a proper &lt;span style=&quot; font-weight:700;&quot;&gt;BIOS/EC&lt;/span&gt; reset, keep in mind that a reset &lt;span style=&quot; font-weight:700;&quot;&gt;might not&lt;/span&gt; fix the device if the device got bricked/broken. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Follow system&apos;s power profile</source>

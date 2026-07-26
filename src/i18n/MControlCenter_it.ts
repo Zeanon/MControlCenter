@@ -4,10 +4,6 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Info</source>
-        <translation>Info</translation>
-    </message>
-    <message>
         <source>EC Version:</source>
         <translation>EC Version:</translation>
     </message>
@@ -32,14 +28,6 @@
         <translation>Temperatura GPU:</translation>
     </message>
     <message>
-        <source>Fan 1:</source>
-        <translation>Ventola 1:</translation>
-    </message>
-    <message>
-        <source>Fan 2:</source>
-        <translation>Ventola 2</translation>
-    </message>
-    <message>
         <source>Cooler Boost</source>
         <translation>Cooler Boost</translation>
     </message>
@@ -48,16 +36,8 @@
         <translation>Batteria</translation>
     </message>
     <message>
-        <source>If you mainly use your laptop with adaptor plugged, we suggest you set the charge capacity at a lower percentage (60% or 80%) to prolong your battery lifecycle</source>
-        <translation>Se di solito usi il tuo portatile collegato alla rete, ti suggeriamo di cambiare la capacità di carica con una percentuale più bassa (60% o 80%) per prolungare la vita della batteria</translation>
-    </message>
-    <message>
         <source>Best for Mobility</source>
         <translation>Migliore per mobilità</translation>
-    </message>
-    <message>
-        <source>Charge the battery to 100% all the time</source>
-        <translation>Carica la batteria fino al 100% tutto il tempo</translation>
     </message>
     <message>
         <source>Balanced</source>
@@ -80,14 +60,6 @@
         <translation>Personalizzato</translation>
     </message>
     <message>
-        <source>Settings</source>
-        <translation>Impostazioni</translation>
-    </message>
-    <message>
-        <source>Keyboard Backlit</source>
-        <translation>Illuminazione tastiera</translation>
-    </message>
-    <message>
         <source>Always on</source>
         <translation>Sempre attivo</translation>
     </message>
@@ -96,16 +68,8 @@
         <translation>Spegni dopo 10 secondi</translation>
     </message>
     <message>
-        <source>FN ⇄ Super</source>
-        <translation>FN ⇄ Super</translation>
-    </message>
-    <message>
         <source>WebCam</source>
         <translation>WebCam</translation>
-    </message>
-    <message>
-        <source>USB Power Share</source>
-        <translation>USB Power Share</translation>
     </message>
     <message>
         <source>Debug</source>
@@ -118,10 +82,6 @@
     <message>
         <source>Version:</source>
         <translation>Versione:</translation>
-    </message>
-    <message>
-        <source>GitHub:</source>
-        <translation>GitHub:</translation>
     </message>
     <message>
         <source>Charging status:</source>
@@ -144,24 +104,12 @@
         <translation>Sconosciuto</translation>
     </message>
     <message>
-        <source>Bug tracker:</source>
-        <translation>Bug tracker:</translation>
-    </message>
-    <message>
-        <source>An application that allows you to change the settings of MSI laptops running Linux</source>
-        <translation>Una applicazione che permette di cambiare le impostazioni di laptop MSI su Linux</translation>
-    </message>
-    <message>
         <source>Swap FN and Super buttons</source>
         <translation>Scambia tasti FN e Super</translation>
     </message>
     <message>
         <source>Fully charged</source>
         <translation>Completamente carico</translation>
-    </message>
-    <message>
-        <source>Fully charged (Discharging)</source>
-        <translation>Completamente carico (In scaricamento)</translation>
     </message>
     <message>
         <source>rpm</source>
@@ -172,36 +120,12 @@
         <translation>Modalità</translation>
     </message>
     <message>
-        <source>High Performance</source>
-        <translation>Alta Performance</translation>
-    </message>
-    <message>
-        <source>A mode that brings a balance between performance and battery live</source>
-        <translation>Modalità che apporta bilanciamento tra performance e vita della batteria</translation>
-    </message>
-    <message>
         <source>Silent</source>
         <translation>Silenzioso</translation>
     </message>
     <message>
         <source>Super Battery</source>
         <translation>Super Batteria</translation>
-    </message>
-    <message>
-        <source>A mode that provides the best system performance for multi-tasking and heavy duty</source>
-        <translation>Modalità che apporta il massimo della performance per multi-tasking e carichi pesanti</translation>
-    </message>
-    <message>
-        <source>A quiet mode that lowers the fan noise</source>
-        <translation>Modalità silenziosa che abbassa il rumore delle ventole</translation>
-    </message>
-    <message>
-        <source>A power-saving mode that lowers the power consumption for basic needs</source>
-        <translation>Modalità risparmio batteria che abbassa il consumo energico per un uso base</translation>
-    </message>
-    <message>
-        <source>Failed to load the ec_sys kernel module</source>
-        <translation>Fallito tentativo di caricare il modulo kernel ec_sys</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -220,10 +144,6 @@
         <translation>Carica limite</translation>
     </message>
     <message>
-        <source>Fan Mode:</source>
-        <translation>Modalità Ventola:</translation>
-    </message>
-    <message>
         <source>Auto</source>
         <translation>Auto</translation>
     </message>
@@ -236,20 +156,8 @@
         <translation>Avanzato</translation>
     </message>
     <message>
-        <source>Choose the mode that best suits your use case</source>
-        <translation>Scegli la modalità si adatta meglio alle tue necessità</translation>
-    </message>
-    <message>
         <source>Cooling</source>
         <translation>Raffreddamento</translation>
-    </message>
-    <message>
-        <source>Fan 1 speed</source>
-        <translation>Velocità della ventola 1</translation>
-    </message>
-    <message>
-        <source>Fan 2 speed</source>
-        <translation>velocità della ventola 2</translation>
     </message>
     <message>
         <source>Reset</source>
@@ -262,6 +170,144 @@
     <message>
         <source>Enable advanced fan control</source>
         <translation>Abilita il controllo avanzato della ventola</translation>
+    </message>
+    <message>
+        <source>Overview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The middle spot between fan noise and power usage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Low fan noise and moderate power usage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Limits performance and turns off fans at lower temperatures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>USB Power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FN ⇄ Meta</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current fan Mode:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keyboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;MC&lt;/span&gt;ontrol&lt;span style=&quot; font-weight:700;&quot;&gt;C&lt;/span&gt;enter (MCC) is an application that allows you to change the settings of MSI laptops running Linux.&lt;/p&gt;&lt;p&gt;MCC acts as a graphical interface for the &lt;span style=&quot; font-weight:700;&quot;&gt;MSI-EC &lt;/span&gt;driver that already exist in the Linux kernel, if your device is not supported (grey buttons/limited in-app functionality), please visit the msi-ec github page to get help.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MCC GitHub:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MSI-EC GitHub:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This mode unlocks Advanced fan mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>High Performance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maximum performance at the cost of heat and increased power consumption</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If you mainly use your laptop with the charger plugged most of the time, it is recommended to set the charge capacity at a lower percentage (60% or 80%) to prolong your battery lifecycle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Charge the battery when under 90%, stop at 100%</source>
+        <translation type="unfinished">Carica la batteria quando sotto 50%, ferma al 60% {90%?} {100%?}</translation>
+    </message>
+    <message>
+        <source>Keyboard Backlight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MCC Bug Tracker:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qt version:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MSI-EC Status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Warning&lt;/span&gt;: Writing the wrong values to the wrong addresses &lt;span style=&quot; font-weight:700;&quot;&gt;WILL BRICK YOUR DEVICE!&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Never&lt;/span&gt; write to EC memory without knowing how to do a proper &lt;span style=&quot; font-weight:700;&quot;&gt;BIOS/EC&lt;/span&gt; reset, keep in mind that a reset &lt;span style=&quot; font-weight:700;&quot;&gt;might not&lt;/span&gt; fix the device if the device got bricked/broken. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Follow system&apos;s power profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatic Profile Switching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On Charger:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On Battery:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to load the ec_sys kernel module</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fully charged (Discharging)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t connect to UPower to get charger status.
+Make sure that UPower is installed and running then restart the system.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t connect to Power Profiles Daemon.
+Make sure that either Power Profiles Daemon or TuneD is installed and restart the system.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fan 2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fan 1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fan 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fan 2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
