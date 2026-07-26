@@ -17,7 +17,6 @@
  */
 
 #include "helper.h"
-#include "msi-ec.h"
 #include "readwrite.h"
 #include <QCoreApplication>
 #include <QDBusConnection>
@@ -39,15 +38,16 @@ void Helper::putValue(const int &address, const int &value) const {
     if (value >= 0 && value <= 255)
         rw.writeToFile(address, value);
     else
-        fprintf(stderr, "tried to input invalid value. Address: %d, value: %d\n", address, value);
+        fprintf(stderr, "Putted invalid value. Address: %d, value: %d\n", address, value);
 }
 
 bool Helper::isEcSysModuleLoaded() const {
-    if (rw.isEcSys()) {
-        return true;
-    }
     if (rw.isAcpiEc()) {
         fprintf(stderr, "%s\n", qPrintable("The acpi_ec kernel module is loaded"));
+        return true;
+    }
+    if (rw.isEcSys()) {
+        fprintf(stderr, "%s\n", qPrintable("The ec_sys kernel module is loaded"));
         return true;
     }
     fprintf(stderr, "%s\n", qPrintable("The ec_sys kernel module is not loaded"));
@@ -74,10 +74,6 @@ int main(int argc, char *argv[]) {
     QObject::connect(&a, &QCoreApplication::aboutToQuit, helper, &Helper::aboutToQuit);
     helper->setProperty("value", "initial value");
     QDBusConnection::systemBus().registerObject("/", &obj);
-
-    QObject objMsiEc;
-    auto *helperMsiEc = new MsiEc(&objMsiEc);
-    QDBusConnection::systemBus().registerObject("/msi_ec", &objMsiEc);
 
     if (!QDBusConnection::systemBus().registerService(SERVICE_NAME)) {
         fprintf(stderr, "%s\n", qPrintable(QDBusConnection::systemBus().lastError().message()));

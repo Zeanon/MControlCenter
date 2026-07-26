@@ -80,14 +80,10 @@ void Helper::callFinishedSlot(QDBusPendingCallWatcher *call) {
     call->deleteLater();
 }
 
-std::optional<int> Helper::getOptionalValue(int address) const {
+int Helper::getValue(int address) const {
     if (!ecData.isEmpty())
         return (BYTE) ecData[address];
-    return std::nullopt;
-}
-
-int Helper::getValue(int address) const {
-    return getOptionalValue(address).value_or(-1);
+    return -1;
 }
 
 QByteArray Helper::getValues(int startAddress, int size) const {

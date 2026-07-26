@@ -28,15 +28,8 @@ enum class charging_state {
     battery_discharging,
     battery_not_charging,
     battery_fully_charged,
+    battery_fully_charged_no_power,
     battery_unknown
-};
-
-enum class shift_mode {
-    eco_mode,
-    comfort_mode,
-    sport_mode,
-    turbo_mode,
-    unknown_mode
 };
 
 enum class user_mode {
@@ -60,20 +53,19 @@ public:
     Operate();
     void closeHelperApp() const;
     [[nodiscard]] bool isEcSysModuleLoaded() const;
-    [[nodiscard]] bool isMsiEcLoaded() const;
     [[nodiscard]] bool loadEcSysModule() const;
     [[nodiscard]] bool updateEcData() const;
     void updateEcDataAsync() const;
-    bool doProbe() const;
+    [[nodiscard]] bool doProbe() const;
     [[nodiscard]] std::string getEcVersion() const;
     [[nodiscard]] std::string getEcBuild() const;
     [[nodiscard]] int getBatteryCharge() const;
     [[nodiscard]] int getBatteryThreshold() const;
     [[nodiscard]] charging_state getChargingStatus() const;
     [[nodiscard]] int getCpuTemp() const;
-    [[nodiscard]] std::optional<int> getGpuTemp() const;
+    [[nodiscard]] int getGpuTemp() const;
     [[nodiscard]] int getFan1Speed() const;
-    [[nodiscard]] std::optional<int> getFan2Speed() const;
+    [[nodiscard]] int getFan2Speed() const;
     [[nodiscard]] QVector<int> getFan1SpeedSettings() const;
     [[nodiscard]] QVector<int> getFan2SpeedSettings() const;
     [[nodiscard]] QVector<int> getFan1TempSettings() const;
@@ -107,20 +99,17 @@ public:
     void setValue(int address, int value) const;
 
     [[nodiscard]] bool isBatteryThresholdSupport() const;
-    [[nodiscard]] bool isKeyboardBacklightModeSupport() const;
     [[nodiscard]] bool isKeyboardBacklightSupport() const;
     [[nodiscard]] bool isUsbPowerShareSupport() const;
     [[nodiscard]] bool isWebCamOffSupport() const;
 
     void loadSettings() const;
-    void handleWakeEvent() const;
 
     void putSuperBatteryModeValue(bool enabled) const;
 private:
     int detectFan1Address() const;
     int detectBatteryThresholdAddress() const;
     int detectFanModeAddress() const;
-    int detectKeyboardBacklightAddress() const;
 };
 
 #endif // OPERATE_H

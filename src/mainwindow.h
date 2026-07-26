@@ -19,7 +19,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "powermonitor.h"
 #include <QMainWindow>
 #include <QCloseEvent>
 #include <QSystemTrayIcon>
@@ -46,7 +45,6 @@ private:
     void startRealtimeUpdate() const;
     void stopRealtimeUpdate() const;
     void setUpdateInterval(int msec) const;
-    void setModeFromSelection(PowerProfile profile);
     void realtimeUpdate();
     void loadConfigs();
 
@@ -59,9 +57,9 @@ private:
     void updateFan1Speed();
     void updateFan2Speed();
     void updateKeyboardBacklightMode();
-    void updateKeyboardBrightness() const;
+    void updateKeyboardBrightness();
     void updateUsbPowerShareState();
-    void updateWebCamState() const;
+    void updateWebCamState();
     void updateFnSuperSwapState();
     void updateCoolerBoostState() const;
     void updateUserMode();
@@ -91,10 +89,6 @@ private:
     void closeEvent(QCloseEvent *event);
     void quitApp() const;
 
-    QTimer timerSleepWatcher;
-    qint64 timeLastWatcherInterval = 0;
-    void timerSleepTimeout();
-
     void createTrayIcon();
     void createActions();
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
@@ -108,7 +102,6 @@ private:
 
     QAction *coolerBoostAction = nullptr;
 
-    QActionGroup *modeTrayActions = nullptr;
     QAction *highPerformanceMode = nullptr;
     QAction *balancedMode = nullptr;
     QAction *silentMode = nullptr;
@@ -122,9 +115,6 @@ private:
     QAction *quitAction = nullptr;
 
 private slots:
-    void on_ChargerStateChange(bool isCharging);
-    void on_PowerProfileChange(const PowerProfile profile);
-
     void on_bestMobilityRadioButton_toggled(bool checked);
     void on_balancedBatteryRadioButton_toggled(bool checked);
     void on_bestBatteryRadioButton_toggled(bool checked);
@@ -135,21 +125,16 @@ private slots:
 
     void on_WriteValueButton_clicked() const;
 
-    void on_usbPowerShareCheckBox_clicked(bool checked) const;
-    void on_webCamCheckBox_clicked(bool checked) const;
+    void on_usbPowerShareCheckBox_toggled(bool checked) const;
+    void on_webCamCheckBox_toggled(bool checked) const;
 
-    void on_fnSuperSwapCheckBox_clicked(bool checked) const;
+    void on_fnSuperSwapCheckBox_toggled(bool checked) const;
 
-    void on_coolerBoostCheckBox_clicked(bool checked) const;
+    void on_coolerBoostCheckBox_toggled(bool checked) const;
 
     void on_keyboardBrightnessSlider_valueChanged(int value) const;
 
     void on_keyboardBacklightModeComboBox_currentIndexChanged(int index) const;
-
-    void on_userModeOnBatteryComboBox_currentIndexChanged(int index) const;
-    void on_userModeOnChargerComboBox_currentIndexChanged(int index) const;
-    void on_autoPPDCheckBox_toggled(bool checked);
-    void on_autoAcDcProfilesGroupBox_toggled(bool active);
 
     void on_highPerformanceModeRadioButton_toggled(bool checked);
     void on_balancedModeRadioButton_toggled(bool checked);

@@ -18,11 +18,9 @@
 
 #include "operate.h"
 #include "helper.h"
-#include "msi-ec_helper.h"
 #include "settings.h"
 
 Helper helper;
-MsiEcHelper msiEcHelper;
 
 const int cpuTempAddress = 0x68;
 const int gpuTempAddress = 0x80;
@@ -31,13 +29,18 @@ int batteryThresholdAddress;
 const int batteryThresholdAddress_0xEF = 0xEF;
 const int batteryThresholdAddress_0xD7 = 0xD7;
 
+const int batteryChargingStatusAddress = 0x31;
+const int batteryNotCharging = 0x01;
+const int batteryCharging = 0x03;
+const int batteryDischarging = 0x05;
+const int batteryFullyCharged = 0x09;
+const int batteryFullyCharged_noPower = 0x0D;
+
 const int keyboardBacklightModeAddress = 0x2C;
 const int keyboardBacklightAlwaysOn = 0x00;
 const int keyboardBacklightAutoTurnOff = 0x08;
 
-int keyboardBacklightAddress;
-const int keyboardBacklightAddress_0xD3 = 0xD3;
-const int keyboardBacklightAddress_0xF3 = 0xF3;
+const int keyboardBacklightAddress = 0xD3;
 const int keyboardBacklight0ff = 0x80;
 const int keyboardBacklightLow = 0x81;
 const int keyboardBacklightMid = 0x82;
@@ -48,6 +51,8 @@ const int usbPowerShareOff = 0x08;
 const int usbPowerShareOn = 0x28;
 
 const int coolerBoostAddress = 0x98;
+
+const int webCamAddress = 0x2E;
 
 const int fnSuperSwapAddress = 0xE8;
 
@@ -63,6 +68,13 @@ const int fan1TempSettingStartAddress = 0x6A;
 const int fan2TempSettingStartAddress = 0x82;
 const int fanTempSettingsCount = fanSpeedSettingsCount - 1;
 
+
+// Modes
+const int shiftModeAddress = 0xD2;
+const int shiftMode0 = 0xC0;
+const int shiftMode1 = 0xC1;
+const int shiftMode2 = 0xC2;
+
 int fanModeAddress;
 const int fanModeAddress_0xD4 = 0xD4;
 const int fanModeAddress_0xF4 = 0xF4;
@@ -70,6 +82,8 @@ const int fanModeAuto = 0x0D;
 const int fanModeSilent = 0x1D;
 const int fanModeBasic = 0x4D;
 const int fanModeAdvanced = 0x8D;
+
+const int superBatteryModeAddress = 0xEB;
 
 const QString settingsGroup = "Settings/";
 
@@ -81,10 +95,6 @@ void Operate::closeHelperApp() const {
 
 bool Operate::isEcSysModuleLoaded() const {
     return helper.isEcSysModuleLoaded();
-}
-
-bool Operate::isMsiEcLoaded() const {
-    return msiEcHelper.isMsiEcModuleLoaded();
 }
 
 bool Operate::loadEcSysModule() const {
@@ -103,20 +113,15 @@ bool Operate::doProbe() const {
     fan1Address = detectFan1Address();
     batteryThresholdAddress = detectBatteryThresholdAddress();
     fanModeAddress = detectFanModeAddress();
-    keyboardBacklightAddress = detectKeyboardBacklightAddress();
 
     return true;
 }
 
 std::string Operate::getEcVersion() const {
-    if (msiEcHelper.isMsiEcModuleLoaded())
-        return msiEcHelper.getFWVersion().toStdString();
     return helper.getValues(160, 12).toStdString();
 }
 
 std::string Operate::getEcBuild() const {
-    if (msiEcHelper.isMsiEcModuleLoaded())
-        return msiEcHelper.getFWReleaseDate().toStdString();
     std::string s = helper.getValues(172, 16).toStdString();
     if (s.size() < 16)
         return s;
@@ -124,72 +129,49 @@ std::string Operate::getEcBuild() const {
 }
 
 int Operate::getBatteryCharge() const {
-    if (msiEcHelper.hasBatteryCapacity())
-        return msiEcHelper.getBatteryCapacity();
     return helper.getValue(batteryChargeAddress) - 1;
 }
 
 int Operate::getBatteryThreshold() const {
-    if (msiEcHelper.hasBatteryEndThreshold())
-        return msiEcHelper.getBatteryEndThreshold();
     return helper.getValue(batteryThresholdAddress) - 128;
 }
 
 charging_state Operate::getChargingStatus() const {
-    if (msiEcHelper.hasBatteryStatus()) {
-        QString status = msiEcHelper.getBatteryStatus();
-        if (status == "Charging")
+    switch (helper.getValue(batteryChargingStatusAddress)) {
+        case batteryCharging:
             return charging_state::battery_charging;
-        else if (status == "Discharging")
+        case batteryDischarging:
             return charging_state::battery_discharging;
-        else if (status == "Not charging")
+        case batteryNotCharging:
             return charging_state::battery_not_charging;
-        else if (status == "Full")
+        case batteryFullyCharged:
             return charging_state::battery_fully_charged;
-        // Fully charged no power doesn't exist in the kernel documentation
-        else
+        case batteryFullyCharged_noPower:
+            return charging_state::battery_fully_charged_no_power;
+        default:
             return charging_state::battery_unknown;
     }
-    return charging_state::battery_unknown;
 }
 
 int Operate::getCpuTemp() const {
-    if (msiEcHelper.hasCPURealtimeTemperature())
-        return msiEcHelper.getCPURealtimeTemperature();
     return helper.getValue(cpuTempAddress);
 }
 
-std::optional<int> Operate::getGpuTemp() const {
-    if (msiEcHelper.isMsiEcModuleLoaded())
-        if (!msiEcHelper.hasGPURealtimeTemperature())
-            return std::nullopt;
-        else
-            return msiEcHelper.getGPURealtimeTemperature();
-    else
-        return helper.getValue(gpuTempAddress);
+int Operate::getGpuTemp() const {
+    return helper.getValue(gpuTempAddress);
 }
 
 int Operate::getFan1Speed() const {
-    // Read 2 bytes (big-endian)
-    int value0 = helper.getValue(fan1Address);
-    int value1 = helper.getValue(fan1Address - 1);
-    int value = (value1 << 8) | value0;
+    int value = helper.getValue(fan1Address);
     if (value > 0)
-        return 480000 / value;
+        return 470000 / value;
     return value;
 }
 
-std::optional<int> Operate::getFan2Speed() const {
-    if (msiEcHelper.isMsiEcModuleLoaded() && !msiEcHelper.hasGPURealtimeFanSpeed())
-        return std::nullopt;
-    // Read 2 bytes (big-endian)
-    auto value0 = helper.getOptionalValue(fan2Address);
-    auto value1 = helper.getOptionalValue(fan2Address - 1);
-    if (!value0.has_value() || !value1.has_value())
-        return std::nullopt;
-    int value = (value1.value() << 8) | value0.value();
+int Operate::getFan2Speed() const {
+    int value = helper.getValue(fan2Address);
     if (value > 0)
-        return 480000 / value;
+        return 470000 / value;
     return value;
 }
 
@@ -232,8 +214,6 @@ int Operate::getKeyboardBacklightMode() const {
 }
 
 int Operate::getKeyboardBrightness() const {
-    if (msiEcHelper.hasKeyboardBacklightBrightness())
-        return msiEcHelper.getKeyboardBacklightBrightness();
     int value = helper.getValue(keyboardBacklightAddress);
     switch (value) {
         case keyboardBacklight0ff:
@@ -256,54 +236,39 @@ bool Operate::getUsbPowerShareState() const {
 }
 
 bool Operate::getWebCamState() const {
-    if (msiEcHelper.hasWebcam())
-        return msiEcHelper.getWebcam();
+    if (helper.getValue(webCamAddress) / 2 % 2 != 0)
+        return true;
     return false;
 }
 
 bool Operate::getFnSuperSwapState() const {
-    if (msiEcHelper.hasFnWinSwap())
-        return msiEcHelper.getFnWinSwap();
     if (helper.getValue(fnSuperSwapAddress) / 16 % 2 != 0)
         return true;
     return false;
 }
 
 bool Operate::getCoolerBoostState() const {
-    if (msiEcHelper.hasCoolerBoost())
-        return msiEcHelper.getCoolerBoost();
     if (helper.getValue(coolerBoostAddress) > 127)
         return true;
     return false;
 }
 
 user_mode Operate::getUserMode() const {
-    if (msiEcHelper.hasShiftMode()) {
-        shift_mode shiftMode = msiEcHelper.getShiftMode();
-        switch(shiftMode) {
-            case shift_mode::eco_mode:
-                return user_mode::super_battery_mode;
-            case shift_mode::comfort_mode: {
-                fan_mode fanMode = getFanMode();
-                if (fanMode == fan_mode::silent_fan_mode)
-                    return user_mode::silent_mode;
-                else
-                    return user_mode::balanced_mode;
-            }
-            case shift_mode::sport_mode: // ?
-                return user_mode::balanced_mode;
-            case shift_mode::turbo_mode:
-                return user_mode::performance_mode;
-            default:
-                return user_mode::unknown_mode;
-        }
+    switch (helper.getValue(shiftModeAddress)) {
+        case shiftMode0:
+            return user_mode::performance_mode;
+        case shiftMode1:
+            if (helper.getValue(fanModeAddress) == fanModeSilent)
+                return user_mode::silent_mode;
+            return user_mode::balanced_mode;
+        case shiftMode2:
+            return user_mode::super_battery_mode;
+        default:
+            return user_mode::unknown_mode;
     }
-    return user_mode::unknown_mode;
 }
 
 fan_mode Operate::getFanMode() const {
-    if (msiEcHelper.hasFanMode())
-        return msiEcHelper.getFanMode();
     switch (helper.getValue(fanModeAddress)) {
         case fanModeAuto:
             return fan_mode::auto_fan_mode;
@@ -319,8 +284,6 @@ fan_mode Operate::getFanMode() const {
 }
 
 void Operate::setBatteryThreshold(int value) const {
-    if (msiEcHelper.hasBatteryEndThreshold())
-        return msiEcHelper.setBatteryEndThreshold(value);
     if (value != getBatteryThreshold())
         helper.putValue(batteryThresholdAddress, value + 128);
 }
@@ -333,8 +296,6 @@ void Operate::setKeyboardBacklightMode(int value) const {
 }
 
 void Operate::setKeyboardBrightness(int value) const {
-    if (msiEcHelper.hasKeyboardBacklightBrightness())
-        return msiEcHelper.setKeyboardBacklightBrightness(value);
     int resValue;
     switch (value) {
         case 0:
@@ -362,23 +323,21 @@ void Operate::setUsbPowerShareState(bool enabled) const {
 }
 
 void Operate::setWebCamState(bool enabled) const {
-    if (msiEcHelper.hasWebcam())
-        return msiEcHelper.setWebcam(enabled);
+    if (getWebCamState() == enabled)
+        return;
+    int value = helper.getValue(webCamAddress) + (enabled ? 2 : -2);
+    helper.putValue(webCamAddress, value);
 }
 
 void Operate::setFnSuperSwapState(bool enabled) const {
-    Settings::setValue(settingsGroup + "FnSuperSwap", enabled);
-    if (msiEcHelper.hasFnWinSwap())
-        return msiEcHelper.setFnWinSwap(enabled);
     if (getFnSuperSwapState() == enabled)
         return;
     int value = helper.getValue(fnSuperSwapAddress) + (enabled ? 16 : -16);
     helper.putValue(fnSuperSwapAddress, value);
+    Settings::setValue(settingsGroup + "FnSuperSwap", enabled);
 }
 
 void Operate::setCoolerBoostState(bool enabled) const {
-    if (msiEcHelper.hasCoolerBoost())
-        return msiEcHelper.setCoolerBoost(enabled);
     int value = helper.getValue(coolerBoostAddress);
     if (enabled && (value < 128))
         helper.putValue(coolerBoostAddress, value + 128);
@@ -387,45 +346,34 @@ void Operate::setCoolerBoostState(bool enabled) const {
 }
 
 void Operate::setUserMode(user_mode userMode) const {
-    shift_mode shiftMode = shift_mode::comfort_mode;
-    fan_mode fanMode = fan_mode::auto_fan_mode;
-    bool superBattery = false;
-    QString userModeStr;
-
     switch (userMode) {
         case user_mode::balanced_mode:
-            userModeStr = "balanced_mode";
+            helper.putValue(shiftModeAddress, shiftMode1);
+            setFanMode(fanModeAuto);
+            putSuperBatteryModeValue(false);
+            Settings::setValue(settingsGroup + "UserMode", "balanced_mode");
             break;
         case user_mode::performance_mode:
-            shiftMode = shift_mode::turbo_mode; // sport on some devices?
-            userModeStr = "performance_mode";
+            helper.putValue(shiftModeAddress, shiftMode0);
+            setFanMode(fanModeAuto);
+            putSuperBatteryModeValue(false);
+            Settings::setValue(settingsGroup + "UserMode", "performance_mode");
             break;
         case user_mode::silent_mode:
-            fanMode = fan_mode::silent_fan_mode;
-            userModeStr = "silent_mode";
+            helper.putValue(shiftModeAddress, shiftMode1);
+            setFanMode(fanModeSilent);
+            putSuperBatteryModeValue(false);
+            Settings::setValue(settingsGroup + "UserMode", "silent_mode");
             break;
         case user_mode::super_battery_mode:
-            shiftMode = shift_mode::eco_mode;
-            superBattery = true;
-            userModeStr = "super_battery_mode";
+            helper.putValue(shiftModeAddress, shiftMode2);
+            setFanMode(fanModeAuto);
+            putSuperBatteryModeValue(true);
+            Settings::setValue(settingsGroup + "UserMode", "super_battery_mode");
             break;
         default:
-            return;
+            break;
     }
-
-    if (msiEcHelper.hasShiftMode()) {
-        msiEcHelper.setShiftMode(shiftMode);
-    }
-    
-    if (msiEcHelper.hasFanMode()) {
-        msiEcHelper.setFanMode(fanMode);
-    }
-
-    if (msiEcHelper.hasSuperBattery()) {
-        msiEcHelper.setSuperBattery(superBattery);
-    }
-
-    Settings::setValue(settingsGroup + "UserMode", userModeStr);
 }
 
 void Operate::setFan1SpeedSettings(QVector<int> value) const {
@@ -488,24 +436,14 @@ void Operate::setValue(int address, int value) const {
 }
 
 bool Operate::isBatteryThresholdSupport() const {
-    return msiEcHelper.hasBatteryEndThreshold() || batteryThresholdAddress != 0;
-}
-
-bool Operate::isKeyboardBacklightModeSupport() const {
-    // Backlight mode is not available for all keyboard with backlight
-    
-    // Keep the same behaviour for devices with brightness at 0xD3
-    if (keyboardBacklightAddress == keyboardBacklightAddress_0xD3)
-        return true;
-    
-    // By security, we concider that devices with brightness at 0xF3 don't have backlight mode
-    return false;
+    return batteryThresholdAddress != 0;
 }
 
 bool Operate::isKeyboardBacklightSupport() const {
-    if (msiEcHelper.hasKeyboardBacklightBrightness())
-        return true;
-    return false;
+    return (helper.getValue(keyboardBacklightAddress) == keyboardBacklight0ff ||
+            helper.getValue(keyboardBacklightAddress) == keyboardBacklightLow ||
+            helper.getValue(keyboardBacklightAddress) == keyboardBacklightMid ||
+            helper.getValue(keyboardBacklightAddress) == keyboardBacklightHigh);
 }
 
 bool Operate::isUsbPowerShareSupport() const {
@@ -514,9 +452,7 @@ bool Operate::isUsbPowerShareSupport() const {
 }
 
 bool Operate::isWebCamOffSupport() const {
-    if (msiEcHelper.hasWebcamBlock())
-        return true;
-    return false;
+    return helper.getValue(webCamAddress) > 0;
 }
 
 void Operate::loadSettings() const {
@@ -551,10 +487,11 @@ void Operate::loadSettings() const {
         setFanModeAdvanced(s.getValue(settingsGroup + "fanModeAdvanced").toBool());
 }
 
-void Operate::handleWakeEvent() const {
-    Settings s;
-    if (s.isValueExist(settingsGroup + "fanModeAdvanced"))
-        setFanModeAdvanced(s.getValue(settingsGroup + "fanModeAdvanced").toBool());
+void Operate::putSuperBatteryModeValue(bool enabled) const {
+    if ((helper.getValue(superBatteryModeAddress) / 15 % 2 != 0) == enabled)
+        return;
+    int currValue = helper.getValue(superBatteryModeAddress);
+    helper.putValue(superBatteryModeAddress, currValue + (enabled ? 15 : -15));
 }
 
 int Operate::detectFan1Address() const {
@@ -582,24 +519,4 @@ int Operate::detectFanModeAddress() const {
             fanModeValue == fanModeAdvanced)
         return fanModeAddress_0xD4;
     return fanModeAddress_0xF4;
-}
-
-int Operate::detectKeyboardBacklightAddress() const {
-    int value_0xD3 = helper.getValue(keyboardBacklightAddress_0xD3);
-    if (value_0xD3 == keyboardBacklight0ff ||
-        value_0xD3 == keyboardBacklightLow ||
-        value_0xD3 == keyboardBacklightMid ||
-        value_0xD3 == keyboardBacklightHigh) {
-        return keyboardBacklightAddress_0xD3;
-    }
-    
-    int value_0xF3 = helper.getValue(keyboardBacklightAddress_0xF3);
-    if (value_0xF3 == keyboardBacklight0ff ||
-        value_0xF3 == keyboardBacklightLow ||
-        value_0xF3 == keyboardBacklightMid ||
-        value_0xF3 == keyboardBacklightHigh) {
-        return keyboardBacklightAddress_0xF3;
-    }
-
-    return -1;
 }

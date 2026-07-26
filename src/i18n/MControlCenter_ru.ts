@@ -4,6 +4,10 @@
 <context>
     <name>MainWindow</name>
     <message>
+        <source>Info</source>
+        <translation>Информация</translation>
+    </message>
+    <message>
         <source>EC Version:</source>
         <translation>Версия EC:</translation>
     </message>
@@ -28,6 +32,14 @@
         <translation>Температура ГП:</translation>
     </message>
     <message>
+        <source>Fan 1:</source>
+        <translation>Вентилятор 1:</translation>
+    </message>
+    <message>
+        <source>Fan 2:</source>
+        <translation>Вентилятор 2:</translation>
+    </message>
+    <message>
         <source>Cooler Boost</source>
         <translation>Cooler Boost</translation>
     </message>
@@ -36,8 +48,16 @@
         <translation>Батарея</translation>
     </message>
     <message>
+        <source>If you mainly use your laptop with adaptor plugged, we suggest you set the charge capacity at a lower percentage (60% or 80%) to prolong your battery lifecycle</source>
+        <translation>Если вы в основном используете ноутбук с подключенным адаптером питания, мы рекомендуем установить ёмкость заряда на более низкий процент (60% или 80%) для продления срока службы аккумулятора</translation>
+    </message>
+    <message>
         <source>Best for Mobility</source>
         <translation>Лучше для мобильности</translation>
+    </message>
+    <message>
+        <source>Charge the battery to 100% all the time</source>
+        <translation>Всегда заряжать батарею до 100%</translation>
     </message>
     <message>
         <source>Balanced</source>
@@ -60,6 +80,14 @@
         <translation>Пользовательский</translation>
     </message>
     <message>
+        <source>Settings</source>
+        <translation>Настройки</translation>
+    </message>
+    <message>
+        <source>Keyboard Backlit</source>
+        <translation>Подсветка клавиатуры</translation>
+    </message>
+    <message>
         <source>Always on</source>
         <translation>Всегда включена</translation>
     </message>
@@ -68,8 +96,16 @@
         <translation>Автовыключение через 10 секунд</translation>
     </message>
     <message>
+        <source>FN ⇄ Super</source>
+        <translation>FN ⇄ Super</translation>
+    </message>
+    <message>
         <source>WebCam</source>
         <translation>Веб-камера</translation>
+    </message>
+    <message>
+        <source>USB Power Share</source>
+        <translation>USB Power Share</translation>
     </message>
     <message>
         <source>Debug</source>
@@ -82,6 +118,10 @@
     <message>
         <source>Version:</source>
         <translation>Версия:</translation>
+    </message>
+    <message>
+        <source>GitHub:</source>
+        <translation>GitHub:</translation>
     </message>
     <message>
         <source>Charging status:</source>
@@ -104,12 +144,24 @@
         <translation>Неизвестно</translation>
     </message>
     <message>
+        <source>Bug tracker:</source>
+        <translation>Баг трекер:</translation>
+    </message>
+    <message>
+        <source>An application that allows you to change the settings of MSI laptops running Linux</source>
+        <translation>Приложение, позволяющее изменять настройки ноутбуков MSI под управлением Linux</translation>
+    </message>
+    <message>
         <source>Swap FN and Super buttons</source>
         <translation>Поменять местами кнопки FN и Super</translation>
     </message>
     <message>
         <source>Fully charged</source>
         <translation>Полностью заряжен</translation>
+    </message>
+    <message>
+        <source>Fully charged (Discharging)</source>
+        <translation>Полностью заряжен (Разряжается)</translation>
     </message>
     <message>
         <source>rpm</source>
@@ -120,12 +172,36 @@
         <translation>Режим</translation>
     </message>
     <message>
+        <source>High Performance</source>
+        <translation>Высокая производительность</translation>
+    </message>
+    <message>
+        <source>A mode that brings a balance between performance and battery live</source>
+        <translation>Режим, обеспечивающий баланс между производительностью и временем автономной работы</translation>
+    </message>
+    <message>
         <source>Silent</source>
         <translation>Тихий</translation>
     </message>
     <message>
         <source>Super Battery</source>
         <translation>Супер батарея</translation>
+    </message>
+    <message>
+        <source>A mode that provides the best system performance for multi-tasking and heavy duty</source>
+        <translation>Режим, обеспечивающий наилучшую производительность системы для многозадачности и интенсивной работы</translation>
+    </message>
+    <message>
+        <source>A quiet mode that lowers the fan noise</source>
+        <translation>Тихий режим, который снижает шум вентилятора</translation>
+    </message>
+    <message>
+        <source>A power-saving mode that lowers the power consumption for basic needs</source>
+        <translation>Энергосберегающий режим, который снижает энергопотребление для базовых потребностей</translation>
+    </message>
+    <message>
+        <source>Failed to load the ec_sys kernel module</source>
+        <translation>Не удалось загрузить модуль ядра ec_sys</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -144,6 +220,10 @@
         <translation>Ограничение заряда</translation>
     </message>
     <message>
+        <source>Fan Mode:</source>
+        <translation>Режим вентилятора:</translation>
+    </message>
+    <message>
         <source>Auto</source>
         <translation>Автоматический</translation>
     </message>
@@ -154,6 +234,10 @@
     <message>
         <source>Advanced</source>
         <translation>Расширенный</translation>
+    </message>
+    <message>
+        <source>Choose the mode that best suits your use case</source>
+        <translation>Выберите режим, который лучше всего подходит для вашего варианта использования</translation>
     </message>
     <message>
         <source>Cooling</source>
@@ -173,133 +257,11 @@
     </message>
     <message>
         <source>Fan control</source>
-        <translation>Вентиляторы</translation>
+        <translation>Управление вентилятором</translation>
     </message>
     <message>
         <source>Enable advanced fan control</source>
         <translation>Включить расширенное управление вентилятором</translation>
-    </message>
-    <message>
-        <source>Overview</source>
-        <translation>Обзор</translation>
-    </message>
-    <message>
-        <source>The middle spot between fan noise and power usage</source>
-        <translation>Среднее значение между шумом вентилятора и энергопотреблением</translation>
-    </message>
-    <message>
-        <source>Low fan noise and moderate power usage</source>
-        <translation>Низкий уровень шума вентилятора и умеренное энергопотребление</translation>
-    </message>
-    <message>
-        <source>Limits performance and turns off fans at lower temperatures</source>
-        <translation>Ограничивает производительность и отключает вентиляторы при низких температурах</translation>
-    </message>
-    <message>
-        <source>GPU Fan:</source>
-        <translation>Вентилятор ГП:</translation>
-    </message>
-    <message>
-        <source>CPU Fan:</source>
-        <translation>Вентилятор ЦП:</translation>
-    </message>
-    <message>
-        <source>USB Power</source>
-        <translation>Питание USB устройств</translation>
-    </message>
-    <message>
-        <source>FN ⇄ Meta</source>
-        <translation>FN ⇄ Meta</translation>
-    </message>
-    <message>
-        <source>Current fan Mode:</source>
-        <translation>Режим вентилятора:</translation>
-    </message>
-    <message>
-        <source>Keyboard</source>
-        <translation>Клавиатура</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;MC&lt;/span&gt;ontrol&lt;span style=&quot; font-weight:700;&quot;&gt;C&lt;/span&gt;enter (MCC) is an application that allows you to change the settings of MSI laptops running Linux.&lt;/p&gt;&lt;p&gt;MCC acts as a graphical interface for the &lt;span style=&quot; font-weight:700;&quot;&gt;MSI-EC &lt;/span&gt;driver that already exist in the Linux kernel, if your device is not supported (grey buttons/limited in-app functionality), please visit the msi-ec github page to get help.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;MC&lt;/span&gt;ontrol&lt;span style=&quot; font-weight:700;&quot;&gt;C&lt;/span&gt;enter (MCC) это приложение, которое позволяет изменять настройки ноутбуков MSI под управлением Linux.&lt;/p&gt;&lt;p&gt;MCC выступает в качестве графического интерфейса для драйвера &lt;span style=&quot; font-weight:700;&quot;&gt;MSI-EC&lt;/span&gt;, который уже присутствует в ядре Linux. Если ваше устройство не поддерживается (серые кнопки / ограниченная функциональность приложения), пожалуйста, посетите страницу msi-ec на github для получения помощи.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>MCC GitHub:</source>
-        <translation>MCC GitHub:</translation>
-    </message>
-    <message>
-        <source>MSI-EC GitHub:</source>
-        <translation>MSI-EC GitHub:</translation>
-    </message>
-    <message>
-        <source>Keyboard Backlight</source>
-        <translation>Подсветка клавиатуры</translation>
-    </message>
-    <message>
-        <source>MCC Bug Tracker:</source>
-        <translation>MCC баг трекер:</translation>
-    </message>
-    <message>
-        <source>MSI-EC Status:</source>
-        <translation>Статус MSI-EC:</translation>
-    </message>
-    <message>
-        <source>Qt version:</source>
-        <translation>Версия Qt:</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The msi-ec module is not loaded/installed.
-Check the &lt;About&gt; page for more info.</source>
-        <translation>Модуль msi-ec не загружен/не установлен.
-Проверьте страницу &lt;About&gt; для получения дополнительной информации.</translation>
-    </message>
-    <message>
-        <source>This mode unlocks Advanced fan mode</source>
-        <translation>Разблокирует расширенный режим вентилятора</translation>
-    </message>
-    <message>
-        <source>Charge the battery when under 90%, stop at 100%</source>
-        <translation>Заряжать батарею, если заряд ниже 90%, остановить на 100%</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Warning&lt;/span&gt;: Writing the wrong values to the wrong addresses &lt;span style=&quot; font-weight:700;&quot;&gt;WILL BRICK YOUR DEVICE!&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Never&lt;/span&gt; write to EC memory without knowing how to do a proper &lt;span style=&quot; font-weight:700;&quot;&gt;BIOS/EC&lt;/span&gt; reset, keep in mind that a reset &lt;span style=&quot; font-weight:700;&quot;&gt;might not&lt;/span&gt; fix the device if the device got bricked/broken. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>High Performance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Maximum performance at the cost of heat and increased power consumption</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>If you mainly use your laptop with the charger plugged most of the time, it is recommended to set the charge capacity at a lower percentage (60% or 80%) to prolong your battery lifecycle.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The ec_sys module couldn&apos;t be detected, it might be required to control the fans.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Loaded</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fallback: Only ec_sys is loaded</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to load both msi-ec/ec_sys</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OFF</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
