@@ -5,6 +5,7 @@ VERSION=$(grep -oP "(?<=MControlCenter VERSION )[0-9.]*" ../CMakeLists.txt)
 
 DIST_DIR="MControlCenter-$VERSION-bin"
 APP_DIR="$DIST_DIR/app"
+BIN_DIR="../bin"
 
 rm -rf $DIST_DIR
 rm -f $DIST_DIR.tar.gz
@@ -22,5 +23,11 @@ cp ./install.sh ./uninstall.sh $DIST_DIR
 tar -czvf $DIST_DIR.tar.gz $DIST_DIR
 
 rm -r $DIST_DIR
+
+mkdir -p $BIN_DIR
+
+rm -f $BIN_DIR/$DIST_DIR.tar.gz
+
+mv $DIST_DIR.tar.gz $BIN_DIR/$DIST_DIR.tar.gz
 
 echo "Installer created successfully"

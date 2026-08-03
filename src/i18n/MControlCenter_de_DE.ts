@@ -160,14 +160,6 @@
         <translation>Kühlen</translation>
     </message>
     <message>
-        <source>Fan 1 speed</source>
-        <translation>Geschwindigkeit des 1. Lüfters</translation>
-    </message>
-    <message>
-        <source>Fan 2 speed</source>
-        <translation>Geschwindigkeit des 2. Lüfters</translation>
-    </message>
-    <message>
         <source>Reset</source>
         <translation>Zurücksetzen</translation>
     </message>
@@ -196,14 +188,6 @@
         <translation>Begrenzt die Leistung und schaltet die Lüfter bei niedrigeren Temperaturen ab</translation>
     </message>
     <message>
-        <source>GPU Fan:</source>
-        <translation>GPU Lüfter:</translation>
-    </message>
-    <message>
-        <source>CPU Fan:</source>
-        <translation>CPU Lüfter:</translation>
-    </message>
-    <message>
         <source>USB Power</source>
         <translation>USB-Stromversorgung</translation>
     </message>
@@ -220,16 +204,8 @@
         <translation>Tastatur</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;MC&lt;/span&gt;ontrol&lt;span style=&quot; font-weight:700;&quot;&gt;C&lt;/span&gt;enter (MCC) is an application that allows you to change the settings of MSI laptops running Linux.&lt;/p&gt;&lt;p&gt;MCC acts as a graphical interface for the &lt;span style=&quot; font-weight:700;&quot;&gt;MSI-EC &lt;/span&gt;driver that already exist in the Linux kernel, if your device is not supported (grey buttons/limited in-app functionality), please visit the msi-ec github page to get help.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;MC&lt;/span&gt;ontrol&lt;span style=&quot; font-weight:700;&quot;&gt;C&lt;/span&gt;enter (MCC) ist eine Anwendung, mit der Sie die Einstellungen von MSI-Laptops unter Linux ändern können.&lt;/p&gt;&lt;p&gt;MCC fungiert als grafische Benutzeroberfläche für den &lt;span style=&quot; font-weight:700;&quot;&gt;MSI-EC&lt;/span&gt;-Treiber, der bereits im Linux-Kernel vorhanden ist. Wenn Ihr Gerät nicht unterstützt wird (graue Schaltflächen/eingeschränkte In-App-Funktionalität), besuchen Sie bitte die MSI-EC-GitHub-Seite, um Hilfe zu erhalten.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>MCC GitHub:</source>
         <translation>MCC GitHub:</translation>
-    </message>
-    <message>
-        <source>MSI-EC GitHub:</source>
-        <translation>MSI-EC GitHub:</translation>
     </message>
     <message>
         <source>Keyboard Backlight</source>
@@ -240,8 +216,8 @@
         <translation>MCC Bug Tracker:</translation>
     </message>
     <message>
-        <source>MSI-EC Status:</source>
-        <translation>MSI-EC Status:</translation>
+        <source>EC Backend Status:</source>
+        <translation>EC Backend Status:</translation>
     </message>
     <message>
         <source>Qt version:</source>
@@ -250,12 +226,6 @@
     <message>
         <source>-</source>
         <translation>-</translation>
-    </message>
-    <message>
-        <source>The msi-ec module is not loaded/installed.
-Check the &lt;About&gt; page for more info.</source>
-        <translation>Das msi-ec-Modul ist nicht geladen/installiert.
-Weitere Informationen finden Sie auf der Seite &lt;Über&gt;.</translation>
     </message>
     <message>
         <source>This mode unlocks Advanced fan mode</source>
@@ -282,23 +252,85 @@ Weitere Informationen finden Sie auf der Seite &lt;Über&gt;.</translation>
         <translation>Das Modul ec_sys konnte nicht erkannt werden. Möglicherweise wird es zur Steuerung der Lüfter benötigt.</translation>
     </message>
     <message>
-        <source>Loaded</source>
-        <translation>Geladen</translation>
-    </message>
-    <message>
-        <source>Fallback: Only ec_sys is loaded</source>
-        <translation>Fallback: Nur ec_sys wird geladen</translation>
-    </message>
-    <message>
-        <source>Failed to load both msi-ec/ec_sys</source>
-        <translation>Das Laden von msi-ec und ec_sys ist fehlgeschlagen</translation>
-    </message>
-    <message>
         <source>If you mainly use your laptop with the charger plugged most of the time, it is recommended to set the charge capacity at a lower percentage (60% or 80%) to prolong your battery lifecycle.</source>
         <translation>Wenn Sie Ihren Laptop überwiegend mit angeschlossenem Ladegerät verwenden, empfiehlt es sich, die Ladekapazität auf einen niedrigeren Prozentsatz (60 % oder 80 %) einzustellen, um die Lebensdauer Ihres Akkus zu verlängern.</translation>
     </message>
     <message>
         <source>OFF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fan 2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fan 1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Follow system&apos;s power profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatic Profile Switching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On Charger:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On Battery:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fan 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fan 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ACPI_EC GitHub:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>acpi_ec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ec_sys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fully charged (Discharging)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t connect to UPower to get charger status.
+Make sure that UPower is installed and running then restart the system.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t connect to Power Profiles Daemon.
+Make sure that either Power Profiles Daemon or TuneD is installed and restart the system.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;MC&lt;/span&gt;ontrol&lt;span style=&quot; font-weight:700;&quot;&gt;C&lt;/span&gt;enter (MCC) is an application that allows you to change the settings of MSI laptops running Linux.&lt;/p&gt;&lt;p&gt;MCC acts as a graphical interface for the &lt;span style=&quot; font-weight:700;&quot;&gt;ACPI_EC &lt;/span&gt; or &lt;span style=&quot; font-weight:700;&quot;&gt;EC_SYS &lt;/span&gt;drivers that already exist in the Linux kernel, if your device is not supported (grey buttons/limited in-app functionality), please visit the acpi_ec github page to get help.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to load both acpi_ec/ec_sys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you really want to clear your settings?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

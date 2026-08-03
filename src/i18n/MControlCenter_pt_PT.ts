@@ -160,14 +160,6 @@
         <translation>Arrefecimento</translation>
     </message>
     <message>
-        <source>Fan 1 speed</source>
-        <translation>Velocidade da ventoinha 1</translation>
-    </message>
-    <message>
-        <source>Fan 2 speed</source>
-        <translation>Velocidade da ventoinha 2</translation>
-    </message>
-    <message>
         <source>Reset</source>
         <translation>Repor</translation>
     </message>
@@ -196,14 +188,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>GPU Fan:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>CPU Fan:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>USB Power</source>
         <translation type="unfinished"></translation>
     </message>
@@ -220,15 +204,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;MC&lt;/span&gt;ontrol&lt;span style=&quot; font-weight:700;&quot;&gt;C&lt;/span&gt;enter (MCC) is an application that allows you to change the settings of MSI laptops running Linux.&lt;/p&gt;&lt;p&gt;MCC acts as a graphical interface for the &lt;span style=&quot; font-weight:700;&quot;&gt;MSI-EC &lt;/span&gt;driver that already exist in the Linux kernel, if your device is not supported (grey buttons/limited in-app functionality), please visit the msi-ec github page to get help.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>MCC GitHub:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MSI-EC GitHub:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -249,7 +225,7 @@
     </message>
     <message>
         <source>Charge the battery when under 90%, stop at 100%</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Carregar a bateria quando estiver abaixo de 50%, parar a 60% {90%?} {100%?}</translation>
     </message>
     <message>
         <source>Keyboard Backlight</source>
@@ -268,7 +244,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>MSI-EC Status:</source>
+        <source>EC Backend Status:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -276,28 +252,85 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The msi-ec module is not loaded/installed.
-Check the &lt;About&gt; page for more info.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>The ec_sys module couldn&apos;t be detected, it might be required to control the fans.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Loaded</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fallback: Only ec_sys is loaded</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to load both msi-ec/ec_sys</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>OFF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fan 2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fan 1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Follow system&apos;s power profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatic Profile Switching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On Charger:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On Battery:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fan 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fan 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ACPI_EC GitHub:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>acpi_ec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ec_sys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fully charged (Discharging)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t connect to UPower to get charger status.
+Make sure that UPower is installed and running then restart the system.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t connect to Power Profiles Daemon.
+Make sure that either Power Profiles Daemon or TuneD is installed and restart the system.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;MC&lt;/span&gt;ontrol&lt;span style=&quot; font-weight:700;&quot;&gt;C&lt;/span&gt;enter (MCC) is an application that allows you to change the settings of MSI laptops running Linux.&lt;/p&gt;&lt;p&gt;MCC acts as a graphical interface for the &lt;span style=&quot; font-weight:700;&quot;&gt;ACPI_EC &lt;/span&gt; or &lt;span style=&quot; font-weight:700;&quot;&gt;EC_SYS &lt;/span&gt;drivers that already exist in the Linux kernel, if your device is not supported (grey buttons/limited in-app functionality), please visit the acpi_ec github page to get help.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to load both acpi_ec/ec_sys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you really want to clear your settings?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

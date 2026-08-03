@@ -160,14 +160,6 @@
         <translation>Refroidissement</translation>
     </message>
     <message>
-        <source>Fan 1 speed</source>
-        <translation>Vitesse du ventilateur 1</translation>
-    </message>
-    <message>
-        <source>Fan 2 speed</source>
-        <translation>Vitesse du ventilateur 2</translation>
-    </message>
-    <message>
         <source>Reset</source>
         <translation>Annuler les changements</translation>
     </message>
@@ -196,14 +188,6 @@
         <translation>Limite les performances pour économiser la batterie et réduire la température</translation>
     </message>
     <message>
-        <source>GPU Fan:</source>
-        <translation>Ventilateur du GPU&#xa0;:</translation>
-    </message>
-    <message>
-        <source>CPU Fan:</source>
-        <translation>Ventilateur du CPU&#xa0;:</translation>
-    </message>
-    <message>
         <source>USB Power</source>
         <translation>Alimentation USB</translation>
     </message>
@@ -220,16 +204,8 @@
         <translation>Clavier</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;MC&lt;/span&gt;ontrol&lt;span style=&quot; font-weight:700;&quot;&gt;C&lt;/span&gt;enter (MCC) is an application that allows you to change the settings of MSI laptops running Linux.&lt;/p&gt;&lt;p&gt;MCC acts as a graphical interface for the &lt;span style=&quot; font-weight:700;&quot;&gt;MSI-EC &lt;/span&gt;driver that already exist in the Linux kernel, if your device is not supported (grey buttons/limited in-app functionality), please visit the msi-ec github page to get help.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;MC&lt;/span&gt;ontrol&lt;span style=&quot; font-weight:700;&quot;&gt;C&lt;/span&gt;enter (MCC) est une application qui vous permet de changer les paramètres d&apos;ordinateurs portables MSI sous Linux.&lt;/p&gt;&lt;p&gt;MCC agit comme une interface graphique pour le pilôte &lt;span style=&quot; font-weight:700;&quot;&gt;MSI-EC &lt;/span&gt;présent dans le kernel Linux. Si votre ordinateur n&apos;est pas supporté (boutons grisés, fonctionnalités limités), merci de vous renseigner auprès de la page github de msi-ec.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>MCC GitHub:</source>
         <translation>MCC GitHub&#xa0;:</translation>
-    </message>
-    <message>
-        <source>MSI-EC GitHub:</source>
-        <translation>MSI-EC GitHub&#xa0;:</translation>
     </message>
     <message>
         <source>This mode unlocks Advanced fan mode</source>
@@ -268,37 +244,93 @@
         <translation>Version Qt&#xa0;:</translation>
     </message>
     <message>
-        <source>MSI-EC Status:</source>
-        <translation>État MSI-EC&#xa0;:</translation>
+        <source>EC Backend Status:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Warning&lt;/span&gt;: Writing the wrong values to the wrong addresses &lt;span style=&quot; font-weight:700;&quot;&gt;WILL BRICK YOUR DEVICE!&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Never&lt;/span&gt; write to EC memory without knowing how to do a proper &lt;span style=&quot; font-weight:700;&quot;&gt;BIOS/EC&lt;/span&gt; reset, keep in mind that a reset &lt;span style=&quot; font-weight:700;&quot;&gt;might not&lt;/span&gt; fix the device if the device got bricked/broken. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Danger&lt;/span&gt;&#xa0;: Écrire la mauvaise valeur à la mauvaise adresse &lt;span style=&quot; font-weight:700;&quot;&gt;DÉTRUIRA VOTRE ORDINATEUR&#xa0;!&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;N&apos;écrivez &lt;span style=&quot; font-weight:700;&quot;&gt;jamais&lt;/span&gt; dans la mémoire EC sans savoir comment réinitialiser le &lt;span style=&quot; font-weight:700;&quot;&gt;BIOS/EC&lt;/span&gt;. Gardez en tête qu&apos;une réinitialisation &lt;span style=&quot; font-weight:700;&quot;&gt;ne garantit pas&lt;/span&gt; de réparer votre ordinateur si celui-ci est briqué/détruit. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>The msi-ec module is not loaded/installed.
-Check the &lt;About&gt; page for more info.</source>
-        <translation>Le module msi-ec n&apos;est pas chargé/installé.
-Regardez la page &lt;À propos&gt; pour plus d&apos;informations.</translation>
-    </message>
-    <message>
         <source>The ec_sys module couldn&apos;t be detected, it might be required to control the fans.</source>
         <translation>Le module ec_sys n&apos;a pas pu être détecté. Il peut être requis pour contrôler les ventilateurs.</translation>
     </message>
     <message>
-        <source>Loaded</source>
-        <translation>Détecté</translation>
-    </message>
-    <message>
-        <source>Fallback: Only ec_sys is loaded</source>
-        <translation>Attention&#xa0;: Seul ec_sys est détecté</translation>
-    </message>
-    <message>
-        <source>Failed to load both msi-ec/ec_sys</source>
-        <translation>Impossible de détecter msi-ec ou ec_sys</translation>
-    </message>
-    <message>
         <source>OFF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fan 2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fan 1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Follow system&apos;s power profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatic Profile Switching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On Charger:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On Battery:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fan 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fan 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ACPI_EC GitHub:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>acpi_ec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ec_sys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fully charged (Discharging)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t connect to UPower to get charger status.
+Make sure that UPower is installed and running then restart the system.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t connect to Power Profiles Daemon.
+Make sure that either Power Profiles Daemon or TuneD is installed and restart the system.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;MC&lt;/span&gt;ontrol&lt;span style=&quot; font-weight:700;&quot;&gt;C&lt;/span&gt;enter (MCC) is an application that allows you to change the settings of MSI laptops running Linux.&lt;/p&gt;&lt;p&gt;MCC acts as a graphical interface for the &lt;span style=&quot; font-weight:700;&quot;&gt;ACPI_EC &lt;/span&gt; or &lt;span style=&quot; font-weight:700;&quot;&gt;EC_SYS &lt;/span&gt;drivers that already exist in the Linux kernel, if your device is not supported (grey buttons/limited in-app functionality), please visit the acpi_ec github page to get help.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to load both acpi_ec/ec_sys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you really want to clear your settings?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

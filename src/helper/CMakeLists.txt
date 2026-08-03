@@ -20,8 +20,6 @@ add_executable(mcontrolcenter-helper
   helper.cpp
   readwrite.h
   readwrite.cpp
-  msi-ec.h
-  msi-ec.cpp
 )
 target_link_libraries(mcontrolcenter-helper Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::DBus)
 

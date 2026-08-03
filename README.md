@@ -47,7 +47,7 @@ If your device is not on the list, follow the steps on the `msi-ec` github page 
 <details open>
    <summary><b>Ubuntu/Mint/openSUSE (No Debian)</b></summary>
 
-1. Download the correct package for your distribution from the [releases page](https://github.com/dmitry-s93/MControlCenter/releases/)
+1. Download the correct package for your distribution from the [releases page](https://github.com/Zeanon/MControlCenter/releases/)
 2. Double click to open it in the software manager (ex. Discover or GNOME software)
 3. Install
 
@@ -59,7 +59,7 @@ If your device is not on the list, follow the steps on the `msi-ec` github page 
 An officially maintained package is available under the name [mcontrolcenter-bin](https://aur.archlinux.org/packages/mcontrolcenter-bin). You can install it using any AUR helper (yay/paru):
 `yay mcontrolcenter-bin`
 
-Or you can use the generic installer in the [releases page](https://github.com/dmitry-s93/MControlCenter/releases/)
+Or you can use the generic installer in the [releases page](https://github.com/Zeanon/MControlCenter/releases/)
 
 </details>
 
@@ -99,7 +99,7 @@ Current packages are built using [OBS](https://build.opensuse.org/package/show/h
 
 ### If your distribution is not listed, try the generic installer:
 
-1. Download MControlCenter-x.x.x.tar.gz from the [releases page](https://github.com/dmitry-s93/MControlCenter/releases/)
+1. Download MControlCenter-x.x.x.tar.gz from the [releases page](https://github.com/Zeanon/MControlCenter/releases/)
 2. Unpack the archive with the program
 3. Open a terminal in the unpacked directory
 4. Run the script `sudo ./install`

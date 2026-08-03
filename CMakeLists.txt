@@ -14,6 +14,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_compile_options(-fPIC)
 
 find_package(Qt6 6.4 REQUIRED COMPONENTS Widgets LinguistTools DBus)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools DBus Network)
 
 set(PROJECT_SOURCES
     src/main.cpp
@@ -22,7 +24,6 @@ set(PROJECT_SOURCES
     src/operate.cpp src/operate.h
     src/powermonitor.cpp src/powermonitor.h
     src/helper.cpp src/helper.h
-    src/msi-ec_helper.cpp src/msi-ec_helper.h
     src/settings.cpp src/settings.h
     src/resources.qrc
 )
@@ -86,7 +87,7 @@ else()
     endif()
 endif()
 
-target_link_libraries(mcontrolcenter PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::DBus)
+target_link_libraries(mcontrolcenter PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::DBus Qt${QT_VERSION_MAJOR}::Network)
 
 install(TARGETS mcontrolcenter
     BUNDLE DESTINATION .

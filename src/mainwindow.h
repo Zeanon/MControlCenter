@@ -49,6 +49,7 @@ private:
     void setModeFromSelection(PowerProfile profile);
     void realtimeUpdate();
     void loadConfigs();
+    void loadSettings();
 
     [[nodiscard]] QString intToQString(int value) const;
     void updateBatteryCharge();
@@ -71,6 +72,8 @@ private:
     void setBestMobility();
     void setBalancedBattery();
     void setBestBattery();
+    void setCustomBattery();
+    void setCustomBatteryTrayLabel(int value);
 
     void setHighPerformanceMode();
     void setBalancedMode();
@@ -78,6 +81,9 @@ private:
     void setSuperBatteryMode();
 
     void setCoolerBoostState(bool enabled) const;
+
+    void setKeyboardAlwaysOn();
+    void setKeyboardAutoOff();
 
     QVector<int> getFan1SpeedValues() const;
     QVector<int> getFan2SpeedValues() const;
@@ -105,6 +111,7 @@ private:
     QMenu *modeTrayMenu = nullptr;
     QMenu *fanTrayMenu = nullptr;
     QMenu *batteryTrayMenu = nullptr;
+    QMenu *keyboardTrayMenu = nullptr;
 
     QAction *coolerBoostAction = nullptr;
 
@@ -114,9 +121,15 @@ private:
     QAction *silentMode = nullptr;
     QAction *superBatteryMode = nullptr;
 
+    QActionGroup *batteryTrayActions = nullptr;
     QAction *bestMobilityAction = nullptr;
     QAction *balancedBatteryAction = nullptr;
     QAction *bestBatteryAction = nullptr;
+    QAction *customBatteryAction = nullptr;
+
+    QActionGroup *keyboardTrayActions = nullptr;
+    QAction *keyboardAlwaysOn = nullptr;
+    QAction *keyboardAutoOff = nullptr;
 
     QAction *restoreAction = nullptr;
     QAction *quitAction = nullptr;
@@ -131,6 +144,7 @@ private slots:
     void on_customBatteryThresholdRadioButton_toggled(bool checked);
     void on_customBatteryThresholdSpinBox_valueChanged(int arg1);
     void on_customBatteryApplyButton_clicked();
+    void on_clearSettingsButton_clicked();
     void on_ReadValueButton_clicked();
 
     void on_WriteValueButton_clicked() const;
@@ -144,7 +158,7 @@ private slots:
 
     void on_keyboardBrightnessSlider_valueChanged(int value) const;
 
-    void on_keyboardBacklightModeComboBox_currentIndexChanged(int index) const;
+    void on_keyboardBacklightModeComboBox_currentIndexChanged(int index);
 
     void on_userModeOnBatteryComboBox_currentIndexChanged(int index) const;
     void on_userModeOnChargerComboBox_currentIndexChanged(int index) const;
@@ -155,5 +169,7 @@ private slots:
     void on_balancedModeRadioButton_toggled(bool checked);
     void on_silentModeRadioButton_toggled(bool checked);
     void on_superBatteryModeRadioButton_toggled(bool checked);
+
+    void clearSettings();
 };
 #endif // MAINWINDOW_H

@@ -26,6 +26,10 @@ QVariant Settings::getValue(const QString &key) {
     return settings.value(key);
 }
 
+void Settings::clear() {
+    settings.clear();
+}
+
 QVector<int> Settings::getValueVector(const QString &key) {
     QVector<int> value;
     std::stringstream string_stream(settings.value(key).toString().toStdString());
@@ -58,7 +62,5 @@ void Settings::setValue(const QString &key, const QVector<int> &value) {
 }
 
 bool Settings::isValueExist(const QString &key) {
-    if (settings.contains(key))
-        return true;
-    return false;
+    return settings.contains(key);
 }

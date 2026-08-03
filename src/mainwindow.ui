@@ -181,7 +181,7 @@
             <item row="5" column="1">
              <widget class="QLabel" name="gpuFanLabel">
               <property name="text">
-               <string>GPU Fan:</string>
+               <string>Fan 2:</string>
               </property>
              </widget>
             </item>
@@ -198,7 +198,7 @@
             <item row="4" column="1">
              <widget class="QLabel" name="cpuFanLabel">
               <property name="text">
-               <string>CPU Fan:</string>
+               <string>Fan 1:</string>
               </property>
              </widget>
             </item>
@@ -820,6 +820,9 @@
               <property name="maximum">
                <number>100</number>
               </property>
+              <property name="singleStep">
+               <number>5</number>
+              </property>
              </widget>
             </item>
             <item>
@@ -886,6 +889,9 @@
        </layout>
       </widget>
       <widget class="QWidget" name="fanControlTab">
+       <attribute name="icon">
+        <iconset theme="adjustcurves"/>
+       </attribute>
        <attribute name="title">
         <string>Fan control</string>
        </attribute>
@@ -934,7 +940,7 @@
               </property>
               <widget class="QWidget" name="tabWidgetPage1">
                <attribute name="title">
-                <string>CPU Fan</string>
+                <string>Fan 1</string>
                </attribute>
                <layout class="QGridLayout" name="_2">
                 <item row="2" column="3">
@@ -1337,7 +1343,7 @@
               </widget>
               <widget class="QWidget" name="tabWidgetPage2">
                <attribute name="title">
-                <string>GPU Fan</string>
+                <string>Fan 2</string>
                </attribute>
                <layout class="QGridLayout" name="gridLayout_4">
                 <item row="0" column="3">
@@ -1824,7 +1830,7 @@
         <item row="0" column="0" colspan="3">
          <widget class="QLabel" name="label_3">
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;MC&lt;/span&gt;ontrol&lt;span style=&quot; font-weight:700;&quot;&gt;C&lt;/span&gt;enter (MCC) is an application that allows you to change the settings of MSI laptops running Linux.&lt;/p&gt;&lt;p&gt;MCC acts as a graphical interface for the &lt;span style=&quot; font-weight:700;&quot;&gt;MSI-EC &lt;/span&gt;driver that already exist in the Linux kernel, if your device is not supported (grey buttons/limited in-app functionality), please visit the msi-ec github page to get help.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;MC&lt;/span&gt;ontrol&lt;span style=&quot; font-weight:700;&quot;&gt;C&lt;/span&gt;enter (MCC) is an application that allows you to change the settings of MSI laptops running Linux.&lt;/p&gt;&lt;p&gt;MCC acts as a graphical interface for the &lt;span style=&quot; font-weight:700;&quot;&gt;ACPI_EC &lt;/span&gt; or &lt;span style=&quot; font-weight:700;&quot;&gt;EC_SYS &lt;/span&gt;drivers that already exist in the Linux kernel, if your device is not supported (grey buttons/limited in-app functionality), please visit the acpi_ec github page to get help.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignmentFlag::AlignJustify|Qt::AlignmentFlag::AlignVCenter</set>
@@ -1892,16 +1898,16 @@
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QLabel" name="label_13">
+           <widget class="QLabel" name="label_14">
             <property name="text">
              <string>Qt version:</string>
             </property>
            </widget>
           </item>
           <item row="5" column="0">
-           <widget class="QLabel" name="label_11">
+           <widget class="QLabel" name="label_12">
             <property name="text">
-             <string>MSI-EC GitHub:</string>
+             <string>ACPI_EC GitHub:</string>
             </property>
            </widget>
           </item>
@@ -1927,9 +1933,9 @@
            </widget>
           </item>
           <item row="5" column="1">
-           <widget class="QLabel" name="MsiEcGitHubLabel">
+           <widget class="QLabel" name="AcpiEcGitHubLabel">
             <property name="text">
-             <string notr="true">&lt;a href=&quot;https://github.com/BeardOverflow/msi-ec&quot;&gt;https://github.com/BeardOverflow/msi-ec&lt;/a&gt;</string>
+             <string notr="true">&lt;a href=&quot;https://github.com/saidsay-so/acpi_ec&quot;&gt;https://github.com/saidsay-so/acpi_ec&lt;/a&gt;</string>
             </property>
             <property name="openExternalLinks">
              <bool>true</bool>
@@ -1942,7 +1948,7 @@
           <item row="4" column="1">
            <widget class="QLabel" name="bugTrackerValueLabel">
             <property name="text">
-             <string notr="true">&lt;a href=&quot;https://github.com/dmitry-s93/MControlCenter/issues&quot;&gt;https://github.com/dmitry-s93/MControlCenter/issues&lt;/a&gt;</string>
+             <string notr="true">&lt;a href=&quot;https://github.com/Zeanon/MControlCenter/issues&quot;&gt;https://github.com/Zeanon/MControlCenter/issues&lt;/a&gt;</string>
             </property>
             <property name="openExternalLinks">
              <bool>true</bool>
@@ -1962,7 +1968,7 @@
           <item row="3" column="1">
            <widget class="QLabel" name="gitHubValueLabel">
             <property name="text">
-             <string notr="true">&lt;a href=&quot;https://github.com/dmitry-s93/MControlCenter&quot;&gt;https://github.com/dmitry-s93/MControlCenter&lt;/a&gt;</string>
+             <string notr="true">&lt;a href=&quot;https://github.com/Zeanon/MControlCenter&quot;&gt;https://github.com/Zeanon/MControlCenter&lt;/a&gt;</string>
             </property>
             <property name="openExternalLinks">
              <bool>true</bool>
@@ -1980,14 +1986,14 @@
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QLabel" name="label_12">
+           <widget class="QLabel" name="label_13">
             <property name="text">
-             <string>MSI-EC Status:</string>
+             <string>EC Backend Status:</string>
             </property>
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QLabel" name="MsiEcStatusLabel">
+           <widget class="QLabel" name="EcBackendStatusLabel">
             <property name="text">
              <string>Unknown</string>
             </property>
@@ -2014,6 +2020,45 @@
            </size>
           </property>
          </spacer>
+        </item>
+        <item row="4" column="0" colspan="3">
+         <widget class="Line" name="line_8">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>10</height>
+           </size>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Shadow::Sunken</enum>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0">
+           <spacer name="horizontalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>5000</width>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="1">
+           <widget class="QPushButton" name="clearSettingsButton">
+            <property name="text">
+             <string>Clear Settings</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -2167,6 +2212,7 @@
   <tabstop>WriteValueButton</tabstop>
   <tabstop>balancedBatteryRadioButton</tabstop>
   <tabstop>customBatteryApplyButton</tabstop>
+  <tabstop>clearSettingsButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>

@@ -51,6 +51,20 @@ bool Helper::loadEcSysModule() {
     return false;
 }
 
+bool Helper::isAcpiEc() {
+    if (QDBusReply<bool> reply = iface->call("isAcpiEc"); reply.isValid())
+        return reply.value();
+    printError(iface->lastError());
+    return false;
+}
+
+bool Helper::isEcSys() {
+    if (QDBusReply<bool> reply = iface->call("isEcSys"); reply.isValid())
+        return reply.value();
+    printError(iface->lastError());
+    return false;
+}
+
 bool Helper::updateData() {
     if (QDBusReply<QByteArray> reply = iface->call("getData"); reply.isValid() &&
                                                                reply.value().size() == EC_SPACE_SIZE) {

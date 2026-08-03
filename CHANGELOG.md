@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 ## Unreleased
 
 ## [0.4.1] 2023-08-09
-- Fixed UI lags when resizing the window (issue https://github.com/dmitry-s93/MControlCenter/issues/97)
+- Fixed UI lags when resizing the window (issue https://github.com/Zeanon/MControlCenter/issues/97)
 - Updated Norwegian Bokmål (Thanks [msigurdsen](https://github.com/msigurdsen))
 - Added support for German language (Thanks [EchterAlsFake](https://github.com/EchterAlsFake))
 - Added support for Hungarian language (Thanks [BiRo96](https://github.com/BiRo96))
@@ -33,7 +33,7 @@ All notable changes to this project will be documented in this file.
 - Added support for Turkish language (Thanks [emrgncr](https://github.com/emrgncr))
 - Corrected display of the current battery level
 - Fixed fan 1 speed display for some devices
-- Fixed "FN <-> Super" for some devices (Issue https://github.com/dmitry-s93/MControlCenter/issues/53)
+- Fixed "FN <-> Super" for some devices (Issue https://github.com/Zeanon/MControlCenter/issues/53)
 
 ## [0.3.0] 2022-10-28
 - Added support for Spanish language (Thanks [ssergio-ll](https://www.github.com/ssergio-ll))

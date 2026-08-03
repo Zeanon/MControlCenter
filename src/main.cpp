@@ -19,20 +19,21 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include <QTranslator>
-#include <QDBusConnectionInterface>
+#include <QLocalSocket>
+#include <QLocalServer>
+
 
 int main(int argc, char *argv[]) {
-    const QString serviceName = "io.github.dmitry_s93.MControlCenter";
-
-    if (QDBusConnection::sessionBus().interface()->isServiceRegistered(serviceName)) {
+    const QString serverName = "MControlCenter";
+    auto *socket = new QLocalSocket();
+    socket->connectToServer(serverName);
+    if (socket->isOpen()) {
         fprintf(stderr, "Another instance of the application is already running\n");
+        socket->close();
+        socket->deleteLater();
         return 0;
     }
-
-    if (!QDBusConnection::sessionBus().registerService(serviceName)) {
-        fprintf(stderr, "Failed to register D-Bus service\n");
-        return 1;
-    }
+    socket->deleteLater();
 
     QApplication a(argc, argv);
 
@@ -47,6 +48,16 @@ int main(int argc, char *argv[]) {
     }
 
     MainWindow w;
+
+    QLocalServer server;
+    QObject::connect(&server, &QLocalServer::newConnection, [&w]() {
+        w.show();
+    });
+    bool serverListening = server.listen(serverName);
+    if (!serverListening && (server.serverError() == QAbstractSocket::AddressInUseError)) {
+        QLocalServer::removeServer(serverName);
+        server.listen(serverName);
+    }
 
     return QApplication::exec();
 }

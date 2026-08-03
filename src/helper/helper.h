@@ -41,6 +41,8 @@ public slots:
     [[nodiscard]] QByteArray getData() const;
     Q_NOREPLY void putValue(const int &address, const int &value) const;
     [[nodiscard]] bool isEcSysModuleLoaded() const;
+    [[nodiscard]] bool isAcpiEc() const;
+    [[nodiscard]] bool isEcSys() const;
     [[nodiscard]] bool loadEcSysModule() const;
 };
 

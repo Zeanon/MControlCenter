@@ -31,6 +31,8 @@ public:
 
     bool isEcSysModuleLoaded();
     bool loadEcSysModule();
+    bool isAcpiEc();
+    bool isEcSys();
     bool updateData();
     void updateDataAsync();
     std::optional<int> getOptionalValue(int address) const;

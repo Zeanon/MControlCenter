@@ -41,7 +41,7 @@ void ReadWrite::writeToFile(const int pos, BYTE value) const {
     }
 }
 
-bool ReadWrite::isAcpiEc() const {
+bool ReadWrite::useAcpiEc() const {
     if (QFile::exists(acpi_ec_file)) {
         ioFile = acpi_ec_file;
         return true;
@@ -49,10 +49,18 @@ bool ReadWrite::isAcpiEc() const {
     return false;
 }
 
-bool ReadWrite::isEcSys() const {
+bool ReadWrite::useEcSys() const {
     if (QFile::exists(ec_sys_file)) {
         ioFile = ec_sys_file;
         return true;
     }
     return false;
+}
+
+bool ReadWrite::isAcpiEc() const {
+    return acpi_ec_file == ioFile;
+}
+
+bool ReadWrite::isEcSys() const {
+    return ec_sys_file == ioFile;
 }

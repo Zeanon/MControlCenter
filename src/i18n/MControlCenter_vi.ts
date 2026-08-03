@@ -160,14 +160,6 @@
         <translation>Tản nhiệt</translation>
     </message>
     <message>
-        <source>Fan 1 speed</source>
-        <translation>Tốc độ quạt 1</translation>
-    </message>
-    <message>
-        <source>Fan 2 speed</source>
-        <translation>Tốc độ quạt 2</translation>
-    </message>
-    <message>
         <source>Reset</source>
         <translation>Cài đặt lại</translation>
     </message>
@@ -196,14 +188,6 @@
         <translation>Giới hạn cấu hình và tắt quạt khi nhiệt độ thấp</translation>
     </message>
     <message>
-        <source>GPU Fan:</source>
-        <translation>Quạt GPU:</translation>
-    </message>
-    <message>
-        <source>CPU Fan:</source>
-        <translation>Quạt CPU:</translation>
-    </message>
-    <message>
         <source>USB Power</source>
         <translation>Nguồn điện USB</translation>
     </message>
@@ -220,16 +204,8 @@
         <translation>Bàn phím</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;MC&lt;/span&gt;ontrol&lt;span style=&quot; font-weight:700;&quot;&gt;C&lt;/span&gt;enter (MCC) is an application that allows you to change the settings of MSI laptops running Linux.&lt;/p&gt;&lt;p&gt;MCC acts as a graphical interface for the &lt;span style=&quot; font-weight:700;&quot;&gt;MSI-EC &lt;/span&gt;driver that already exist in the Linux kernel, if your device is not supported (grey buttons/limited in-app functionality), please visit the msi-ec github page to get help.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;MC&lt;/span&gt;ontrol&lt;span style=&quot; font-weight:700;&quot;&gt;C&lt;/span&gt;enter (MCC) là một ứng dụng cho phép bạn thay đổi cài đặt của máy tính xách tay MSI chạy Linux.&lt;/p&gt;&lt;p&gt;MCC hoạt động như một giao diện đồ họa cho &lt;span style=&quot; font-weight:700;&quot;&gt;MSI-EC &lt;/span&gt;driver đã tồn tại trong kernel Linux, nếu thiết bị của bạn không được hỗ trợ (các nút màu xám/chức năng trong ứng dụng bị giới hạn), vui lòng truy cập trang github msi-ec để được trợ giúp.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>MCC GitHub:</source>
         <translation>MCC Github:</translation>
-    </message>
-    <message>
-        <source>MSI-EC GitHub:</source>
-        <translation>MSI-EC Github:</translation>
     </message>
     <message>
         <source>This mode unlocks Advanced fan mode</source>
@@ -249,7 +225,7 @@
     </message>
     <message>
         <source>Charge the battery when under 90%, stop at 100%</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sạc khi pin dưới 50%, dừng khi đạt 60% {90%?} {100%?}</translation>
     </message>
     <message>
         <source>Keyboard Backlight</source>
@@ -268,7 +244,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>MSI-EC Status:</source>
+        <source>EC Backend Status:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -276,28 +252,85 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The msi-ec module is not loaded/installed.
-Check the &lt;About&gt; page for more info.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>The ec_sys module couldn&apos;t be detected, it might be required to control the fans.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Loaded</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fallback: Only ec_sys is loaded</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to load both msi-ec/ec_sys</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>OFF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fan 2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fan 1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Follow system&apos;s power profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatic Profile Switching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On Charger:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On Battery:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fan 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fan 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ACPI_EC GitHub:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>acpi_ec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ec_sys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fully charged (Discharging)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t connect to UPower to get charger status.
+Make sure that UPower is installed and running then restart the system.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t connect to Power Profiles Daemon.
+Make sure that either Power Profiles Daemon or TuneD is installed and restart the system.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;MC&lt;/span&gt;ontrol&lt;span style=&quot; font-weight:700;&quot;&gt;C&lt;/span&gt;enter (MCC) is an application that allows you to change the settings of MSI laptops running Linux.&lt;/p&gt;&lt;p&gt;MCC acts as a graphical interface for the &lt;span style=&quot; font-weight:700;&quot;&gt;ACPI_EC &lt;/span&gt; or &lt;span style=&quot; font-weight:700;&quot;&gt;EC_SYS &lt;/span&gt;drivers that already exist in the Linux kernel, if your device is not supported (grey buttons/limited in-app functionality), please visit the acpi_ec github page to get help.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to load both acpi_ec/ec_sys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you really want to clear your settings?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

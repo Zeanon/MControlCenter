@@ -28,6 +28,7 @@ enum class charging_state {
     battery_discharging,
     battery_not_charging,
     battery_fully_charged,
+    battery_fully_charged_no_power,
     battery_unknown
 };
 
@@ -60,13 +61,14 @@ public:
     Operate();
     void closeHelperApp() const;
     [[nodiscard]] bool isEcSysModuleLoaded() const;
-    [[nodiscard]] bool isMsiEcLoaded() const;
     [[nodiscard]] bool loadEcSysModule() const;
     [[nodiscard]] bool updateEcData() const;
     void updateEcDataAsync() const;
     bool doProbe() const;
     [[nodiscard]] std::string getEcVersion() const;
     [[nodiscard]] std::string getEcBuild() const;
+    [[nodiscard]] bool isAcpiEc() const;
+    [[nodiscard]] bool isEcSys() const;
     [[nodiscard]] int getBatteryCharge() const;
     [[nodiscard]] int getBatteryThreshold() const;
     [[nodiscard]] charging_state getChargingStatus() const;
