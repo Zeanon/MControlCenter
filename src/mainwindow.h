@@ -112,12 +112,13 @@ private:
     QMenu *fanTrayMenu = nullptr;
     QMenu *batteryTrayMenu = nullptr;
     QMenu *keyboardTrayMenu = nullptr;
+    QMenu *miscTrayMenu = nullptr;
 
     QAction *coolerBoostAction = nullptr;
 
     QActionGroup *modeTrayActions = nullptr;
     QAction *autoPPDMode = nullptr;
-    QAction *autoACDCMode = nullptr;
+    QAction *autoAcDcMode = nullptr;
     QAction *highPerformanceMode = nullptr;
     QAction *balancedMode = nullptr;
     QAction *silentMode = nullptr;
@@ -132,6 +133,8 @@ private:
     QActionGroup *keyboardTrayActions = nullptr;
     QAction *keyboardAlwaysOn = nullptr;
     QAction *keyboardAutoOff = nullptr;
+
+    QAction *usbPowerShareTrayAction = nullptr;
 
     QAction *restoreAction = nullptr;
     QAction *quitAction = nullptr;

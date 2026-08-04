@@ -311,7 +311,7 @@
             <item>
              <widget class="QCheckBox" name="usbPowerShareCheckBox">
               <property name="text">
-               <string>USB Power</string>
+               <string>USB PowerShare</string>
               </property>
              </widget>
             </item>

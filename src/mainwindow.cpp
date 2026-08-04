@@ -193,6 +193,7 @@ void MainWindow::loadSettings() {
         Settings::setValue("Settings/CustomBatteryThreshold", 50);
     }
     ui->customBatteryThresholdSpinBox->setValue(Settings::getValue("Settings/CustomBatteryThreshold").toInt());
+    setCustomBatteryTrayLabel(ui->customBatteryThresholdSpinBox->value());
     if (!Settings::isValueExist("Settings/BatteryThresholdSetting"))
         switch (operate.getBatteryThreshold()) {
             case 0:
@@ -289,9 +290,9 @@ void MainWindow::loadConfigs() {
     if (operate.isBatteryThresholdSupport()) {
         updateBatteryThreshold();
     } else {
-        ui->batteryTab->setDisabled(true);
+        ui->batteryTab->hide();
         if (batteryTrayMenu)
-            batteryTrayMenu->setDisabled(true);
+            batteryTrayMenu->hide();
     }
 
     updateFanSpeedSettings();
@@ -299,16 +300,16 @@ void MainWindow::loadConfigs() {
     if (operate.isKeyboardBacklightModeSupport()) {
         updateKeyboardBacklightMode();
     } else {
-        ui->keyboardBacklightModeComboBox->setDisabled(true);
+        ui->keyboardBacklightModeComboBox->hide();
         if (keyboardTrayMenu)
-            keyboardTrayMenu->setDisabled(true);
+            keyboardTrayMenu->hide();
     }
 
     if (operate.isKeyboardBacklightSupport()) {
         updateKeyboardBrightness();
     } else {
-        ui->keyboardBrightnessSlider->setDisabled(true);
-        ui->tabWidget->removeTab(3);
+        ui->keyboardBrightnessSlider->hide();
+        ui->keyboardTab->hide();
     }
 
     if (operate.isUsbPowerShareSupport()) {
@@ -374,20 +375,18 @@ void MainWindow::updateBatteryThreshold() {
 void MainWindow::updateChargingStatus() {
     QString chargingStatus;
     switch (operate.getChargingStatus()) {
-        case charging_state::battery_charging:
-            chargingStatus = tr("Charging");
-            break;
-        case charging_state::battery_discharging:
-            chargingStatus = tr("Discharging");
-            break;
         case charging_state::battery_not_charging:
             chargingStatus = tr("Not charging");
+            break;
+        case charging_state::battery_charging:
+            chargingStatus = tr("Charging");
             break;
         case charging_state::battery_fully_charged:
             chargingStatus = tr("Fully charged");
             break;
+        case charging_state::battery_discharging:
         case charging_state::battery_fully_charged_no_power:
-            chargingStatus = tr("Fully charged (Discharging)");
+            chargingStatus = tr("Discharging");
             break;
         default:
             chargingStatus = tr("Unknown");
@@ -864,6 +863,8 @@ void MainWindow::on_WriteValueButton_clicked() const {
 }
 
 void MainWindow::on_usbPowerShareCheckBox_clicked(bool checked) const {
+    ui->usbPowerShareCheckBox->setChecked(checked);
+    usbPowerShareTrayAction->setChecked(checked);
     operate.setUsbPowerShareState(checked);
 }
 
@@ -919,7 +920,7 @@ void MainWindow::on_autoAcDcProfilesGroupBox_toggled(bool checked) {
         }
 
         ui->autoAcDcProfilesGroupBox->setChecked(true);
-        autoACDCMode->setChecked(true);
+        autoAcDcMode->setChecked(true);
 
         powerMonitor.disconnectFromPowerProfiles();
         ui->autoPPDCheckBox->setChecked(false);
@@ -929,7 +930,7 @@ void MainWindow::on_autoAcDcProfilesGroupBox_toggled(bool checked) {
         powerMonitor.queryChargerState();
     } else {
         ui->autoAcDcProfilesGroupBox->setChecked(false);
-        autoACDCMode->setChecked(false);
+        autoAcDcMode->setChecked(false);
 
         ui->autoPPDCheckBox->setEnabled(true);
         autoPPDMode->setVisible(true);
@@ -959,12 +960,10 @@ void MainWindow::on_autoPPDCheckBox_toggled(bool checked) {
 
         ui->autoAcDcProfilesGroupBox->setChecked(false);
         ui->autoAcDcProfilesGroupBox->setDisabled(true);
-        autoACDCMode->setChecked(false);
-        autoACDCMode->setVisible(false);
+        autoAcDcMode->setChecked(false);
+        autoAcDcMode->setVisible(false);
         if (modeTrayActions)
             modeTrayActions->setVisible(false);
-            //modeTrayActions->setDisabled(true);
-            //modeTrayMenu->setDisabled(true);
         powerMonitor.queryPowerProfile();
     } else {
         ui->autoPPDCheckBox->setChecked(false);
@@ -976,11 +975,9 @@ void MainWindow::on_autoPPDCheckBox_toggled(bool checked) {
         ui->superBatteryModeRadioButton->setEnabled(true);
 
         ui->autoAcDcProfilesGroupBox->setEnabled(true);
-        autoACDCMode->setVisible(true);
+        autoAcDcMode->setVisible(true);
         if (modeTrayActions)
             modeTrayActions->setVisible(true);
-            //modeTrayActions->setEnabled(true);
-            //modeTrayMenu->setEnabled(true);
     }
     Settings::setValue("Settings/autoPPDstate", checked);
 }
@@ -1034,7 +1031,7 @@ void MainWindow::createTrayIcon() {
     modeTrayActions->addAction(superBatteryMode);
 
     modeTrayMenu->addAction(autoPPDMode);
-    modeTrayMenu->addAction(autoACDCMode);
+    modeTrayMenu->addAction(autoAcDcMode);
     modeTrayMenu->addAction(highPerformanceMode);
     modeTrayMenu->addAction(balancedMode);
     modeTrayMenu->addAction(silentMode);
@@ -1071,6 +1068,10 @@ void MainWindow::createTrayIcon() {
     keyboardTrayActions->addAction(keyboardAutoOff);
 
 
+    miscTrayMenu = new QMenu(tr("Misc"));
+    miscTrayMenu->addAction(usbPowerShareTrayAction);
+
+
     trayIconMenu = new QMenu(this);
     trayIconMenu->addAction(restoreAction);
     trayIconMenu->addSeparator();
@@ -1078,6 +1079,7 @@ void MainWindow::createTrayIcon() {
     trayIconMenu->addMenu(fanTrayMenu);
     trayIconMenu->addMenu(batteryTrayMenu);
     trayIconMenu->addMenu(keyboardTrayMenu);
+    trayIconMenu->addMenu(miscTrayMenu);
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(quitAction);
 
@@ -1100,8 +1102,8 @@ void MainWindow::createActions() {
     autoPPDMode = new QAction(tr("System Profile"), this);
     autoPPDMode->setCheckable(true);
 
-    autoACDCMode = new QAction(tr("AC|DC based"), this);
-    autoACDCMode->setCheckable(true);
+    autoAcDcMode = new QAction(tr("AC|DC based"), this);
+    autoAcDcMode->setCheckable(true);
 
     highPerformanceMode = new QAction(ui->highPerformanceModeRadioButton->text(), this);
     highPerformanceMode->setCheckable(true);
@@ -1116,7 +1118,7 @@ void MainWindow::createActions() {
     superBatteryMode->setCheckable(true);
 
     connect(autoPPDMode, &QAction::triggered, this, &MainWindow::on_autoPPDCheckBox_toggled);
-    connect(autoACDCMode, &QAction::triggered, this, &MainWindow::on_autoAcDcProfilesGroupBox_toggled);
+    connect(autoAcDcMode, &QAction::triggered, this, &MainWindow::on_autoAcDcProfilesGroupBox_toggled);
     connect(highPerformanceMode, &QAction::triggered, this, &MainWindow::setHighPerformanceMode);
     connect(balancedMode, &QAction::triggered, this, &MainWindow::setBalancedMode);
     connect(silentMode, &QAction::triggered, this, &MainWindow::setSilentMode);
@@ -1155,6 +1157,12 @@ void MainWindow::createActions() {
 
     connect(keyboardAlwaysOn, &QAction::triggered, this, &MainWindow::setKeyboardAlwaysOn);
     connect(keyboardAutoOff, &QAction::triggered, this, &MainWindow::setKeyboardAutoOff);
+
+
+    usbPowerShareTrayAction = new QAction("USB Power Share", this);
+    usbPowerShareTrayAction->setCheckable(true);
+
+    connect(usbPowerShareTrayAction, &QAction::triggered, this, &MainWindow::on_usbPowerShareCheckBox_clicked);
 
 
     quitAction = new QAction(tr("Quit"), this);
