@@ -918,12 +918,21 @@ void MainWindow::on_autoAcDcProfilesGroupBox_toggled(bool checked) {
             return;
         }
 
+        ui->autoAcDcProfilesGroupBox->setChecked(true);
+        autoACDCMode->setChecked(true);
+
         powerMonitor.disconnectFromPowerProfiles();
         ui->autoPPDCheckBox->setChecked(false);
         ui->autoPPDCheckBox->setDisabled(true);
+        autoPPDMode->setChecked(false);
+        autoPPDMode->setVisible(false);
         powerMonitor.queryChargerState();
     } else {
+        ui->autoAcDcProfilesGroupBox->setChecked(false);
+        autoACDCMode->setChecked(false);
+
         ui->autoPPDCheckBox->setEnabled(true);
+        autoPPDMode->setVisible(true);
         powerMonitor.disconnectFromUpower();
     }
 
@@ -939,25 +948,39 @@ void MainWindow::on_autoPPDCheckBox_toggled(bool checked) {
             ui->autoPPDCheckBox->setChecked(false);
             return;
         }
+        ui->autoPPDCheckBox->setChecked(true);
+        autoPPDMode->setChecked(true);
 
         powerMonitor.disconnectFromUpower();
         ui->highPerformanceModeRadioButton->setDisabled(true);
         ui->balancedModeRadioButton->setDisabled(true);
         ui->silentModeRadioButton->setDisabled(true);
         ui->superBatteryModeRadioButton->setDisabled(true);
+
         ui->autoAcDcProfilesGroupBox->setChecked(false);
         ui->autoAcDcProfilesGroupBox->setDisabled(true);
-        if (modeTrayMenu)
-            modeTrayMenu->setDisabled(true);
+        autoACDCMode->setChecked(false);
+        autoACDCMode->setVisible(false);
+        if (modeTrayActions)
+            modeTrayActions->setVisible(false);
+            //modeTrayActions->setDisabled(true);
+            //modeTrayMenu->setDisabled(true);
         powerMonitor.queryPowerProfile();
     } else {
+        ui->autoPPDCheckBox->setChecked(false);
+        autoPPDMode->setChecked(false);
+
         ui->highPerformanceModeRadioButton->setEnabled(true);
         ui->balancedModeRadioButton->setEnabled(true);
         ui->silentModeRadioButton->setEnabled(true);
         ui->superBatteryModeRadioButton->setEnabled(true);
+
         ui->autoAcDcProfilesGroupBox->setEnabled(true);
-        if (modeTrayMenu)
-            modeTrayMenu->setEnabled(true);
+        autoACDCMode->setVisible(true);
+        if (modeTrayActions)
+            modeTrayActions->setVisible(true);
+            //modeTrayActions->setEnabled(true);
+            //modeTrayMenu->setEnabled(true);
     }
     Settings::setValue("Settings/autoPPDstate", checked);
 }
@@ -1010,6 +1033,8 @@ void MainWindow::createTrayIcon() {
     modeTrayActions->addAction(silentMode);
     modeTrayActions->addAction(superBatteryMode);
 
+    modeTrayMenu->addAction(autoPPDMode);
+    modeTrayMenu->addAction(autoACDCMode);
     modeTrayMenu->addAction(highPerformanceMode);
     modeTrayMenu->addAction(balancedMode);
     modeTrayMenu->addAction(silentMode);
@@ -1062,7 +1087,7 @@ void MainWindow::createTrayIcon() {
     trayIcon->setIcon(icon);
     trayIcon->setToolTip("MControlCenter");
 
-    trayIcon->show();
+    trayIcon->setVisible(true);
 
     connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::iconActivated);
 }
@@ -1071,6 +1096,12 @@ void MainWindow::createActions() {
     restoreAction = new QAction(tr("Show"), this);
     connect(restoreAction, &QAction::triggered, this, &MainWindow::showNormal);
 
+
+    autoPPDMode = new QAction(tr("System Profile"), this);
+    autoPPDMode->setCheckable(true);
+
+    autoACDCMode = new QAction(tr("AC|DC based"), this);
+    autoACDCMode->setCheckable(true);
 
     highPerformanceMode = new QAction(ui->highPerformanceModeRadioButton->text(), this);
     highPerformanceMode->setCheckable(true);
@@ -1084,6 +1115,8 @@ void MainWindow::createActions() {
     superBatteryMode = new QAction(ui->superBatteryModeRadioButton->text(), this);
     superBatteryMode->setCheckable(true);
 
+    connect(autoPPDMode, &QAction::triggered, this, &MainWindow::on_autoPPDCheckBox_toggled);
+    connect(autoACDCMode, &QAction::triggered, this, &MainWindow::on_autoAcDcProfilesGroupBox_toggled);
     connect(highPerformanceMode, &QAction::triggered, this, &MainWindow::setHighPerformanceMode);
     connect(balancedMode, &QAction::triggered, this, &MainWindow::setBalancedMode);
     connect(silentMode, &QAction::triggered, this, &MainWindow::setSilentMode);

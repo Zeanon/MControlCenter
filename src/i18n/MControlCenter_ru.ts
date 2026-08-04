@@ -333,5 +333,13 @@ Make sure that either Power Profiles Daemon or TuneD is installed and restart th
         <source>Do you really want to clear your settings?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>System Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AC|DC based</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
