@@ -50,7 +50,7 @@ void Settings::setValue(const QString &key, const QVariant &value) {
 
 void Settings::setValue(const QString &key, const QVector<int> &value) {
     QString resValue;
-    for (int i = 0; i < value.size(); i++) {
+    for (uint8_t i = 0; i < value.size(); i++) {
         resValue.append(QString::number(value[i]));
         if (i < value.size() - 1)
             resValue.append("|");

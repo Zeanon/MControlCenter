@@ -28,10 +28,6 @@
         <translation>Температура ГП:</translation>
     </message>
     <message>
-        <source>Cooler Boost</source>
-        <translation>Cooler Boost</translation>
-    </message>
-    <message>
         <source>Battery</source>
         <translation>Батарея</translation>
     </message>
@@ -66,10 +62,6 @@
     <message>
         <source>Auto turn off in 10 sec</source>
         <translation>Автовыключение через 10 секунд</translation>
-    </message>
-    <message>
-        <source>WebCam</source>
-        <translation>Веб-камера</translation>
     </message>
     <message>
         <source>Debug</source>
@@ -116,32 +108,12 @@
         <translation>об/мин</translation>
     </message>
     <message>
-        <source>Mode</source>
-        <translation>Режим</translation>
-    </message>
-    <message>
         <source>Silent</source>
         <translation>Тихий</translation>
     </message>
     <message>
-        <source>Super Battery</source>
-        <translation>Супер батарея</translation>
-    </message>
-    <message>
         <source>Apply</source>
         <translation>Применить</translation>
-    </message>
-    <message>
-        <source>Show</source>
-        <translation>Показать</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation>Выход</translation>
-    </message>
-    <message>
-        <source>Charge limit</source>
-        <translation>Ограничение заряда</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -154,10 +126,6 @@
     <message>
         <source>Advanced</source>
         <translation>Расширенный</translation>
-    </message>
-    <message>
-        <source>Cooling</source>
-        <translation>Охлаждение</translation>
     </message>
     <message>
         <source>Reset</source>
@@ -224,19 +192,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This mode unlocks Advanced fan mode</source>
-        <translation>Разблокирует расширенный режим вентилятора</translation>
-    </message>
-    <message>
         <source>Charge the battery when under 90%, stop at 100%</source>
         <translation>Заряжать батарею, если заряд ниже 90%, остановить на 100%</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Warning&lt;/span&gt;: Writing the wrong values to the wrong addresses &lt;span style=&quot; font-weight:700;&quot;&gt;WILL BRICK YOUR DEVICE!&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Never&lt;/span&gt; write to EC memory without knowing how to do a proper &lt;span style=&quot; font-weight:700;&quot;&gt;BIOS/EC&lt;/span&gt; reset, keep in mind that a reset &lt;span style=&quot; font-weight:700;&quot;&gt;might not&lt;/span&gt; fix the device if the device got bricked/broken. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>High Performance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -334,11 +294,63 @@ Make sure that either Power Profiles Daemon or TuneD is installed and restart th
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Misc</source>
+        <source>USB PowerShare</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>USB PowerShare</source>
+        <source>Auto off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>USB Power Share</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turbotastic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Eco Silent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mode    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cooling    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Battery    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keyboard    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Misc    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quit    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen charge:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Full Performance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Performance</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

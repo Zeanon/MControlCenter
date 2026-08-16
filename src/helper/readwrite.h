@@ -22,11 +22,10 @@
 #include <QByteArray>
 
 class ReadWrite {
-    using BYTE = unsigned char;
 public:
     ReadWrite();
     QByteArray readFromFile() const;
-    void writeToFile(int pos, BYTE value) const;
+    void writeToFile(const uint8_t pos, const uint8_t value) const;
     bool useAcpiEc() const;
     bool useEcSys() const;
     bool isAcpiEc() const;

@@ -38,30 +38,30 @@ public:
     bool connectToPowerProfiles();
     void disconnectFromUpower();
     void disconnectFromPowerProfiles();
-    void queryChargerState();
-    void queryPowerProfile();
+    void queryChargerState() const;
+    void queryPowerProfile() const;
 
     Q_ENUM(PowerProfile)
 
 private:
     bool parseChargerState(uint state) const;
-    PowerProfile parsePowerProfile(const QString &profile);
+    PowerProfile parsePowerProfile(const QString &profile) const;
 
     bool isUPowerConnected = false;
     bool isPowerProfileConnected = false;
 
 signals:
-    void currentChargerState(bool isOnline);
-    void currentPowerProfile(const PowerProfile profile);
+    void currentChargerState(bool isOnline) const;
+    void currentPowerProfile(const PowerProfile profile) const;
 
 private slots:
     void onChargerStateChanged(const QString &interface,
                                const QVariantMap &changedProps,
-                               const QStringList &invalidatedProps);
+                               const QStringList &invalidatedProps) const;
 
     void onPowerProfileChanged(const QString &interface,
                                const QVariantMap &changed,
-                               const QStringList &invalidatedProps);
+                               const QStringList &invalidatedProps) const;
 };
 
 #endif // POWERMONITOR_H

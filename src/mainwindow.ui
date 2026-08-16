@@ -178,42 +178,15 @@
           </item>
           <item row="0" column="1">
            <layout class="QGridLayout" name="gridLayout_8">
-            <item row="5" column="1">
-             <widget class="QLabel" name="gpuFanLabel">
+            <item row="0" column="1">
+             <widget class="QLabel" name="batteryChargeLabel">
               <property name="text">
-               <string>Fan 2:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="2">
-             <widget class="QLabel" name="cpuTempValueLabel">
-              <property name="text">
-               <string notr="true">-</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignmentFlag::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="1">
-             <widget class="QLabel" name="cpuFanLabel">
-              <property name="text">
-               <string>Fan 1:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="2">
-             <widget class="QLabel" name="fan1ValueLabel">
-              <property name="text">
-               <string notr="true">-</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignmentFlag::AlignCenter</set>
+               <string>Battery charge:</string>
               </property>
              </widget>
             </item>
             <item row="0" column="2">
-             <widget class="QLabel" name="BatteryChargeValueLabel">
+             <widget class="QLabel" name="batteryChargeValueLabel">
               <property name="text">
                <string notr="true">-</string>
               </property>
@@ -240,6 +213,29 @@
              </widget>
             </item>
             <item row="2" column="1">
+             <widget class="QLabel" name="penChargeLabel">
+              <property name="text">
+               <string>Pen charge:</string>
+              </property>
+              <property name="visible">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QLabel" name="penChargeValueLabel">
+              <property name="text">
+               <string notr="true">-</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+              <property name="visible">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
              <widget class="QLabel" name="cpuTempLabel">
               <property name="text">
                <string>CPU temp:</string>
@@ -247,6 +243,26 @@
              </widget>
             </item>
             <item row="3" column="2">
+             <widget class="QLabel" name="cpuTempValueLabel">
+              <property name="text">
+               <string notr="true">-</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QLabel" name="gpuTempLabel">
+              <property name="text">
+               <string>GPU temp:</string>
+              </property>
+              <property name="visible">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="2">
              <widget class="QLabel" name="gpuTempValueLabel">
               <property name="text">
                <string notr="true">-</string>
@@ -254,17 +270,20 @@
               <property name="alignment">
                <set>Qt::AlignmentFlag::AlignCenter</set>
               </property>
+              <property name="visible">
+               <bool>false</bool>
+              </property>
              </widget>
             </item>
-            <item row="0" column="1">
-             <widget class="QLabel" name="BatteryChargeLabel">
+            <item row="5" column="1">
+             <widget class="QLabel" name="fan1Label">
               <property name="text">
-               <string>Battery charge:</string>
+               <string>Fan 1:</string>
               </property>
              </widget>
             </item>
             <item row="5" column="2">
-             <widget class="QLabel" name="fan2ValueLabel">
+             <widget class="QLabel" name="fan1ValueLabel">
               <property name="text">
                <string notr="true">-</string>
               </property>
@@ -273,10 +292,26 @@
               </property>
              </widget>
             </item>
-            <item row="3" column="1">
-             <widget class="QLabel" name="gpuTempLabel">
+            <item row="6" column="1">
+             <widget class="QLabel" name="fan2Label">
               <property name="text">
-               <string>GPU temp:</string>
+               <string>Fan 2:</string>
+              </property>
+              <property name="visible">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="2">
+             <widget class="QLabel" name="fan2ValueLabel">
+              <property name="text">
+               <string notr="true">-</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignCenter</set>
+              </property>
+              <property name="visible">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -316,7 +351,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="fnSuperSwapCheckBox">
+             <widget class="QCheckBox" name="fnMetaSwapCheckBox">
               <property name="toolTip">
                <string>Swap FN and Super buttons</string>
               </property>
@@ -326,9 +361,9 @@
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="webCamCheckBox">
+             <widget class="QCheckBox" name="turboModeCheckBox">
               <property name="text">
-               <string>WebCam</string>
+               <string>Full Performance</string>
               </property>
              </widget>
             </item>
@@ -368,7 +403,7 @@
                </size>
               </property>
               <property name="text">
-               <string>Cooler Boost</string>
+               <string>Turbotastic</string>
               </property>
              </widget>
             </item>
@@ -438,12 +473,9 @@
             <number>15</number>
            </property>
            <item row="2" column="0">
-            <widget class="QRadioButton" name="highPerformanceModeRadioButton">
-             <property name="toolTip">
-              <string>This mode unlocks Advanced fan mode</string>
-             </property>
+            <widget class="QRadioButton" name="performanceModeRadioButton">
              <property name="text">
-              <string>High Performance</string>
+              <string>Performance</string>
              </property>
             </widget>
            </item>
@@ -507,9 +539,9 @@
             </widget>
            </item>
            <item row="5" column="0">
-            <widget class="QRadioButton" name="superBatteryModeRadioButton">
+            <widget class="QRadioButton" name="ecoSilentModeRadioButton">
              <property name="text">
-              <string>Super Battery</string>
+              <string>Eco Silent</string>
              </property>
             </widget>
            </item>
@@ -646,15 +678,12 @@
                <height>0</height>
               </size>
              </property>
-             <property name="currentText">
-              <string>Balanced</string>
-             </property>
              <property name="currentIndex">
-              <number>1</number>
+              <number>0</number>
              </property>
              <item>
               <property name="text">
-               <string>High Performance</string>
+               <string>Performance</string>
               </property>
              </item>
              <item>
@@ -669,7 +698,7 @@
              </item>
              <item>
               <property name="text">
-               <string>Super Battery</string>
+               <string>Eco Silent</string>
               </property>
              </item>
             </widget>
@@ -695,15 +724,12 @@
                <height>0</height>
               </size>
              </property>
-             <property name="currentText">
-              <string>Super Battery</string>
-             </property>
              <property name="currentIndex">
               <number>3</number>
              </property>
              <item>
               <property name="text">
-               <string>High Performance</string>
+               <string>Performance</string>
               </property>
              </item>
              <item>
@@ -718,7 +744,7 @@
              </item>
              <item>
               <property name="text">
-               <string>Super Battery</string>
+               <string>Eco Silent</string>
               </property>
              </item>
             </widget>
@@ -943,8 +969,8 @@
                 <string>Fan 1</string>
                </attribute>
                <layout class="QGridLayout" name="_2">
-                <item row="2" column="3">
-                 <widget class="QSlider" name="fan1Speed4Slider">
+                <item row="2" column="0">
+                 <widget class="QSlider" name="fan1Speed1Slider">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
                     <horstretch>0</horstretch>
@@ -971,16 +997,84 @@
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="2">
-                 <widget class="QLabel" name="fan1Speed3Label">
+                <item row="0" column="0">
+                 <widget class="QSpinBox" name="fan1Speed1SpinBox">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
-                  <property name="text">
-                   <string notr="true">0%</string>
+                  <property name="maximumSize">
+                   <size>
+                    <width>62</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="suffix">
+                   <string notr="true">%</string>
+                  </property>
+                  <property name="minimum">
+                   <number>0</number>
+                  </property>
+                  <property name="maximum">
+                   <number>150</number>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignmentFlag::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QSlider" name="fan1Speed2Slider">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>200</height>
+                   </size>
+                  </property>
+                  <property name="maximum">
+                   <number>150</number>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Orientation::Vertical</enum>
+                  </property>
+                  <property name="tickPosition">
+                   <enum>QSlider::TickPosition::TicksBelow</enum>
+                  </property>
+                  <property name="tickInterval">
+                   <number>100</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QSpinBox" name="fan1Speed2SpinBox">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>62</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="suffix">
+                   <string notr="true">%</string>
+                  </property>
+                  <property name="minimum">
+                   <number>0</number>
+                  </property>
+                  <property name="maximum">
+                   <number>150</number>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -1015,6 +1109,90 @@
                   </property>
                  </widget>
                 </item>
+                <item row="0" column="2">
+                 <widget class="QSpinBox" name="fan1Speed3SpinBox">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>62</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="suffix">
+                   <string notr="true">%</string>
+                  </property>
+                  <property name="minimum">
+                   <number>0</number>
+                  </property>
+                  <property name="maximum">
+                   <number>150</number>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignmentFlag::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="3">
+                 <widget class="QSlider" name="fan1Speed4Slider">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>200</height>
+                   </size>
+                  </property>
+                  <property name="maximum">
+                   <number>150</number>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Orientation::Vertical</enum>
+                  </property>
+                  <property name="tickPosition">
+                   <enum>QSlider::TickPosition::TicksBelow</enum>
+                  </property>
+                  <property name="tickInterval">
+                   <number>100</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="3">
+                 <widget class="QSpinBox" name="fan1Speed4SpinBox">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>62</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="suffix">
+                   <string notr="true">%</string>
+                  </property>
+                  <property name="minimum">
+                   <number>0</number>
+                  </property>
+                  <property name="maximum">
+                   <number>150</number>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignmentFlag::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
                 <item row="2" column="4">
                  <widget class="QSlider" name="fan1Speed5Slider">
                   <property name="sizePolicy">
@@ -1043,8 +1221,36 @@
                   </property>
                  </widget>
                 </item>
-                <item row="2" column="1">
-                 <widget class="QSlider" name="fan1Speed2Slider">
+                <item row="0" column="4">
+                 <widget class="QSpinBox" name="fan1Speed5SpinBox">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>62</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="suffix">
+                   <string notr="true">%</string>
+                  </property>
+                  <property name="minimum">
+                   <number>0</number>
+                  </property>
+                  <property name="maximum">
+                   <number>150</number>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignmentFlag::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="5">
+                 <widget class="QSlider" name="fan1Speed6Slider">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
                     <horstretch>0</horstretch>
@@ -1071,48 +1277,28 @@
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="6">
-                 <widget class="QLabel" name="fan1Speed7Label">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="text">
-                   <string notr="true">0%</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignmentFlag::AlignCenter</set>
-                  </property>
-                 </widget>
-                </item>
                 <item row="0" column="5">
-                 <widget class="QLabel" name="fan1Speed6Label">
+                 <widget class="QSpinBox" name="fan1Speed6SpinBox">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
-                  <property name="text">
-                   <string notr="true">0%</string>
+                  <property name="maximumSize">
+                   <size>
+                    <width>62</width>
+                    <height>16777215</height>
+                   </size>
                   </property>
-                  <property name="alignment">
-                   <set>Qt::AlignmentFlag::AlignCenter</set>
+                  <property name="suffix">
+                   <string notr="true">%</string>
                   </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QLabel" name="fan1Speed2Label">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
+                  <property name="minimum">
+                   <number>0</number>
                   </property>
-                  <property name="text">
-                   <string notr="true">0%</string>
+                  <property name="maximum">
+                   <number>150</number>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -1147,107 +1333,31 @@
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="4">
-                 <widget class="QLabel" name="fan1Speed5Label">
+                <item row="0" column="6">
+                 <widget class="QSpinBox" name="fan1Speed7SpinBox">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
-                  <property name="text">
-                   <string notr="true">0%</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignmentFlag::AlignCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="0">
-                 <widget class="QLabel" name="fan1Speed1Label">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="text">
-                   <string notr="true">0%</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignmentFlag::AlignCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="0">
-                 <widget class="QSlider" name="fan1Speed1Slider">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
+                  <property name="maximumSize">
                    <size>
-                    <width>0</width>
-                    <height>200</height>
+                    <width>62</width>
+                    <height>16777215</height>
                    </size>
+                  </property>
+                  <property name="suffix">
+                   <string notr="true">%</string>
+                  </property>
+                  <property name="minimum">
+                   <number>0</number>
                   </property>
                   <property name="maximum">
                    <number>150</number>
                   </property>
-                  <property name="orientation">
-                   <enum>Qt::Orientation::Vertical</enum>
-                  </property>
-                  <property name="tickPosition">
-                   <enum>QSlider::TickPosition::TicksBelow</enum>
-                  </property>
-                  <property name="tickInterval">
-                   <number>100</number>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="3">
-                 <widget class="QLabel" name="fan1Speed4Label">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="text">
-                   <string notr="true">0%</string>
-                  </property>
                   <property name="alignment">
                    <set>Qt::AlignmentFlag::AlignCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="5">
-                 <widget class="QSlider" name="fan1Speed6Slider">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>200</height>
-                   </size>
-                  </property>
-                  <property name="maximum">
-                   <number>150</number>
-                  </property>
-                  <property name="orientation">
-                   <enum>Qt::Orientation::Vertical</enum>
-                  </property>
-                  <property name="tickPosition">
-                   <enum>QSlider::TickPosition::TicksBelow</enum>
-                  </property>
-                  <property name="tickInterval">
-                   <number>100</number>
                   </property>
                  </widget>
                 </item>
@@ -1346,32 +1456,150 @@
                 <string>Fan 2</string>
                </attribute>
                <layout class="QGridLayout" name="gridLayout_4">
-                <item row="0" column="3">
-                 <widget class="QLabel" name="fan2Speed4Label">
+                <item row="1" column="0">
+                 <widget class="QSlider" name="fan2Speed1Slider">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>200</height>
+                   </size>
+                  </property>
+                  <property name="maximum">
+                   <number>150</number>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Orientation::Vertical</enum>
+                  </property>
+                  <property name="tickPosition">
+                   <enum>QSlider::TickPosition::TicksBelow</enum>
+                  </property>
+                  <property name="tickInterval">
+                   <number>100</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QSpinBox" name="fan2Speed1SpinBox">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
-                  <property name="text">
-                   <string notr="true">0%</string>
+                  <property name="maximumSize">
+                   <size>
+                    <width>62</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="suffix">
+                   <string notr="true">%</string>
+                  </property>
+                  <property name="minimum">
+                   <number>0</number>
+                  </property>
+                  <property name="maximum">
+                   <number>150</number>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignmentFlag::AlignCenter</set>
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="0">
-                 <widget class="QLabel" name="fan2Speed1Label">
+                <item row="1" column="1">
+                 <widget class="QSlider" name="fan2Speed2Slider">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>200</height>
+                   </size>
+                  </property>
+                  <property name="maximum">
+                   <number>150</number>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Orientation::Vertical</enum>
+                  </property>
+                  <property name="tickPosition">
+                   <enum>QSlider::TickPosition::TicksBelow</enum>
+                  </property>
+                  <property name="tickInterval">
+                   <number>100</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QSpinBox" name="fan2Speed2SpinBox">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
-                  <property name="text">
-                   <string notr="true">0%</string>
+                  <property name="maximumSize">
+                   <size>
+                    <width>62</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="suffix">
+                   <string notr="true">%</string>
+                  </property>
+                  <property name="minimum">
+                   <number>0</number>
+                  </property>
+                  <property name="maximum">
+                   <number>150</number>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignmentFlag::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="2">
+                 <widget class="QSlider" name="fan2Speed3Slider">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>200</height>
+                   </size>
+                  </property>
+                  <property name="maximum">
+                   <number>150</number>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Orientation::Vertical</enum>
+                  </property>
+                  <property name="tickPosition">
+                   <enum>QSlider::TickPosition::TicksBelow</enum>
+                  </property>
+                  <property name="tickInterval">
+                   <number>100</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <widget class="QSpinBox" name="fan2Speed3SpinBox">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>62</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="suffix">
+                   <string notr="true">%</string>
+                  </property>
+                  <property name="minimum">
+                   <number>0</number>
+                  </property>
+                  <property name="maximum">
+                   <number>150</number>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -1400,60 +1628,78 @@
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="1">
-                 <widget class="QSlider" name="fan2Speed2Slider">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>200</height>
-                   </size>
-                  </property>
-                  <property name="maximum">
-                   <number>150</number>
-                  </property>
-                  <property name="orientation">
-                   <enum>Qt::Orientation::Vertical</enum>
-                  </property>
-                  <property name="tickPosition">
-                   <enum>QSlider::TickPosition::TicksBelow</enum>
-                  </property>
-                  <property name="tickInterval">
-                   <number>100</number>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="2">
-                 <widget class="QSlider" name="fan2Speed3Slider">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>200</height>
-                   </size>
-                  </property>
-                  <property name="maximum">
-                   <number>150</number>
-                  </property>
-                  <property name="orientation">
-                   <enum>Qt::Orientation::Vertical</enum>
-                  </property>
-                  <property name="tickPosition">
-                   <enum>QSlider::TickPosition::TicksBelow</enum>
-                  </property>
-                  <property name="tickInterval">
-                   <number>100</number>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="5">
-                 <widget class="QLabel" name="fan2Speed6Label">
+                <item row="0" column="3">
+                 <widget class="QSpinBox" name="fan2Speed4SpinBox">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
-                  <property name="text">
-                   <string notr="true">0%</string>
+                  <property name="maximumSize">
+                   <size>
+                    <width>62</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="suffix">
+                   <string notr="true">%</string>
+                  </property>
+                  <property name="minimum">
+                   <number>0</number>
+                  </property>
+                  <property name="maximum">
+                   <number>150</number>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignmentFlag::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="4">
+                 <widget class="QSlider" name="fan2Speed5Slider">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>200</height>
+                   </size>
+                  </property>
+                  <property name="maximum">
+                   <number>150</number>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Orientation::Vertical</enum>
+                  </property>
+                  <property name="tickPosition">
+                   <enum>QSlider::TickPosition::TicksBelow</enum>
+                  </property>
+                  <property name="tickInterval">
+                   <number>100</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="4">
+                 <widget class="QSpinBox" name="fan2Speed5SpinBox">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>62</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="suffix">
+                   <string notr="true">%</string>
+                  </property>
+                  <property name="minimum">
+                   <number>0</number>
+                  </property>
+                  <property name="maximum">
+                   <number>150</number>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -1482,92 +1728,28 @@
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="4">
-                 <widget class="QLabel" name="fan2Speed5Label">
+                <item row="0" column="5">
+                 <widget class="QSpinBox" name="fan2Speed6SpinBox">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
-                  <property name="text">
-                   <string notr="true">0%</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignmentFlag::AlignCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QSlider" name="fan2Speed1Slider">
-                  <property name="minimumSize">
+                  <property name="maximumSize">
                    <size>
-                    <width>0</width>
-                    <height>200</height>
+                    <width>62</width>
+                    <height>16777215</height>
                    </size>
+                  </property>
+                  <property name="suffix">
+                   <string notr="true">%</string>
+                  </property>
+                  <property name="minimum">
+                   <number>0</number>
                   </property>
                   <property name="maximum">
                    <number>150</number>
-                  </property>
-                  <property name="orientation">
-                   <enum>Qt::Orientation::Vertical</enum>
-                  </property>
-                  <property name="tickPosition">
-                   <enum>QSlider::TickPosition::TicksBelow</enum>
-                  </property>
-                  <property name="tickInterval">
-                   <number>100</number>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="4">
-                 <widget class="QSlider" name="fan2Speed5Slider">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>200</height>
-                   </size>
-                  </property>
-                  <property name="maximum">
-                   <number>150</number>
-                  </property>
-                  <property name="orientation">
-                   <enum>Qt::Orientation::Vertical</enum>
-                  </property>
-                  <property name="tickPosition">
-                   <enum>QSlider::TickPosition::TicksBelow</enum>
-                  </property>
-                  <property name="tickInterval">
-                   <number>100</number>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QLabel" name="fan2Speed2Label">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="text">
-                   <string notr="true">0%</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignmentFlag::AlignCenter</set>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="2">
-                 <widget class="QLabel" name="fan2Speed3Label">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="text">
-                   <string notr="true">0%</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -1597,15 +1779,27 @@
                  </widget>
                 </item>
                 <item row="0" column="6">
-                 <widget class="QLabel" name="fan2Speed7Label">
+                 <widget class="QSpinBox" name="fan2Speed7SpinBox">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
-                  <property name="text">
-                   <string notr="true">0%</string>
+                  <property name="maximumSize">
+                   <size>
+                    <width>62</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="suffix">
+                   <string notr="true">%</string>
+                  </property>
+                  <property name="minimum">
+                   <number>0</number>
+                  </property>
+                  <property name="maximum">
+                   <number>150</number>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -2038,7 +2232,7 @@
          </widget>
         </item>
         <item row="6" column="1">
-         <layout class="QGridLayout" name="gridLayout_2">
+         <layout class="QGridLayout" name="gridLayout_16">
           <item row="0" column="0">
            <spacer name="horizontalSpacer_7">
             <property name="orientation">

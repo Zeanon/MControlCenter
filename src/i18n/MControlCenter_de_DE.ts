@@ -28,10 +28,6 @@
         <translation>GPU Temperatur:</translation>
     </message>
     <message>
-        <source>Cooler Boost</source>
-        <translation>Cooler Boost</translation>
-    </message>
-    <message>
         <source>Battery</source>
         <translation>Batterie</translation>
     </message>
@@ -66,10 +62,6 @@
     <message>
         <source>Auto turn off in 10 sec</source>
         <translation>Automatisch in 10 Sekunden ausschalten</translation>
-    </message>
-    <message>
-        <source>WebCam</source>
-        <translation>Kamera</translation>
     </message>
     <message>
         <source>Debug</source>
@@ -116,32 +108,12 @@
         <translation>rpm</translation>
     </message>
     <message>
-        <source>Mode</source>
-        <translation>Modus</translation>
-    </message>
-    <message>
         <source>Silent</source>
         <translation>Leise</translation>
     </message>
     <message>
-        <source>Super Battery</source>
-        <translation>Batterie sparen</translation>
-    </message>
-    <message>
         <source>Apply</source>
         <translation>Anwenden</translation>
-    </message>
-    <message>
-        <source>Show</source>
-        <translation>Anzeigen</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation>Beenden</translation>
-    </message>
-    <message>
-        <source>Charge limit</source>
-        <translation>Lade Limit</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -154,10 +126,6 @@
     <message>
         <source>Advanced</source>
         <translation>Erweitert</translation>
-    </message>
-    <message>
-        <source>Cooling</source>
-        <translation>Kühlen</translation>
     </message>
     <message>
         <source>Reset</source>
@@ -224,20 +192,12 @@
         <translation>-</translation>
     </message>
     <message>
-        <source>This mode unlocks Advanced fan mode</source>
-        <translation>Dieser Modus schaltet den erweiterten Lüftermodus frei</translation>
-    </message>
-    <message>
         <source>Charge the battery when under 90%, stop at 100%</source>
         <translation>Lade die Batterie, wenn sie unter 90% ist, und stoppe das Laden bei 100%</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Warning&lt;/span&gt;: Writing the wrong values to the wrong addresses &lt;span style=&quot; font-weight:700;&quot;&gt;WILL BRICK YOUR DEVICE!&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Never&lt;/span&gt; write to EC memory without knowing how to do a proper &lt;span style=&quot; font-weight:700;&quot;&gt;BIOS/EC&lt;/span&gt; reset, keep in mind that a reset &lt;span style=&quot; font-weight:700;&quot;&gt;might not&lt;/span&gt; fix the device if the device got bricked/broken. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Warnung&lt;/span&gt;: Das Schreiben der falschen Werte an die falschen Adressen &lt;span style=&quot; font-weight:700;&quot;&gt;FÜHRT ZUR BESCHÄDIGUNG IHRES GERÄTS!&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;Schreiben Sie &lt;span style=&quot; font-weight:700;&quot;&gt;niemals&lt;/span&gt; in den EC-Speicher, ohne zu wissen, wie man einen ordnungsgemäßen &lt;span style=&quot; font-weight:700;&quot;&gt;BIOS/EC&lt;/span&gt;-Reset durchführt. Bedenken Sie, dass ein Reset das Gerät  &lt;span style=&quot; font-weight:700;&quot;&gt;möglicherweise nicht&lt;/span&gt; repariert, wenn es beschädigt ist. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>High Performance</source>
-        <translation>Hohe Leistung</translation>
     </message>
     <message>
         <source>Maximum performance at the cost of heat and increased power consumption</source>
@@ -334,11 +294,63 @@ Make sure that either Power Profiles Daemon or TuneD is installed and restart th
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Misc</source>
+        <source>USB PowerShare</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>USB PowerShare</source>
+        <source>Auto off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>USB Power Share</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turbotastic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Eco Silent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mode    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cooling    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Battery    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keyboard    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Misc    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quit    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen charge:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Full Performance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Performance</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

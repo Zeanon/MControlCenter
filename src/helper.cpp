@@ -37,37 +37,41 @@ Helper::Helper() {
     iface = new QDBusInterface(SERVICE_NAME, "/", INTERFACE_NAME, QDBusConnection::systemBus());
 }
 
-bool Helper::isEcSysModuleLoaded() {
-    if (QDBusReply<bool> reply = iface->call("isEcSysModuleLoaded"); reply.isValid())
+bool Helper::isEcModuleLoaded() const {
+    const QDBusReply<bool> reply = iface->call("isEcModuleLoaded");
+    if (reply.isValid())
         return reply.value();
     printError(iface->lastError());
     return false;
 }
 
-bool Helper::loadEcSysModule() {
-    if (QDBusReply<bool> reply = iface->call("loadEcSysModule"); reply.isValid())
+bool Helper::loadEcModule() const {
+    const QDBusReply<bool> reply = iface->call("loadEcSysModule");
+    if (reply.isValid())
         return reply.value();
     printError(iface->lastError());
     return false;
 }
 
-bool Helper::isAcpiEc() {
-    if (QDBusReply<bool> reply = iface->call("isAcpiEc"); reply.isValid())
+bool Helper::isAcpiEc() const {
+    const QDBusReply<bool> reply = iface->call("isAcpiEc");
+    if (reply.isValid())
         return reply.value();
     printError(iface->lastError());
     return false;
 }
 
-bool Helper::isEcSys() {
-    if (QDBusReply<bool> reply = iface->call("isEcSys"); reply.isValid())
+bool Helper::isEcSys() const {
+    const QDBusReply<bool> reply = iface->call("isEcSys");
+    if (reply.isValid())
         return reply.value();
     printError(iface->lastError());
     return false;
 }
 
-bool Helper::updateData() {
-    if (QDBusReply<QByteArray> reply = iface->call("getData"); reply.isValid() &&
-                                                               reply.value().size() == EC_SPACE_SIZE) {
+bool Helper::updateData() const {
+    const QDBusReply<QByteArray> reply = iface->call("getData");
+    if (reply.isValid() && reply.value().size() == EC_SPACE_SIZE) {
         ecData = reply.value();
         return true;
     }
@@ -76,14 +80,14 @@ bool Helper::updateData() {
 }
 
 void Helper::updateDataAsync() {
-    QDBusPendingCall async = iface->asyncCall("getData");
-    QDBusPendingCallWatcher const *watcher = new QDBusPendingCallWatcher(async, this);
+    const QDBusPendingCall async = iface->asyncCall("getData");
+    const QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(async, this);
 
     QObject::connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),this, SLOT(callFinishedSlot(QDBusPendingCallWatcher*)));
 }
 
-void Helper::callFinishedSlot(QDBusPendingCallWatcher *call) {
-    QDBusPendingReply<QByteArray> reply = *call;
+void Helper::callFinishedSlot(QDBusPendingCallWatcher *call) const {
+    const QDBusPendingReply<QByteArray> reply = *call;
     if (reply.isError()) {
         printError(reply.error());
         MainWindow::setUpdateDataError(true);
@@ -94,33 +98,33 @@ void Helper::callFinishedSlot(QDBusPendingCallWatcher *call) {
     call->deleteLater();
 }
 
-std::optional<int> Helper::getOptionalValue(int address) const {
+std::optional<uint8_t> Helper::getOptionalValue(const uint8_t address) const {
     if (!ecData.isEmpty())
-        return (BYTE) ecData[address];
+        return (uint8_t) ecData[address];
     return std::nullopt;
 }
 
-int Helper::getValue(int address) const {
+uint8_t Helper::getValue(const uint8_t address) const {
     return getOptionalValue(address).value_or(-1);
 }
 
-QByteArray Helper::getValues(int startAddress, int size) const {
+QByteArray Helper::getValues(const uint8_t startAddress, const uint8_t size) const {
     return ecData.mid(startAddress, size);
 }
 
-void Helper::putValue(int address, int value) {
+void Helper::putValue(const uint8_t address, const uint8_t value) const {
     if (getValue(address) == value)
         return;
     iface->call("putValue", address, value);
     printError(iface->lastError());
 }
 
-void Helper::quit() {
+void Helper::quit() const {
     iface->call("quit");
     printError(iface->lastError());
 }
 
-void Helper::printError(QDBusError const & error) const {
+void Helper::printError(const QDBusError &error) const {
     if (error.isValid())
         fprintf(stderr, "Call failed: %s\n", qPrintable(error.message()));
 }

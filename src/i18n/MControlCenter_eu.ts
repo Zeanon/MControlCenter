@@ -28,10 +28,6 @@
         <translation>GPU tenp:</translation>
     </message>
     <message>
-        <source>Cooler Boost</source>
-        <translation>Cooler Boost</translation>
-    </message>
-    <message>
         <source>Battery</source>
         <translation>Bateria</translation>
     </message>
@@ -66,10 +62,6 @@
     <message>
         <source>Auto turn off in 10 sec</source>
         <translation>Automatikoki itzali 10 segundotan</translation>
-    </message>
-    <message>
-        <source>WebCam</source>
-        <translation>Web Kamera</translation>
     </message>
     <message>
         <source>Debug</source>
@@ -116,32 +108,12 @@
         <translation>rpm</translation>
     </message>
     <message>
-        <source>Mode</source>
-        <translation>Modua</translation>
-    </message>
-    <message>
         <source>Silent</source>
         <translation>Isila</translation>
     </message>
     <message>
-        <source>Super Battery</source>
-        <translation>Super Bateria</translation>
-    </message>
-    <message>
         <source>Apply</source>
         <translation>Aplikatu</translation>
-    </message>
-    <message>
-        <source>Show</source>
-        <translation>Erakutsi</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation>Irten</translation>
-    </message>
-    <message>
-        <source>Charge limit</source>
-        <translation>Karga muga</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -154,10 +126,6 @@
     <message>
         <source>Advanced</source>
         <translation>Aurreratua</translation>
-    </message>
-    <message>
-        <source>Cooling</source>
-        <translation>Hoztu</translation>
     </message>
     <message>
         <source>Reset</source>
@@ -201,14 +169,6 @@
     </message>
     <message>
         <source>MCC GitHub:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This mode unlocks Advanced fan mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>High Performance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -334,11 +294,63 @@ Make sure that either Power Profiles Daemon or TuneD is installed and restart th
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Misc</source>
+        <source>USB PowerShare</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>USB PowerShare</source>
+        <source>Auto off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>USB Power Share</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turbotastic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Eco Silent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mode    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cooling    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Battery    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keyboard    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Misc    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quit    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen charge:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Full Performance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Performance</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

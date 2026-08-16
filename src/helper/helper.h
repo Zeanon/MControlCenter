@@ -25,8 +25,6 @@
 #include <QtDBus/QDBusAbstractAdaptor>
 #include <QtDBus/QDBusVariant>
 
-using BYTE = unsigned char;
-
 class Helper : public QDBusAbstractAdaptor {
 Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", INTERFACE_NAME)
@@ -40,10 +38,10 @@ public slots:
     Q_NOREPLY void quit() const;
     [[nodiscard]] QByteArray getData() const;
     Q_NOREPLY void putValue(const int &address, const int &value) const;
-    [[nodiscard]] bool isEcSysModuleLoaded() const;
+    [[nodiscard]] bool isEcModuleLoaded() const;
     [[nodiscard]] bool isAcpiEc() const;
     [[nodiscard]] bool isEcSys() const;
-    [[nodiscard]] bool loadEcSysModule() const;
+    [[nodiscard]] bool loadEcModule() const;
 };
 
 #endif // HELPER_H

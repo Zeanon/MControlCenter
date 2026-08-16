@@ -35,22 +35,27 @@ QByteArray Helper::getData() const {
 }
 
 void Helper::putValue(const int &address, const int &value) const {
-    if (value >= 0 && value <= 255)
-        rw.writeToFile(address, value);
-    else
-        fprintf(stderr, "Tried to input invalid value. Address: %d, value: %d\n", address, value);
+    if (value < 0 || value >> 8) {
+        fprintf(stderr, "Tried to input invalid value. Address: %d, value: %d\n", address, value);  
+    }
+    rw.writeToFile(address, value);
 }
 
-bool Helper::isEcSysModuleLoaded() const {
+bool Helper::isEcModuleLoaded() const {
+    const bool isAcpiEc = rw.isAcpiEc();
     if (rw.useAcpiEc()) {
-        fprintf(stderr, "%s\n", qPrintable("The acpi_ec kernel module is loaded"));
+        if (!isAcpiEc)
+            fprintf(stderr, "%s\n", qPrintable("The acpi_ec kernel module is loaded"));
         return true;
     }
+    const bool isEcSys = rw.isEcSys();
     if (rw.useEcSys()) {
-        fprintf(stderr, "%s\n", qPrintable("The ec_sys kernel module is loaded"));
+        if (!isEcSys)
+            fprintf(stderr, "%s\n", qPrintable("The ec_sys kernel module is loaded"));
         return true;
     }
-    fprintf(stderr, "%s\n", qPrintable("The ec_sys kernel module is not loaded"));
+    if (isAcpiEc || isEcSys)
+        fprintf(stderr, "%s\n", qPrintable("The acpi_ec and ec_sys kernel modulee are not loaded"));
     return false;
 }
 
@@ -62,14 +67,14 @@ bool Helper::isEcSys() const {
     return rw.isEcSys();
 }
 
-bool Helper::loadEcSysModule() const {
+bool Helper::loadEcModule() const {
     fprintf(stderr, "%s\n", qPrintable("Trying to load the ec_sys kernel module"));
     auto *process = new QProcess();
     process->start("sh", QStringList() << "-c" << "/usr/sbin/modprobe ec_sys write_support=1 2>&1");
     process->waitForFinished(1000);
     if (QByteArray output = process->readAllStandardOutput(); output != "")
         fprintf(stderr, "%s", qPrintable(output));
-    if (isEcSysModuleLoaded())
+    if (isEcModuleLoaded())
         return true;
     return false;
 }

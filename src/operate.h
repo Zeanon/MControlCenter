@@ -44,7 +44,7 @@ enum class user_mode {
     performance_mode,
     balanced_mode,
     silent_mode,
-    super_battery_mode,
+    eco_silent_mode,
     unknown_mode
 };
 
@@ -60,20 +60,19 @@ class Operate {
 public:
     Operate();
     void closeHelperApp() const;
-    [[nodiscard]] bool isEcSysModuleLoaded() const;
-    [[nodiscard]] bool loadEcSysModule() const;
+    [[nodiscard]] bool isEcModuleLoaded() const;
+    [[nodiscard]] bool loadEcModule() const;
     [[nodiscard]] bool updateEcData() const;
     void updateEcDataAsync() const;
-    bool doProbe() const;
     [[nodiscard]] std::string getEcVersion() const;
     [[nodiscard]] std::string getEcBuild() const;
     [[nodiscard]] bool isAcpiEc() const;
     [[nodiscard]] bool isEcSys() const;
-    [[nodiscard]] int getBatteryCharge() const;
-    [[nodiscard]] int getBatteryThreshold() const;
+    [[nodiscard]] uint8_t getBatteryCharge() const;
+    [[nodiscard]] uint8_t getBatteryThreshold() const;
     [[nodiscard]] charging_state getChargingStatus() const;
-    [[nodiscard]] int getCpuTemp() const;
-    [[nodiscard]] std::optional<int> getGpuTemp() const;
+    [[nodiscard]] uint8_t getCpuTemp() const;
+    [[nodiscard]] std::optional<uint8_t> getGpuTemp() const;
     [[nodiscard]] int getFan1Speed() const;
     [[nodiscard]] std::optional<int> getFan2Speed() const;
     [[nodiscard]] QVector<int> getFan1SpeedSettings() const;
@@ -81,48 +80,37 @@ public:
     [[nodiscard]] QVector<int> getFan1TempSettings() const;
     [[nodiscard]] QVector<int> getFan2TempSettings() const;
 
-    [[nodiscard]] int getKeyboardBacklightMode() const;
-    [[nodiscard]] int getKeyboardBrightness() const;
+    [[nodiscard]] uint8_t getKeyboardBacklightMode() const;
+    [[nodiscard]] uint8_t getKeyboardBrightness() const;
     [[nodiscard]] bool getUsbPowerShareState() const;
-    [[nodiscard]] bool getWebCamState() const;
-    [[nodiscard]] bool getFnSuperSwapState() const;
+    [[nodiscard]] bool getFnMetaSwapState() const;
     [[nodiscard]] bool getCoolerBoostState() const;
+    [[nodiscard]] bool getTurboMode() const;
     [[nodiscard]] user_mode getUserMode() const;
     [[nodiscard]] fan_mode getFanMode() const;
 
-    void setBatteryThreshold(int value) const;
-    void setKeyboardBacklightMode(int value) const;
-    void setKeyboardBrightness(int value) const;
+    void setBatteryThreshold(uint8_t value) const;
+    void setKeyboardBacklightMode(uint8_t value) const;
+    void setKeyboardBrightness(uint8_t value) const;
     void setUsbPowerShareState(bool enabled) const;
-    void setWebCamState(bool enabled) const;
-    void setFnSuperSwapState(bool enabled) const;
+    void setFnMetaSwapState(bool enabled) const;
     void setCoolerBoostState(bool enabled) const;
+    void setTurboMode(bool enabled) const;
     void setUserMode(user_mode userMode) const;
     void setFan1SpeedSettings(QVector<int> value) const;
     void setFan2SpeedSettings(QVector<int> value) const;
     void setFan1TempSettings(QVector<int> value) const;
     void setFan2TempSettings(QVector<int> value) const;
-    void setFanMode(int value) const;
+    void setFanMode(uint8_t value) const;
     void setFanModeAdvanced(bool enabled) const;
 
-    [[nodiscard]] int getValue(int address) const;
-    void setValue(int address, int value) const;
-
-    [[nodiscard]] bool isBatteryThresholdSupport() const;
-    [[nodiscard]] bool isKeyboardBacklightModeSupport() const;
-    [[nodiscard]] bool isKeyboardBacklightSupport() const;
-    [[nodiscard]] bool isUsbPowerShareSupport() const;
-    [[nodiscard]] bool isWebCamOffSupport() const;
+    [[nodiscard]] uint8_t getValue(uint8_t address) const;
+    void setValue(uint8_t address, uint8_t value) const;
 
     void loadSettings() const;
     void handleWakeEvent() const;
-
-    void putSuperBatteryModeValue(bool enabled) const;
 private:
-    int detectFan1Address() const;
-    int detectBatteryThresholdAddress() const;
-    int detectFanModeAddress() const;
-    int detectKeyboardBacklightAddress() const;
+    void setUserModeValues(const uint8_t shiftMode, const uint8_t fanMode, const QString userMode) const;
 };
 
 #endif // OPERATE_H

@@ -59,7 +59,7 @@ void PowerMonitor::disconnectFromUpower() {
     }
 }
 
-void PowerMonitor::queryChargerState() {
+void PowerMonitor::queryChargerState() const {
     if (isUPowerConnected) {
         QDBusInterface iface(
             "org.freedesktop.UPower",
@@ -85,7 +85,7 @@ void PowerMonitor::queryChargerState() {
 void PowerMonitor::onChargerStateChanged(
     const QString &interface,
     const QVariantMap &changedProps,
-    const QStringList &invalidatedProps) {
+    const QStringList &invalidatedProps) const {
     Q_UNUSED(invalidatedProps);
 
     if (interface != "org.freedesktop.UPower.Device")
@@ -153,7 +153,7 @@ void PowerMonitor::disconnectFromPowerProfiles() {
     }
 }
 
-void PowerMonitor::queryPowerProfile() {
+void PowerMonitor::queryPowerProfile() const {
     if (isPowerProfileConnected) {
         QDBusInterface iface(
             "net.hadess.PowerProfiles",
@@ -180,7 +180,7 @@ void PowerMonitor::queryPowerProfile() {
 void PowerMonitor::onPowerProfileChanged(
     const QString &interface,
     const QVariantMap &changed,
-    const QStringList &invalidatedProps) {
+    const QStringList &invalidatedProps) const {
     Q_UNUSED(invalidatedProps);
 
     if (interface != "org.freedesktop.UPower.PowerProfiles")
@@ -196,7 +196,7 @@ void PowerMonitor::onPowerProfileChanged(
     emit currentPowerProfile(profile);
 }
 
-PowerProfile PowerMonitor::parsePowerProfile(const QString &profile) {
+PowerProfile PowerMonitor::parsePowerProfile(const QString &profile) const {
     if (profile == "performance")
         return PowerProfile::Performance;
     if (profile == "balanced")

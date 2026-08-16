@@ -28,10 +28,6 @@
         <translation>GPU 温度：</translation>
     </message>
     <message>
-        <source>Cooler Boost</source>
-        <translation>启用 Cooler Boost</translation>
-    </message>
-    <message>
         <source>Battery</source>
         <translation>电池</translation>
     </message>
@@ -66,10 +62,6 @@
     <message>
         <source>Auto turn off in 10 sec</source>
         <translation>10 秒后熄灭</translation>
-    </message>
-    <message>
-        <source>WebCam</source>
-        <translation>启用内置摄像头</translation>
     </message>
     <message>
         <source>Debug</source>
@@ -116,32 +108,12 @@
         <translation>rpm</translation>
     </message>
     <message>
-        <source>Mode</source>
-        <translation>工作模式</translation>
-    </message>
-    <message>
         <source>Silent</source>
         <translation>安静模式</translation>
     </message>
     <message>
-        <source>Super Battery</source>
-        <translation>节能模式</translation>
-    </message>
-    <message>
         <source>Apply</source>
         <translation>应用</translation>
-    </message>
-    <message>
-        <source>Show</source>
-        <translation>显示面板</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation>退出</translation>
-    </message>
-    <message>
-        <source>Charge limit</source>
-        <translation>充电上限</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -154,10 +126,6 @@
     <message>
         <source>Advanced</source>
         <translation>高级（手动）</translation>
-    </message>
-    <message>
-        <source>Cooling</source>
-        <translation>冷却选项</translation>
     </message>
     <message>
         <source>Reset</source>
@@ -201,14 +169,6 @@
     </message>
     <message>
         <source>MCC GitHub:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This mode unlocks Advanced fan mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>High Performance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -334,11 +294,63 @@ Make sure that either Power Profiles Daemon or TuneD is installed and restart th
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Misc</source>
+        <source>USB PowerShare</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>USB PowerShare</source>
+        <source>Auto off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>USB Power Share</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turbotastic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Eco Silent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mode    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cooling    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Battery    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keyboard    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Misc    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quit    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen charge:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Full Performance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Performance</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

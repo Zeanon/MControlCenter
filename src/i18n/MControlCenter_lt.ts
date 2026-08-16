@@ -156,7 +156,7 @@
         <translation type="Išeiti"></translation>
     </message>
     <message>
-        <source>Charge limit</source>
+        <source>Battery</source>
         <translation type="Įkrovos limitas"></translation>
     </message>
     <message>

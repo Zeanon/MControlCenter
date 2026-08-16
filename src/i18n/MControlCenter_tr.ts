@@ -30,10 +30,6 @@
         <translation>GPU sıcaklığı:</translation>
     </message>
     <message>
-        <source>Cooler Boost</source>
-        <translation>Cooler Boost</translation>
-    </message>
-    <message>
         <source>Battery</source>
         <translation>Pil</translation>
     </message>
@@ -68,10 +64,6 @@
     <message>
         <source>Auto turn off in 10 sec</source>
         <translation>10 saniye sonra otomatik kapat</translation>
-    </message>
-    <message>
-        <source>WebCam</source>
-        <translation>Web Kamerası</translation>
     </message>
     <message>
         <source>Debug</source>
@@ -118,33 +110,12 @@
         <translation>rpm</translation>
     </message>
     <message>
-        <source>Mode</source>
-        <translation>Mod</translation>
-    </message>
-    <message>
         <source>Silent</source>
         <translation>Sessiz</translation>
     </message>
     <message>
-        <source>Super Battery</source>
-        <translatorcomment>I don&apos;t know what this is</translatorcomment>
-        <translation type="unfinished">Super Battery</translation>
-    </message>
-    <message>
         <source>Apply</source>
         <translation>Uygula</translation>
-    </message>
-    <message>
-        <source>Show</source>
-        <translation>Göster</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation>Çıkış</translation>
-    </message>
-    <message>
-        <source>Charge limit</source>
-        <translation>Şarj limiti</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -156,10 +127,6 @@
     </message>
     <message>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cooling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -204,14 +171,6 @@
     </message>
     <message>
         <source>MCC GitHub:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This mode unlocks Advanced fan mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>High Performance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -337,11 +296,63 @@ Make sure that either Power Profiles Daemon or TuneD is installed and restart th
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Misc</source>
+        <source>USB PowerShare</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>USB PowerShare</source>
+        <source>Auto off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>USB Power Share</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turbotastic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Eco Silent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mode    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cooling    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Battery    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keyboard    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Misc    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quit    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen charge:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Full Performance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Performance</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

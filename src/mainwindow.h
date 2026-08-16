@@ -36,61 +36,63 @@ Q_OBJECT
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void updateData();
-    static void setUpdateDataError(bool error);
+    void updateData() const;
+    static void setUpdateDataError(const bool error);
 
 private:
     Ui::MainWindow *ui;
 
-    void setTabsEnabled(bool enabled);
+    void setTabsEnabled(const bool enabled) const;
     void startRealtimeUpdate() const;
     void stopRealtimeUpdate() const;
-    void setUpdateInterval(int msec) const;
-    void setModeFromSelection(PowerProfile profile);
-    void realtimeUpdate();
-    void loadConfigs();
-    void loadSettings();
+    void setUpdateInterval(const int msec) const;
+    void setModeFromSelection(const PowerProfile profile) const;
+    void realtimeUpdate() const;
+    void loadConfigs() const;
+    void loadSettings() const;
 
-    [[nodiscard]] QString intToQString(int value) const;
-    void updateBatteryCharge();
-    void updateBatteryThreshold();
-    void updateChargingStatus();
-    void updateCpuTemp();
-    void updateGpuTemp();
-    void updateFan1Speed();
-    void updateFan2Speed();
-    void updateKeyboardBacklightMode();
+    [[nodiscard]] QString intToQString(const int value) const;
+    void updateBatteryCharge() const;
+    void updatePenCharge() const;
+    void updateBatteryThreshold() const;
+    void updateChargingStatus() const;
+    void updateCpuTemp() const;
+    void updateGpuTemp() const;
+    void updateFan1Speed() const;
+    void updateFan2Speed() const;
+    void updateKeyboardBacklightMode() const;
     void updateKeyboardBrightness() const;
-    void updateUsbPowerShareState();
-    void updateWebCamState() const;
-    void updateFnSuperSwapState();
+    void updateUsbPowerShareState() const;
+    void updateTurboMode() const;
+    void updateFnMetaSwapState() const;
     void updateCoolerBoostState() const;
-    void updateUserMode();
-    void updateFanMode();
-    void updateFanSpeedSettings();
+    void updateUserMode() const;
 
-    void setBestMobility();
-    void setBalancedBattery();
-    void setBestBattery();
-    void setCustomBattery();
-    void setCustomBatteryTrayLabel(int value);
+    void updateFanMode() const;
+    void updateFanSpeedSettings() const;
 
-    void setHighPerformanceMode();
-    void setBalancedMode();
-    void setSilentMode();
-    void setSuperBatteryMode();
+    void setBestMobility() const;
+    void setBalancedBattery() const;
+    void setBestBattery() const;
+    void setCustomBattery() const;
+    void setCustomBatteryTrayLabel(const uint8_t value) const;
 
-    void setCoolerBoostState(bool enabled) const;
+    void setPerformanceMode() const;
+    void setBalancedMode() const;
+    void setSilentMode() const;
+    void setEcoSilentMode() const;
 
-    void setKeyboardAlwaysOn();
-    void setKeyboardAutoOff();
+    void setCoolerBoostState(const bool enabled) const;
+
+    void setKeyboardAlwaysOn() const;
+    void setKeyboardAutoOff() const;
 
     QVector<int> getFan1SpeedValues() const;
     QVector<int> getFan2SpeedValues() const;
     QVector<int> getFan1TempValues() const;
     QVector<int> getFan2TempValues() const;
-    void setFanSpeedSettings();
-    void setFanModeAdvanced(bool enabled) const;
+    void setFanSpeedSettings() const;
+    void setFanModeAdvanced(const bool enabled) const;
     void checkFanSettingsChanged() const;
 
     void showEvent(QShowEvent *event);
@@ -103,8 +105,8 @@ private:
 
     void createTrayIcon();
     void createActions();
-    void iconActivated(QSystemTrayIcon::ActivationReason reason);
-    void saveStateRequest(QSessionManager &sessionManager);
+    void iconActivated(const QSystemTrayIcon::ActivationReason reason);
+    void saveStateRequest(QSessionManager &sessionManager) const;
 
     QSystemTrayIcon *trayIcon = nullptr;;
     QMenu *trayIconMenu = nullptr;
@@ -119,10 +121,11 @@ private:
     QActionGroup *modeTrayActions = nullptr;
     QAction *autoPPDMode = nullptr;
     QAction *autoAcDcMode = nullptr;
-    QAction *highPerformanceMode = nullptr;
+    QAction *turboMode = nullptr;
+    QAction *performanceMode = nullptr;
     QAction *balancedMode = nullptr;
     QAction *silentMode = nullptr;
-    QAction *superBatteryMode = nullptr;
+    QAction *ecoSilentMode = nullptr;
 
     QActionGroup *batteryTrayActions = nullptr;
     QAction *bestMobilityAction = nullptr;
@@ -135,46 +138,47 @@ private:
     QAction *keyboardAutoOff = nullptr;
 
     QAction *usbPowerShareTrayAction = nullptr;
+    QAction *fnMetaSwapTrayAction = nullptr;
 
     QAction *restoreAction = nullptr;
     QAction *quitAction = nullptr;
 
 private slots:
-    void on_ChargerStateChange(bool isCharging);
-    void on_PowerProfileChange(const PowerProfile profile);
+    void on_ChargerStateChange(const bool isCharging) const;
+    void on_PowerProfileChange(const PowerProfile profile) const;
 
-    void on_bestMobilityRadioButton_toggled(bool checked);
-    void on_balancedBatteryRadioButton_toggled(bool checked);
-    void on_bestBatteryRadioButton_toggled(bool checked);
-    void on_customBatteryThresholdRadioButton_toggled(bool checked);
-    void on_customBatteryThresholdSpinBox_valueChanged(int arg1);
-    void on_customBatteryApplyButton_clicked();
-    void on_clearSettingsButton_clicked();
-    void on_ReadValueButton_clicked();
+    void on_bestMobilityRadioButton_toggled(const bool checked) const;
+    void on_balancedBatteryRadioButton_toggled(const bool checked) const;
+    void on_bestBatteryRadioButton_toggled(const bool checked) const;
+    void on_customBatteryThresholdRadioButton_toggled(const bool checked) const;
+    void on_customBatteryThresholdSpinBox_valueChanged(const int arg1) const;
+    void on_customBatteryApplyButton_clicked() const;
+    void on_clearSettingsButton_clicked() const;
+    void on_ReadValueButton_clicked() const;
 
     void on_WriteValueButton_clicked() const;
 
-    void on_usbPowerShareCheckBox_clicked(bool checked) const;
-    void on_webCamCheckBox_clicked(bool checked) const;
+    void on_usbPowerShareCheckBox_clicked(const bool checked) const;
+    void on_turboModeCheckBox_clicked(const bool checked) const;
 
-    void on_fnSuperSwapCheckBox_clicked(bool checked) const;
+    void on_fnMetaSwapCheckBox_clicked(const bool checked) const;
 
-    void on_coolerBoostCheckBox_clicked(bool checked) const;
+    void on_coolerBoostCheckBox_clicked(const bool checked) const;
 
-    void on_keyboardBrightnessSlider_valueChanged(int value) const;
+    void on_keyboardBrightnessSlider_valueChanged(const int value) const;
 
-    void on_keyboardBacklightModeComboBox_currentIndexChanged(int index);
+    void on_keyboardBacklightModeComboBox_currentIndexChanged(const int index) const;
 
-    void on_userModeOnBatteryComboBox_currentIndexChanged(int index) const;
-    void on_userModeOnChargerComboBox_currentIndexChanged(int index) const;
-    void on_autoPPDCheckBox_toggled(bool checked);
-    void on_autoAcDcProfilesGroupBox_toggled(bool active);
+    void on_userModeOnBatteryComboBox_currentIndexChanged(const int index) const;
+    void on_userModeOnChargerComboBox_currentIndexChanged(const int index) const;
+    void on_autoPPDCheckBox_toggled(const bool checked) const;
+    void on_autoAcDcProfilesGroupBox_toggled(const bool active) const;
 
-    void on_highPerformanceModeRadioButton_toggled(bool checked);
-    void on_balancedModeRadioButton_toggled(bool checked);
-    void on_silentModeRadioButton_toggled(bool checked);
-    void on_superBatteryModeRadioButton_toggled(bool checked);
+    void on_performanceModeRadioButton_toggled(const bool checked) const;
+    void on_balancedModeRadioButton_toggled(const bool checked) const;
+    void on_silentModeRadioButton_toggled(const bool checked) const;
+    void on_ecoSilentModeRadioButton_toggled(const bool checked) const;
 
-    void clearSettings();
+    void clearSettings() const;
 };
 #endif // MAINWINDOW_H

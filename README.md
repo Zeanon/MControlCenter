@@ -1,6 +1,9 @@
 # MControlCenter
 
 MControlCenter is a Free and Open Source GNU/Linux application that allows you to change the settings of MSI laptops.
+This fork is specifically made for the MSI Prestige 16 Flip AI+ C3MTG with adjusted addresses and bit masks.
+I can't and won't guarantee that it works for any other Laptop.
+It also contains some modifications to suite my personal usecase you use with caution.
 
 <img width="1500" height="1332" alt="MCC3" src="https://github.com/user-attachments/assets/75b5ee18-ed99-4a89-b9fe-1ec0078760e8" />
 
@@ -12,10 +15,10 @@ MControlCenter is a Free and Open Source GNU/Linux application that allows you t
  - CPU and GPU temperature display
  - Fan speed display
  - Switch between modes (Since version 0.2):
-   - High Performance
+   - Performance
    - Balanced
    - Silent
-   - Super Battery
+   - Eco Silent
  - Automatic mode switching (charger status/system power profile)
  - Change the maximum battery level limit
  - Advanced Fan Speed Control (Since version 0.4)

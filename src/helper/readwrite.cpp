@@ -22,18 +22,19 @@
 #include <QFile>
 
 const QString acpi_ec_file = "/dev/ec";
-const QString ec_sys_file = "/sys/kernel/debug/ec/ec0/io";
-QString ioFile = ec_sys_file;
+const QString ec_file = "/sys/kernel/debug/ec/ec0/io";
+QString ioFile = "";
 
 ReadWrite::ReadWrite() = default;
 
 QByteArray ReadWrite::readFromFile() const {
-    if (QFile file(ioFile); file.open(QIODevice::ReadOnly))
+    QFile file(ioFile);
+    if (file.open(QIODevice::ReadOnly))
         return file.readAll();
     return {};
 }
 
-void ReadWrite::writeToFile(const int pos, BYTE value) const {
+void ReadWrite::writeToFile(const uint8_t pos, const uint8_t value) const {
     std::ofstream file(ioFile.toStdString(), std::ios::in | std::ios::out | std::ios::binary);
     if (file.is_open()) {
         file.seekp(pos);
@@ -50,8 +51,8 @@ bool ReadWrite::useAcpiEc() const {
 }
 
 bool ReadWrite::useEcSys() const {
-    if (QFile::exists(ec_sys_file)) {
-        ioFile = ec_sys_file;
+    if (QFile::exists(ec_file)) {
+        ioFile = ec_file;
         return true;
     }
     return false;
@@ -62,5 +63,5 @@ bool ReadWrite::isAcpiEc() const {
 }
 
 bool ReadWrite::isEcSys() const {
-    return ec_sys_file == ioFile;
+    return ec_file == ioFile;
 }

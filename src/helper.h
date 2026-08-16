@@ -22,29 +22,27 @@
 #include <QtCore/QObject>
 #include <QtDBus/QDBusInterface>
 
-using BYTE = unsigned char;
-
 class Helper : public QObject {
 Q_OBJECT
 public:
     Helper();
 
-    bool isEcSysModuleLoaded();
-    bool loadEcSysModule();
-    bool isAcpiEc();
-    bool isEcSys();
-    bool updateData();
+    bool isEcModuleLoaded() const;
+    bool loadEcModule() const;
+    bool isAcpiEc() const;
+    bool isEcSys() const;
+    bool updateData() const;
     void updateDataAsync();
-    std::optional<int> getOptionalValue(int address) const;
-    int getValue(int address) const;
-    QByteArray getValues(int startAddress, int size) const;
-    void putValue(int address, int value);
-    void quit();
+    std::optional<uint8_t> getOptionalValue(uint8_t address) const;
+    uint8_t getValue(uint8_t address) const;
+    QByteArray getValues(uint8_t startAddress, uint8_t size) const;
+    void putValue(uint8_t address, uint8_t value) const;
+    void quit() const;
     QDBusInterface *iface;
 private:
-    void printError(QDBusError const & error) const;
+    void printError(const QDBusError &error) const;
 private slots:
-    void callFinishedSlot(QDBusPendingCallWatcher *call);
+    void callFinishedSlot(QDBusPendingCallWatcher *call) const;
 };
 
 #endif // HELPER_H
