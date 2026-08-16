@@ -577,26 +577,25 @@ void MainWindow::updateUserMode() const {
     }
 }
 
-void MainWindow::updateFanMode() const {
-    QString fanMode;
+static inline const char* getFanModeString() {
+    if (operate.getCoolerBoostState())
+        return "Turbotastic";
     switch (operate.getFanMode()) {
         case fan_mode::auto_fan_mode:
-            fanMode = tr("Auto");
-            break;
+            return "Auto";
         case fan_mode::silent_fan_mode:
-            fanMode = tr("Silent");
-            break;
+            return "Silent";
         case fan_mode::basic_fan_mode:
-            fanMode = tr("Basic");
-            break;
+            return "Basic";
         case fan_mode::advanced_fan_mode:
-            fanMode = tr("Advanced");
-            break;
+            return "Advanced";
         default:
-            fanMode = tr("Unknown");
-            break;
+            return "Unknown";
     }
-    ui->fanModeValueLabel->setText(fanMode);
+}
+
+void MainWindow::updateFanMode() const {
+    ui->fanModeValueLabel->setText(tr(getFanModeString()));
 }
 
 void MainWindow::updateFanSpeedSettings() const {

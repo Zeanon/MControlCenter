@@ -116,18 +116,6 @@
         <translation>Aplicar</translation>
     </message>
     <message>
-        <source>Auto</source>
-        <translation>Automático</translation>
-    </message>
-    <message>
-        <source>Basic</source>
-        <translation>Básico</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation>Avançado</translation>
-    </message>
-    <message>
         <source>Reset</source>
         <translation>Repor</translation>
     </message>
@@ -160,7 +148,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Current fan Mode:</source>
+        <source>Current fan mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

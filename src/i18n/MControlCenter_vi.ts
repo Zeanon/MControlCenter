@@ -116,18 +116,6 @@
         <translation>Áp dụng</translation>
     </message>
     <message>
-        <source>Auto</source>
-        <translation>Tự động</translation>
-    </message>
-    <message>
-        <source>Basic</source>
-        <translation>Cơ bản</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation>Nâng cao</translation>
-    </message>
-    <message>
         <source>Reset</source>
         <translation>Cài đặt lại</translation>
     </message>
@@ -160,7 +148,7 @@
         <translation>FN ⇄ Meta</translation>
     </message>
     <message>
-        <source>Current fan Mode:</source>
+        <source>Current fan mode:</source>
         <translation>Chế độ quạt hiện tại:</translation>
     </message>
     <message>

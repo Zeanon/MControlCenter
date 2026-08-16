@@ -236,7 +236,7 @@
         <translation type="FN ⇄ Meta"></translation>
     </message>
     <message>
-        <source>Current fan Mode:</source>
+        <source>Current fan mode:</source>
         <translation type="Dabartinis ventiliatoriaus režimas"></translation>
     </message>
     <message>

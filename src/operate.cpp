@@ -26,7 +26,7 @@ const uint8_t cpuTempAddress = 0x68;
 const uint8_t gpuTempAddress = 0x80;
 const uint8_t batteryChargeAddress = 0x42;
 
-uint8_t batteryThresholdAddress = 0xD7;
+const uint8_t batteryThresholdAddress = 0xD7;
 
 const uint8_t batteryChargingStatusAddress = 0x31;
 const uint8_t batteryNotCharging = 0x01;

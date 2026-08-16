@@ -116,18 +116,6 @@
         <translation>Применить</translation>
     </message>
     <message>
-        <source>Auto</source>
-        <translation>Автоматический</translation>
-    </message>
-    <message>
-        <source>Basic</source>
-        <translation>Базовый</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation>Расширенный</translation>
-    </message>
-    <message>
         <source>Reset</source>
         <translation>Сброс</translation>
     </message>
@@ -160,7 +148,7 @@
         <translation>FN ⇄ Meta</translation>
     </message>
     <message>
-        <source>Current fan Mode:</source>
+        <source>Current fan mode:</source>
         <translation>Режим вентилятора:</translation>
     </message>
     <message>

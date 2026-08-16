@@ -116,18 +116,6 @@
         <translation>Alkalmaz</translation>
     </message>
     <message>
-        <source>Auto</source>
-        <translation>Automatikus</translation>
-    </message>
-    <message>
-        <source>Basic</source>
-        <translation>Alap</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation>Haladó</translation>
-    </message>
-    <message>
         <source>Reset</source>
         <translation>Visszaállítás</translation>
     </message>
@@ -160,7 +148,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Current fan Mode:</source>
+        <source>Current fan mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

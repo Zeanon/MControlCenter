@@ -116,18 +116,6 @@
         <translation>Aplikatu</translation>
     </message>
     <message>
-        <source>Auto</source>
-        <translation>Automatikoa</translation>
-    </message>
-    <message>
-        <source>Basic</source>
-        <translation>Oinarrizkoa</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation>Aurreratua</translation>
-    </message>
-    <message>
         <source>Reset</source>
         <translation>Berrezarri</translation>
     </message>
@@ -160,7 +148,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Current fan Mode:</source>
+        <source>Current fan mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

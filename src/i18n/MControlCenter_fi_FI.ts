@@ -116,18 +116,6 @@
         <translation>Käytä</translation>
     </message>
     <message>
-        <source>Auto</source>
-        <translation>Automaattinen</translation>
-    </message>
-    <message>
-        <source>Basic</source>
-        <translation>Perus</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation>Edistynyt</translation>
-    </message>
-    <message>
         <source>Reset</source>
         <translation>Nollaa</translation>
     </message>
@@ -160,7 +148,7 @@
         <translation>FN ⇄ Meta </translation>
     </message>
     <message>
-        <source>Current fan Mode:</source>
+        <source>Current fan mode:</source>
         <translation>Aktiivinen tuulettimen tila: </translation>
     </message>
     <message>

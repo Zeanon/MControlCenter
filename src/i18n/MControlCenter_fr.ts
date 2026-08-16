@@ -116,18 +116,6 @@
         <translation>Appliquer</translation>
     </message>
     <message>
-        <source>Auto</source>
-        <translation>Auto</translation>
-    </message>
-    <message>
-        <source>Basic</source>
-        <translation>Basique</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation>Avancé</translation>
-    </message>
-    <message>
         <source>Reset</source>
         <translation>Annuler les changements</translation>
     </message>
@@ -160,7 +148,7 @@
         <translation>FN ⇄ Méta</translation>
     </message>
     <message>
-        <source>Current fan Mode:</source>
+        <source>Current fan mode:</source>
         <translation>Mode des ventilateurs&#xa0;:</translation>
     </message>
     <message>

@@ -116,18 +116,6 @@
         <translation>Applica</translation>
     </message>
     <message>
-        <source>Auto</source>
-        <translation>Auto</translation>
-    </message>
-    <message>
-        <source>Basic</source>
-        <translation>Base</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation>Avanzato</translation>
-    </message>
-    <message>
         <source>Reset</source>
         <translation>Ripristinare</translation>
     </message>
@@ -160,7 +148,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Current fan Mode:</source>
+        <source>Current fan mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

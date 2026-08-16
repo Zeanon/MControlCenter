@@ -118,18 +118,6 @@
         <translation>Uygula</translation>
     </message>
     <message>
-        <source>Auto</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Basic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -162,7 +150,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Current fan Mode:</source>
+        <source>Current fan mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

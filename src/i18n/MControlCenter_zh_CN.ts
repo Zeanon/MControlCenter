@@ -116,18 +116,6 @@
         <translation>应用</translation>
     </message>
     <message>
-        <source>Auto</source>
-        <translation>自动</translation>
-    </message>
-    <message>
-        <source>Basic</source>
-        <translation>基础</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation>高级（手动）</translation>
-    </message>
-    <message>
         <source>Reset</source>
         <translation>复位</translation>
     </message>
@@ -160,7 +148,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Current fan Mode:</source>
+        <source>Current fan mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
