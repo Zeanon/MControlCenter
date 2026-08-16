@@ -95,6 +95,17 @@ However, if you didn't follow the above method (built from source or used the ge
 
 </details>
 
+<details> 
+   <summary><b>Unsupported distributions</b></summary>
+No need to try the generic installer, it won't work.
+
+1. Debian: for some reason, they did something weird with `ec_sys` and related functions don't work.
+2. Nixos: the app is packaged in the repos, but i don't maintain the package, so dont report bugs.
+3. All immutable distributions: that means SteamOS, Bazzite, Fedora Silver blue, and others. the necessary drivers can't be installed.
+
+</details>
+
+
 Current packages are built using [OBS](https://build.opensuse.org/package/show/home:Mutchiko/mcontrolcenter)
 
 ### If your distribution is not listed, try the generic installer:
@@ -108,15 +119,20 @@ Current packages are built using [OBS](https://build.opensuse.org/package/show/h
 **Note:** In some cases, building from source can be a good option too, steps for it can be found further down.
 
 ## Extra tweaks
-### Nvidia dedicated GPUs
-For laptops with a dedicated Nvidia graphics card, the power limits won't react to performance mode changes.
+### Laptops with dedicated GPUs
+For laptops with a dedicated **Nvidia** graphics card, the power limits won't react to performance mode changes.
 To fix this, you need to be using the Nvidia proprietary driver.
 
 Enable and start the `nvidia-powerd` service:
 1. `sudo systemctl enable --now nvidia-powerd`
 2. Reboot.
 
-Laptops with AMD dGPUs (usually AMD Advantage models) don't need any steps, as power limits and smartshift functionality work correctly with each performance mode.
+Laptops with **AMD** dGPUs (usually AMD Advantage models) don't need any steps, as power limits and smartshift functionality work correctly with each performance mode.
+
+### Laptops with RGB keyboards
+Try using [OpenRGB](https://openrgb.org/), and make sure you're using the latest version if your distribution ships old versions.
+
+Regular laptops with only 1 color can be controlled directly by the app. However, RGB keyboards are wired over USB, thats why openRGB is needed.
 
 ### MUX switching
 
