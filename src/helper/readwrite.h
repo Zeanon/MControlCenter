@@ -30,6 +30,7 @@ public:
     bool useEcSys() const;
     bool isAcpiEc() const;
     bool isEcSys() const;
+    QByteArray readModelName() const;
 };
 
 #endif // READWRITE_H

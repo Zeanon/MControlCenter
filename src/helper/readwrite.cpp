@@ -25,6 +25,8 @@ const QString acpi_ec_file = "/dev/ec";
 const QString ec_file = "/sys/kernel/debug/ec/ec0/io";
 QString ioFile = "";
 
+const QString dmiFile = "/sys/devices/virtual/dmi/id/product_name";
+
 ReadWrite::ReadWrite() = default;
 
 QByteArray ReadWrite::readFromFile() const {
@@ -64,4 +66,11 @@ bool ReadWrite::isAcpiEc() const {
 
 bool ReadWrite::isEcSys() const {
     return ec_file == ioFile;
+}
+
+QByteArray ReadWrite::readModelName() const {
+    QFile file(dmiFile);
+    if (file.open(QIODevice::ReadOnly))
+        return file.readAll();
+    return {};
 }

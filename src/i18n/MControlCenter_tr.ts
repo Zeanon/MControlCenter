@@ -198,10 +198,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The ec_sys module couldn&apos;t be detected, it might be required to control the fans.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>OFF</source>
         <translation type="unfinished"></translation>
     </message>
@@ -341,6 +337,22 @@ Make sure that either Power Profiles Daemon or TuneD is installed and restart th
     </message>
     <message>
         <source>Performance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The EC version &apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos; is not supported.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The ec_sys module could not be detected, it is required to control the embedded controller.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Laptop Model:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

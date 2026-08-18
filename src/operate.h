@@ -64,8 +64,9 @@ public:
     [[nodiscard]] bool loadEcModule() const;
     [[nodiscard]] bool updateEcData() const;
     void updateEcDataAsync() const;
-    [[nodiscard]] std::string getEcVersion() const;
-    [[nodiscard]] std::string getEcBuild() const;
+    [[nodiscard]] QString getEcVersion() const;
+    [[nodiscard]] QString getEcBuild() const;
+    [[nodiscard]] QString getModelName() const;
     [[nodiscard]] bool isAcpiEc() const;
     [[nodiscard]] bool isEcSys() const;
     [[nodiscard]] uint8_t getBatteryCharge() const;

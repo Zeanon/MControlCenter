@@ -101,15 +101,19 @@ void Operate::updateEcDataAsync() const {
     helper.updateDataAsync();
 }
 
-std::string Operate::getEcVersion() const {
-    return helper.getValues(0xA0, 12).toStdString();
+QString Operate::getEcVersion() const {
+    return QString(helper.getValues(0xA0, 12));
 }
 
-std::string Operate::getEcBuild() const {
+QString Operate::getEcBuild() const {
     std::string build = helper.getValues(0xAC, 16).toStdString();
     if (build.size() < 16)
-        return build;
-    return build.substr(0, 2) + "/" + build.substr(2, 2) + "/" + build.substr(4, 4) + " " + build.substr(8, 8);
+        return QString::fromStdString(build);
+    return QString::fromStdString(build.substr(0, 2) + "/" + build.substr(2, 2) + "/" + build.substr(4, 4) + " " + build.substr(8, 8));
+}
+
+QString Operate::getModelName() const {
+    return QString(helper.getModelName());
 }
 
 bool Operate::isAcpiEc() const {

@@ -2070,85 +2070,10 @@
           <property name="verticalSpacing">
            <number>10</number>
           </property>
-          <item row="1" column="1">
-           <widget class="QLabel" name="QtVersionValue">
-            <property name="text">
-             <string>-</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="bugTrackerLabel">
-            <property name="text">
-             <string>MCC Bug Tracker:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="ecVersionLabel">
-            <property name="text">
-             <string>EC Version:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_14">
-            <property name="text">
-             <string>Qt version:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="label_12">
-            <property name="text">
-             <string>ACPI_EC GitHub:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="gitHubLabel">
-            <property name="text">
-             <string>MCC GitHub:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
-           <widget class="QLabel" name="ecVersionValueLabel">
-            <property name="text">
-             <string notr="true">-</string>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="0">
            <widget class="QLabel" name="versionLabel">
             <property name="text">
              <string>Version:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QLabel" name="AcpiEcGitHubLabel">
-            <property name="text">
-             <string notr="true">&lt;a href=&quot;https://github.com/saidsay-so/acpi_ec&quot;&gt;https://github.com/saidsay-so/acpi_ec&lt;/a&gt;</string>
-            </property>
-            <property name="openExternalLinks">
-             <bool>true</bool>
-            </property>
-            <property name="textInteractionFlags">
-             <set>Qt::TextInteractionFlag::TextBrowserInteraction</set>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QLabel" name="bugTrackerValueLabel">
-            <property name="text">
-             <string notr="true">&lt;a href=&quot;https://github.com/Zeanon/MControlCenter/issues&quot;&gt;https://github.com/Zeanon/MControlCenter/issues&lt;/a&gt;</string>
-            </property>
-            <property name="openExternalLinks">
-             <bool>true</bool>
-            </property>
-            <property name="textInteractionFlags">
-             <set>Qt::TextInteractionFlag::TextBrowserInteraction</set>
             </property>
            </widget>
           </item>
@@ -2159,23 +2084,17 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
-           <widget class="QLabel" name="gitHubValueLabel">
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_14">
             <property name="text">
-             <string notr="true">&lt;a href=&quot;https://github.com/Zeanon/MControlCenter&quot;&gt;https://github.com/Zeanon/MControlCenter&lt;/a&gt;</string>
-            </property>
-            <property name="openExternalLinks">
-             <bool>true</bool>
-            </property>
-            <property name="textInteractionFlags">
-             <set>Qt::TextInteractionFlag::TextBrowserInteraction</set>
+             <string>Qt version:</string>
             </property>
            </widget>
           </item>
-          <item row="7" column="0">
-           <widget class="QLabel" name="ecBuildLabel">
+          <item row="1" column="1">
+           <widget class="QLabel" name="QtVersionValue">
             <property name="text">
-             <string>EC Build:</string>
+             <string>-</string>
             </property>
            </widget>
           </item>
@@ -2193,7 +2112,102 @@
             </property>
            </widget>
           </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="gitHubLabel">
+            <property name="text">
+             <string>MCC GitHub:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLabel" name="gitHubValueLabel">
+            <property name="text">
+             <string notr="true">&lt;a href=&quot;https://github.com/Zeanon/MControlCenter&quot;&gt;https://github.com/Zeanon/MControlCenter&lt;/a&gt;</string>
+            </property>
+            <property name="openExternalLinks">
+             <bool>true</bool>
+            </property>
+            <property name="textInteractionFlags">
+             <set>Qt::TextInteractionFlag::TextBrowserInteraction</set>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="bugTrackerLabel">
+            <property name="text">
+             <string>MCC Bug Tracker:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLabel" name="bugTrackerValueLabel">
+            <property name="text">
+             <string notr="true">&lt;a href=&quot;https://github.com/Zeanon/MControlCenter/issues&quot;&gt;https://github.com/Zeanon/MControlCenter/issues&lt;/a&gt;</string>
+            </property>
+            <property name="openExternalLinks">
+             <bool>true</bool>
+            </property>
+            <property name="textInteractionFlags">
+             <set>Qt::TextInteractionFlag::TextBrowserInteraction</set>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_12">
+            <property name="text">
+             <string>ACPI_EC GitHub:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QLabel" name="AcpiEcGitHubLabel">
+            <property name="text">
+             <string notr="true">&lt;a href=&quot;https://github.com/saidsay-so/acpi_ec&quot;&gt;https://github.com/saidsay-so/acpi_ec&lt;/a&gt;</string>
+            </property>
+            <property name="openExternalLinks">
+             <bool>true</bool>
+            </property>
+            <property name="textInteractionFlags">
+             <set>Qt::TextInteractionFlag::TextBrowserInteraction</set>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="modelNameLabel">
+            <property name="text">
+             <string>Laptop Model:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QLabel" name="modelNameValueLabel">
+            <property name="text">
+             <string notr="true">-</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="ecVersionLabel">
+            <property name="text">
+             <string>EC Version:</string>
+            </property>
+           </widget>
+          </item>
           <item row="7" column="1">
+           <widget class="QLabel" name="ecVersionValueLabel">
+            <property name="text">
+             <string notr="true">-</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="ecBuildLabel">
+            <property name="text">
+             <string>EC Build:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
            <widget class="QLabel" name="ecBuildValueLabel">
             <property name="text">
              <string notr="true">-</string>

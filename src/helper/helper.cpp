@@ -67,6 +67,10 @@ bool Helper::isEcSys() const {
     return rw.isEcSys();
 }
 
+QByteArray Helper::getModelName() const {
+    return rw.readModelName();
+}
+
 bool Helper::loadEcModule() const {
     fprintf(stderr, "%s\n", qPrintable("Trying to load the ec_sys kernel module"));
     auto *process = new QProcess();

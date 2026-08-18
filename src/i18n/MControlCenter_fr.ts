@@ -196,10 +196,6 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Danger&lt;/span&gt;&#xa0;: Écrire la mauvaise valeur à la mauvaise adresse &lt;span style=&quot; font-weight:700;&quot;&gt;DÉTRUIRA VOTRE ORDINATEUR&#xa0;!&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;N&apos;écrivez &lt;span style=&quot; font-weight:700;&quot;&gt;jamais&lt;/span&gt; dans la mémoire EC sans savoir comment réinitialiser le &lt;span style=&quot; font-weight:700;&quot;&gt;BIOS/EC&lt;/span&gt;. Gardez en tête qu&apos;une réinitialisation &lt;span style=&quot; font-weight:700;&quot;&gt;ne garantit pas&lt;/span&gt; de réparer votre ordinateur si celui-ci est briqué/détruit. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>The ec_sys module couldn&apos;t be detected, it might be required to control the fans.</source>
-        <translation>Le module ec_sys n&apos;a pas pu être détecté. Il peut être requis pour contrôler les ventilateurs.</translation>
-    </message>
-    <message>
         <source>OFF</source>
         <translation type="unfinished"></translation>
     </message>
@@ -339,6 +335,22 @@ Make sure that either Power Profiles Daemon or TuneD is installed and restart th
     </message>
     <message>
         <source>Performance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The EC version &apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos; is not supported.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The ec_sys module could not be detected, it is required to control the embedded controller.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Laptop Model:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

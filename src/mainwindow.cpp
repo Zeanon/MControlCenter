@@ -210,9 +210,13 @@ MainWindow::MainWindow(QWidget *parent)
     setTabsEnabled(false);
 
     if (!operate.isEcModuleLoaded() && !operate.loadEcModule())
-        QMessageBox::critical(nullptr, this->windowTitle(), tr("The ec_sys module couldn't be detected, it might be required to control the fans."));
+        QMessageBox::critical(nullptr, this->windowTitle(), tr("The ec_sys module could not be detected, it is required to control the embedded controller."));
 
     if(operate.updateEcData())
+        if (operate.getEcVersion() != "2622EMS1.112") {
+            QMessageBox::critical(nullptr, this->windowTitle(), tr("The EC version '") + operate.getEcVersion() + tr("' is not supported."));
+            return;
+        }
         updateData();
 
     connect(realtimeUpdateTimer, &QTimer::timeout, this, &MainWindow::realtimeUpdate);
@@ -349,8 +353,9 @@ void MainWindow::updateData() const {
 }
 
 void MainWindow::loadConfigs() const {
-    ui->ecVersionValueLabel->setText(QString::fromStdString(operate.getEcVersion()));
-    ui->ecBuildValueLabel->setText(QString::fromStdString(operate.getEcBuild()));
+    ui->ecVersionValueLabel->setText(operate.getEcVersion());
+    ui->ecBuildValueLabel->setText(operate.getEcBuild());
+    ui->modelNameValueLabel->setText(operate.getModelName());
 
     operate.loadSettings();
     updateUserMode();

@@ -69,6 +69,14 @@ bool Helper::isEcSys() const {
     return false;
 }
 
+QByteArray Helper::getModelName() const {
+    const QDBusReply<QByteArray> reply = iface->call("getModelName");
+    if (reply.isValid())
+        return reply.value();
+    printError(iface->lastError());
+    return {};
+}
+
 bool Helper::updateData() const {
     const QDBusReply<QByteArray> reply = iface->call("getData");
     if (reply.isValid() && reply.value().size() == EC_SPACE_SIZE) {

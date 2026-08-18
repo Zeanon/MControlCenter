@@ -31,6 +31,7 @@ public:
     bool loadEcModule() const;
     bool isAcpiEc() const;
     bool isEcSys() const;
+    QByteArray getModelName() const;
     bool updateData() const;
     void updateDataAsync();
     std::optional<uint8_t> getOptionalValue(uint8_t address) const;
