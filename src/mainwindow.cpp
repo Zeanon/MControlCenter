@@ -212,12 +212,13 @@ MainWindow::MainWindow(QWidget *parent)
     if (!operate.isEcModuleLoaded() && !operate.loadEcModule())
         QMessageBox::critical(nullptr, this->windowTitle(), tr("The ec_sys module could not be detected, it is required to control the embedded controller."));
 
-    if(operate.updateEcData())
+    if(operate.updateEcData()) {
         if (operate.getEcVersion() != "2622EMS1.112") {
             QMessageBox::critical(nullptr, this->windowTitle(), tr("The EC version '") + operate.getEcVersion() + tr("' is not supported."));
             return;
         }
         updateData();
+    }
 
     connect(realtimeUpdateTimer, &QTimer::timeout, this, &MainWindow::realtimeUpdate);
     setUpdateInterval(1000);
@@ -435,8 +436,6 @@ void MainWindow::updateBatteryThreshold() const {
         }
 
         ui->batteryThresholdValueLabel->setText(QString::number(batteryThreshold) + " %");
-
-        // ui->customBatteryThresholdSpinBox->setValue(batteryThreshold);
     }
 }
 

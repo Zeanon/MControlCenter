@@ -19,63 +19,62 @@
 #include "operate.h"
 #include "helper.h"
 #include "settings.h"
+#include <QFile>
 
 Helper helper;
 
-const uint8_t cpuTempAddress = 0x68;
-const uint8_t gpuTempAddress = 0x80;
-const uint8_t batteryChargeAddress = 0x42;
+inline constexpr uint8_t cpuTempAddress = 0x68;
+inline constexpr uint8_t gpuTempAddress = 0x80;
+inline constexpr uint8_t batteryChargeAddress = 0x42;
 
-const uint8_t batteryThresholdAddress = 0xD7;
+inline constexpr uint8_t batteryThresholdAddress = 0xD7;
 
-const uint8_t batteryChargingStatusAddress = 0x31;
-const uint8_t batteryNotCharging = 0x01;
-const uint8_t batteryCharging = 0x03;
-const uint8_t batteryDischarging = 0x05;
-const uint8_t batteryFullyCharged = 0x09;
-const uint8_t batteryFullyCharged_noPower = 0x0D;
+inline constexpr uint8_t batteryChargingStatusAddress = 0x31;
+inline constexpr uint8_t batteryNotCharging = 0x01;
+inline constexpr uint8_t batteryCharging = 0x03;
+inline constexpr uint8_t batteryDischarging = 0x05;
+inline constexpr uint8_t batteryFullyCharged = 0x09;
+inline constexpr uint8_t batteryFullyCharged_noPower = 0x0D;
 
-const uint8_t keyboardBacklightModeAddress = 0x2C;
-const uint8_t keyboardBacklightAutoTurnOffBit = 0x08;
+inline constexpr uint8_t keyboardBacklightModeAddress = 0x2C;
+inline constexpr uint8_t keyboardBacklightAutoTurnOffBit = 0x08;
 
-const uint8_t keyboardBacklightAddress = 0xD3;
-const uint8_t keyboardBacklight0ff = 0x80;
-const uint8_t keyboardBacklightLow = 0x81;
-const uint8_t keyboardBacklightMid = 0x82;
-const uint8_t keyboardBacklightHigh = 0x83;
+inline constexpr uint8_t keyboardBacklightAddress = 0xD3;
+inline constexpr uint8_t keyboardBacklightBaseState = 0x80;
+inline constexpr uint8_t keyboardBacklightMaxState = 3;
 
-const uint8_t usbPowerShareAddress = 0xBF;
-const uint8_t usbPowerShareBit = 0x20;
+inline constexpr uint8_t usbPowerShareAddress = 0xBF;
+inline constexpr uint8_t usbPowerShareBit = 0x20;
 
-const uint8_t coolerBoostAddress = 0x98;
-const uint8_t coolerBoostBit = 0x80;
+inline constexpr uint8_t coolerBoostAddress = 0x98;
+inline constexpr uint8_t coolerBoostBit = 0x80;
 
-const uint8_t fnMetaSwapAddress = 0xE8;
-const uint8_t fnMetaSwapBit = 0x10;
+inline constexpr uint8_t fnMetaSwapAddress = 0xE8;
+inline constexpr uint8_t fnMetaSwapBit = 0x10;
 
-const uint8_t fan1Address = 0xC9;
-const uint8_t fan2Address = 0xCB;
+inline constexpr uint8_t fan1Address = 0xC9;
+inline constexpr uint8_t fan2Address = 0xCB;
 
-const uint8_t fan1SpeedSettingStartAddress = 0x72;
-const uint8_t fan2SpeedSettingStartAddress = 0x8A;
-const uint8_t fanSpeedSettingsCount = 7;
-const uint8_t fan1TempSettingStartAddress = 0x6A;
-const uint8_t fan2TempSettingStartAddress = 0x82;
-const uint8_t fanTempSettingsCount = fanSpeedSettingsCount - 1;
+inline constexpr uint8_t fan1SpeedSettingStartAddress = 0x72;
+inline constexpr uint8_t fan2SpeedSettingStartAddress = 0x8A;
+inline constexpr uint8_t fanSpeedSettingsCount = 7;
+inline constexpr uint8_t fan1TempSettingStartAddress = 0x6A;
+inline constexpr uint8_t fan2TempSettingStartAddress = 0x82;
+inline constexpr uint8_t fanTempSettingsCount = fanSpeedSettingsCount - 1;
 
 
 // Modes
-const uint8_t shiftModeAddress = 0xD2;
-const uint8_t shiftModeTurbo = 0xC5;
-const uint8_t shiftModePerformance = 0xC4;
-const uint8_t shiftModeBalanced = 0xC1;
-const uint8_t shiftModeBattery = 0xC2;
+inline constexpr uint8_t shiftModeAddress = 0xD2;
+inline constexpr uint8_t shiftModeTurbo = 0xC5;
+inline constexpr uint8_t shiftModePerformance = 0xC4;
+inline constexpr uint8_t shiftModeBalanced = 0xC1;
+inline constexpr uint8_t shiftModeBattery = 0xC2;
 
-const uint8_t fanModeAddress = 0xD4;
-const uint8_t fanModeAuto = 0x0D;
-const uint8_t fanModeSilent = 0x1D;
-const uint8_t fanModeBasic = 0x4D;
-const uint8_t fanModeAdvanced = 0x8D;
+inline constexpr uint8_t fanModeAddress = 0xD4;
+inline constexpr uint8_t fanModeAuto = 0x0D;
+inline constexpr uint8_t fanModeSilent = 0x1D;
+inline constexpr uint8_t fanModeBasic = 0x4D;
+inline constexpr uint8_t fanModeAdvanced = 0x8D;
 
 const QString settingsGroup = "Settings/";
 
@@ -113,7 +112,10 @@ QString Operate::getEcBuild() const {
 }
 
 QString Operate::getModelName() const {
-    return QString(helper.getModelName());
+    QFile file("/sys/devices/virtual/dmi/id/product_name");
+    if (file.open(QIODevice::ReadOnly))
+        return QString(file.readAll());
+    return "";
 }
 
 bool Operate::isAcpiEc() const {
@@ -216,18 +218,7 @@ uint8_t Operate::getKeyboardBacklightMode() const {
 }
 
 uint8_t Operate::getKeyboardBrightness() const {
-    switch (helper.getValue(keyboardBacklightAddress)) {
-        case keyboardBacklight0ff:
-            return 0;
-        case keyboardBacklightLow:
-            return 1;
-        case keyboardBacklightMid:
-            return 2;
-        case keyboardBacklightHigh:
-            return 3;
-        default:
-            return 0;
-    }
+    return helper.getValue(keyboardBacklightAddress) & ~keyboardBacklightBaseState;
 }
 
 bool Operate::getUsbPowerShareState() const {
@@ -292,21 +283,10 @@ void Operate::setKeyboardBacklightMode(const uint8_t value) const {
 }
 
 void Operate::setKeyboardBrightness(const uint8_t value) const {
-    switch (value) {
-        case 3:
-            helper.putValue(keyboardBacklightAddress, keyboardBacklightHigh);
-            break;
-        case 2:
-            helper.putValue(keyboardBacklightAddress, keyboardBacklightMid);
-            break;
-        case 1:
-            helper.putValue(keyboardBacklightAddress, keyboardBacklightLow);
-            break;
-        case 0:
-        default:
-            helper.putValue(keyboardBacklightAddress, keyboardBacklight0ff);
-            break;
+    if (value < 0 || value > keyboardBacklightMaxState) {
+        return;
     }
+    helper.putValue(keyboardBacklightAddress, keyboardBacklightBaseState | value);
 }
 
 void Operate::setUsbPowerShareState(const bool enabled) const {

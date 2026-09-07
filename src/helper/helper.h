@@ -42,7 +42,6 @@ public slots:
     [[nodiscard]] bool isAcpiEc() const;
     [[nodiscard]] bool isEcSys() const;
     [[nodiscard]] bool loadEcModule() const;
-    [[nodiscard]] QByteArray getModelName() const;
 };
 
 #endif // HELPER_H
