@@ -2162,7 +2162,7 @@
           <item row="5" column="1">
            <widget class="QLabel" name="AcpiEcGitHubLabel">
             <property name="text">
-             <string notr="true">&lt;a href=&quot;https://github.com/saidsay-so/acpi_ec&quot;&gt;https://github.com/saidsay-so/acpi_ec&lt;/a&gt;</string>
+             <string notr="true">&lt;a href=&quot;https://github.com/Zeanon/acpi_ec&quot;&gt;https://github.com/Zeanon/acpi_ec&lt;/a&gt;</string>
             </property>
             <property name="openExternalLinks">
              <bool>true</bool>
