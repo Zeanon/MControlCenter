@@ -20,3 +20,4 @@ GenericName[vi]=Thay đổi cài đặt máy tính xách tay MSI
 Type=Application
 Exec=mcontrolcenter
 Icon=mcontrolcenter
+StartupWMClass=MControlCenter
