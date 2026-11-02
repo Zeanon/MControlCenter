@@ -47,10 +47,6 @@ void Operate::closeHelperApp() const {
     printError(iface->lastError());
 }
 
-bool Operate::isEcModuleLoaded() const {
-    return value("ecModuleLoaded").toBool();
-}
-
 bool Operate::loadEcModule() const {
     if (!iface) return false;
     const QDBusReply<bool> reply = iface->call("loadEcModule");
@@ -78,7 +74,6 @@ void Operate::updateEcDataAsync() {
     if (!iface)
         return;
 
-    // Keine parallelen Statusabfragen starten
     if (updatePending)
         return;
 
@@ -110,11 +105,11 @@ void Operate::updateEcDataAsync() {
     });
 }
 
-QVariant Operate::value(const char *key, const QVariant &fallback) const {
+inline QVariant Operate::value(const char *key, const QVariant &fallback) const {
     return statusSnapshot.value(QString::fromLatin1(key), fallback);
 }
 
-QVector<int> Operate::intList(const char *key) const
+inline QVector<int> Operate::intList(const char *key) const
 {
     QVector<int> result;
 
@@ -145,34 +140,124 @@ QVector<int> Operate::intList(const char *key) const
     return result;
 }
 
-QString Operate::getEcVersion() const { return value("ecVersion").toString(); }
-QString Operate::getEcBuild() const { return value("ecBuild").toString(); }
-QString Operate::getModelName() const { return value("modelName").toString(); }
-bool Operate::isAcpiEc() const { return value("isAcpiEc").toBool(); }
-bool Operate::isEcSys() const { return value("isEcSys").toBool(); }
-uint8_t Operate::getBatteryCharge() const { return static_cast<uint8_t>(value("batteryCharge", 0).toInt()); }
-uint8_t Operate::getBatteryThreshold() const { return static_cast<uint8_t>(value("batteryThreshold", 0).toInt()); }
-charging_state Operate::getChargingStatus() const { return static_cast<charging_state>(value("chargingStatus", 5).toInt()); }
-uint8_t Operate::getCpuTemp() const { return static_cast<uint8_t>(value("cpuTemp", 0).toInt()); }
-std::optional<uint8_t> Operate::getGpuTemp() const { const int t = value("gpuTemp", -1).toInt(); if (t < 0) return std::nullopt; return static_cast<uint8_t>(t); }
-int Operate::getFan1Speed() const { return value("fan1Speed", 0).toInt(); }
-std::optional<int> Operate::getFan2Speed() const { const int v = value("fan2Speed", -1).toInt(); if (v < 0) return std::nullopt; return v; }
-QVector<int> Operate::getFan1SpeedSettings() const { return intList("fan1SpeedSettings"); }
-QVector<int> Operate::getFan2SpeedSettings() const { return intList("fan2SpeedSettings"); }
-QVector<int> Operate::getFan1TempSettings() const { return intList("fan1TempSettings"); }
-QVector<int> Operate::getFan2TempSettings() const { return intList("fan2TempSettings"); }
-uint8_t Operate::getKeyboardBacklightMode() const { return static_cast<uint8_t>(value("keyboardBacklightMode", 0).toInt()); }
-uint8_t Operate::getKeyboardBrightness() const { return static_cast<uint8_t>(value("keyboardBrightness", 0).toInt()); }
-bool Operate::getUsbPowerShareState() const { return value("usbPowerShareState", false).toBool(); }
-bool Operate::getFnMetaSwapState() const { return value("fnMetaSwapState", false).toBool(); }
-bool Operate::getCoolerBoostState() const { return value("coolerBoostState", false).toBool(); }
-bool Operate::getTurboMode() const { return Settings::getValue("Settings/TurboMode").toBool(); }
-user_mode Operate::getUserMode() const { return static_cast<user_mode>(value("userMode", 4).toInt()); }
-fan_mode Operate::getFanMode() const { return static_cast<fan_mode>(value("fanMode", 4).toInt()); }
+bool Operate::isEcModuleLoaded() const {
+    return value("ecModuleLoaded").toBool();
+}
 
-void Operate::setBatteryThreshold(const uint8_t value) const { if (!iface) return; iface->call("setBatteryThreshold", value); printError(iface->lastError()); }
-void Operate::setKeyboardBacklightMode(const uint8_t value) const { if (!iface) return; iface->call("setKeyboardBacklightMode", value != 0); printError(iface->lastError()); }
-void Operate::setKeyboardBrightness(const uint8_t value) const { if (!iface) return; iface->call("setKeyboardBrightness", value); printError(iface->lastError()); }
+bool Operate::isAcpiEc() const {
+    return value("isAcpiEc").toBool();
+}
+
+bool Operate::isEcSys() const {
+    return value("isEcSys").toBool();
+}
+
+QString Operate::getEcVersion() const {
+    return value("ecVersion").toString();
+}
+
+QString Operate::getEcBuild() const {
+    return value("ecBuild").toString();
+}
+
+QString Operate::getModelName() const {
+    return value("modelName").toString();
+}
+
+uint8_t Operate::getBatteryCharge() const {
+    return static_cast<uint8_t>(value("batteryCharge", 0).toInt());
+}
+
+uint8_t Operate::getBatteryThreshold() const {
+    return static_cast<uint8_t>(value("batteryThreshold", 0).toInt());
+}
+
+charging_state Operate::getChargingStatus() const {
+    return static_cast<charging_state>(value("chargingStatus", 5).toInt());
+}
+
+uint8_t Operate::getCpuTemp() const {
+    return static_cast<uint8_t>(value("cpuTemp", 0).toInt());
+}
+
+std::optional<uint8_t> Operate::getGpuTemp() const {
+    const int t = value("gpuTemp", -1).toInt(); if (t < 0) return std::nullopt; return static_cast<uint8_t>(t);
+}
+
+int Operate::getFan1Speed() const {
+    return value("fan1Speed", 0).toInt();
+}
+
+std::optional<int> Operate::getFan2Speed() const {
+    const int v = value("fan2Speed", -1).toInt(); if (v < 0) return std::nullopt; return v;
+}
+
+QVector<int> Operate::getFan1SpeedSettings() const {
+    return intList("fan1SpeedSettings");
+}
+
+QVector<int> Operate::getFan2SpeedSettings() const {
+    return intList("fan2SpeedSettings");
+}
+
+QVector<int> Operate::getFan1TempSettings() const {
+    return intList("fan1TempSettings");
+}
+
+QVector<int> Operate::getFan2TempSettings() const {
+    return intList("fan2TempSettings");
+}
+
+uint8_t Operate::getKeyboardBacklightMode() const {
+    return static_cast<uint8_t>(value("keyboardBacklightMode", 0).toInt());
+}
+
+uint8_t Operate::getKeyboardBrightness() const {
+    return static_cast<uint8_t>(value("keyboardBrightness", 0).toInt());
+}
+
+bool Operate::getUsbPowerShareState() const {
+    return value("usbPowerShareState", false).toBool();
+}
+
+bool Operate::getFnMetaSwapState() const {
+    return value("fnMetaSwapState", false).toBool();
+}
+
+bool Operate::getCoolerBoostState() const {
+    return value("coolerBoostState", false).toBool();
+}
+
+bool Operate::getTurboMode() const {
+    return Settings::getValue("Settings/TurboMode").toBool();
+}
+
+user_mode Operate::getUserMode() const {
+    return static_cast<user_mode>(value("userMode", 4).toInt());
+}
+
+fan_mode Operate::getFanMode() const {
+    return static_cast<fan_mode>(value("fanMode", 4).toInt());
+}
+
+
+void Operate::setBatteryThreshold(const uint8_t value) const {
+    if (!iface) return;
+    iface->call("setBatteryThreshold", value);
+    printError(iface->lastError());
+}
+
+void Operate::setKeyboardBacklightMode(const uint8_t value) const {
+    if (!iface) return;
+    iface->call("setKeyboardBacklightMode", value != 0);
+    printError(iface->lastError());
+}
+
+void Operate::setKeyboardBrightness(const uint8_t value) const {
+    if (!iface) return;
+    iface->call("setKeyboardBrightness", value);
+    printError(iface->lastError());
+}
 
 void Operate::setUsbPowerShareState(const bool enabled) const {
     if (!iface) return;
@@ -188,7 +273,11 @@ void Operate::setFnMetaSwapState(const bool enabled) const {
     printError(iface->lastError());
 }
 
-void Operate::setCoolerBoostState(const bool enabled) const { if (!iface) return; iface->call("setCoolerBoostState", enabled); printError(iface->lastError()); }
+void Operate::setCoolerBoostState(const bool enabled) const {
+    if (!iface) return;
+    iface->call("setCoolerBoostState", enabled);
+    printError(iface->lastError());
+}
 
 void Operate::setTurboMode(const bool enabled) const {
     if (!iface) return;
@@ -212,8 +301,8 @@ void Operate::setUserMode(const user_mode userMode) const {
 }
 
 void Operate::setFan1SpeedSettings(const QVector<int> value) const {
-    if (value.size() != fanSpeedSettingsCount) return;
     if (!iface) return;
+    if (value.size() != fanSpeedSettingsCount) return;
     Settings::setValue(settingsGroup + "fan1SpeedSettings", value);
     const QList<int> list(value.cbegin(), value.cend());
     iface->call("setFan1SpeedSettings", QVariant::fromValue(list));
@@ -221,8 +310,8 @@ void Operate::setFan1SpeedSettings(const QVector<int> value) const {
 }
 
 void Operate::setFan2SpeedSettings(const QVector<int> value) const {
-    if (value.size() != fanSpeedSettingsCount) return;
     if (!iface) return;
+    if (value.size() != fanSpeedSettingsCount) return;
     Settings::setValue(settingsGroup + "fan2SpeedSettings", value);
     const QList<int> list(value.cbegin(), value.cend());
     iface->call("setFan2SpeedSettings", QVariant::fromValue(list));
@@ -230,8 +319,8 @@ void Operate::setFan2SpeedSettings(const QVector<int> value) const {
 }
 
 void Operate::setFan1TempSettings(const QVector<int> value) const {
-    if (value.size() != fanTempSettingsCount) return;
     if (!iface) return;
+    if (value.size() != fanTempSettingsCount) return;
     Settings::setValue(settingsGroup + "fan1TempSettings", value);
     const QList<int> list(value.cbegin(), value.cend());
     iface->call("setFan1TempSettings", QVariant::fromValue(list));
@@ -239,8 +328,8 @@ void Operate::setFan1TempSettings(const QVector<int> value) const {
 }
 
 void Operate::setFan2TempSettings(const QVector<int> value) const {
-    if (value.size() != fanTempSettingsCount) return;
     if (!iface) return;
+    if (value.size() != fanTempSettingsCount) return;
     Settings::setValue(settingsGroup + "fan2TempSettings", value);
     const QList<int> list(value.cbegin(), value.cend());
     iface->call("setFan2TempSettings", QVariant::fromValue(list));
@@ -248,10 +337,10 @@ void Operate::setFan2TempSettings(const QVector<int> value) const {
 }
 
 void Operate::setFanModeAdvanced(const bool enabled) const {
+    if (!iface) return;
     const QString mode = Settings::getValue(settingsGroup + "UserMode").toString();
     const int userMode = mode == "performance_mode" ? 0 : mode == "balanced_mode" ? 1 : mode == "silent_mode" ? 2 : mode == "eco_silent_mode" ? 3 : 1;
     Settings::setValue(settingsGroup + "fanModeAdvanced", enabled);
-    if (!iface) return;
     iface->call("setFanModeAdvanced", enabled, userMode);
     printError(iface->lastError());
 }

@@ -69,15 +69,15 @@ class Operate : public QObject {
 public:
     Operate();
     void closeHelperApp() const;
-    [[nodiscard]] bool isEcModuleLoaded() const;
     [[nodiscard]] bool loadEcModule() const;
     [[nodiscard]] bool updateEcData() const;
     void updateEcDataAsync();
+    [[nodiscard]] bool isEcModuleLoaded() const;
+    [[nodiscard]] bool isAcpiEc() const;
+    [[nodiscard]] bool isEcSys() const;
     [[nodiscard]] QString getEcVersion() const;
     [[nodiscard]] QString getEcBuild() const;
     [[nodiscard]] QString getModelName() const;
-    [[nodiscard]] bool isAcpiEc() const;
-    [[nodiscard]] bool isEcSys() const;
     [[nodiscard]] uint8_t getBatteryCharge() const;
     [[nodiscard]] uint8_t getBatteryThreshold() const;
     [[nodiscard]] charging_state getChargingStatus() const;
@@ -117,7 +117,6 @@ public:
     void loadSettings() const;
     void handleWakeEvent() const;
 
-    void quit() const;
     QDBusInterface *iface = nullptr;
 
 signals:
