@@ -54,18 +54,18 @@ private:
     [[nodiscard]] QString intToQString(const int value) const;
     void updateBatteryCharge() const;
     void updatePenCharge() const;
-    void updateBatteryThreshold() const;
+    void updateBatteryThreshold(uint8_t batteryThreshold) const;
     void updateChargingStatus() const;
     void updateCpuTemp() const;
     void updateGpuTemp() const;
     void updateFan1Speed() const;
     void updateFan2Speed() const;
-    void updateKeyboardBacklightMode() const;
-    void updateKeyboardBrightness() const;
-    void updateUsbPowerShareState() const;
-    void updateTurboMode() const;
-    void updateFnMetaSwapState() const;
-    void updateCoolerBoostState() const;
+    void updateKeyboardBacklightMode(const uint8_t index) const;
+    void updateKeyboardBrightness(const uint8_t value) const;
+    void updateUsbPowerShareState(const bool state) const;
+    void updateTurboMode(const bool state) const;
+    void updateFnMetaSwapState(const bool state) const;
+    void updateCoolerBoostState(const bool state) const;
     void updateUserMode() const;
 
     void updateFanMode() const;
@@ -154,9 +154,7 @@ private slots:
     void on_customBatteryThresholdSpinBox_valueChanged(const int arg1) const;
     void on_customBatteryApplyButton_clicked() const;
     void on_clearSettingsButton_clicked() const;
-    void on_ReadValueButton_clicked() const;
 
-    void on_WriteValueButton_clicked() const;
 
     void on_usbPowerShareCheckBox_clicked(const bool checked) const;
     void on_turboModeCheckBox_clicked(const bool checked) const;

@@ -35,6 +35,19 @@ MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
+    connect(&operate, &Operate::dataUpdated,
+            this, [this](bool valid) {
+        if (!valid) {
+            setTabsEnabled(false);
+            isActive = false;
+            ui->EcBackendStatusLabel->setText(
+                tr("Failed to load both acpi_ec/ec_sys"));
+            return;
+        }
+
+        updateData();
+    });
+
     connect(ui->advancedFanControlCheckBox, &QCheckBox::toggled, this, &MainWindow::setFanModeAdvanced);
 
     connect(ui->fan1Speed1Slider, &QSlider::valueChanged, this, [this]() {
@@ -277,7 +290,7 @@ void MainWindow::loadSettings() const {
         Settings::setValue("Settings/TurboMode", false);
     }
 
-    updateBatteryThreshold();
+    updateBatteryThreshold(Settings::getValue("Settings/CustomBatteryThreshold").toInt());
 }
 
 void MainWindow::setUpdateDataError(const bool error) {
@@ -302,7 +315,6 @@ void MainWindow::setTabsEnabled(const bool enabled) const {
         keyboardTrayMenu->setEnabled(enabled);
     if (miscTrayMenu)
         miscTrayMenu->setEnabled(enabled);
-
 }
 
 void MainWindow::startRealtimeUpdate() const {
@@ -319,37 +331,58 @@ void MainWindow::setUpdateInterval(const int msec) const {
 
 void MainWindow::realtimeUpdate() const {
     operate.updateEcDataAsync();
-    updateData();
 }
 
-void MainWindow::updateData() const {
-    if (!isUpdateDataError && operate.isEcModuleLoaded()) {
-        if (!isActive) {
-            setTabsEnabled(true);
-            loadConfigs();
-            isActive = true;
-        }
-        updateBatteryCharge();
-        updatePenCharge();
-        updateChargingStatus();
-        updateCpuTemp();
-        updateGpuTemp();
-        updateFanMode();
-        updateFan1Speed();
-        updateFan2Speed();
-        updateKeyboardBrightness();
-        updateKeyboardBacklightMode();
-        updateTurboMode();
-
-        if(operate.isAcpiEc()) {
-            ui->EcBackendStatusLabel->setText(tr("acpi_ec"));
-        } else if (operate.isEcSys()) {
-            ui->EcBackendStatusLabel->setText(tr("ec_sys"));
-        }
-    } else {
+void MainWindow::updateData() const
+{
+    if (isUpdateDataError || !operate.isEcModuleLoaded()) {
         setTabsEnabled(false);
-        ui->EcBackendStatusLabel->setText(tr("Failed to load both acpi_ec/ec_sys"));
+
+        ui->EcBackendStatusLabel->setText(
+            tr("Failed to load both acpi_ec/ec_sys")
+        );
+
         isActive = false;
+        return;
+    }
+
+    if (!isActive) {
+        setTabsEnabled(true);
+        loadConfigs();
+        isActive = true;
+    }
+
+    // Battery
+    updateBatteryCharge();
+    updatePenCharge();
+    updateChargingStatus();
+
+    // Temperatures
+    updateCpuTemp();
+    updateGpuTemp();
+
+    // Fans
+    updateFanMode();
+    updateFan1Speed();
+    updateFan2Speed();
+
+    // Keyboard
+    updateKeyboardBrightness(operate.getKeyboardBrightness());
+    updateKeyboardBacklightMode(operate.getKeyboardBacklightMode());
+
+    // Other settings
+    updateTurboMode(operate.getTurboMode());
+    updateFnMetaSwapState(operate.getFnMetaSwapState());
+
+    // EC backend
+    if (operate.isAcpiEc()) {
+        ui->EcBackendStatusLabel->setText(tr("acpi_ec"));
+    } else if (operate.isEcSys()) {
+        ui->EcBackendStatusLabel->setText(tr("ec_sys"));
+    } else {
+        ui->EcBackendStatusLabel->setText(
+            tr("Failed to load both acpi_ec/ec_sys")
+        );
     }
 }
 
@@ -360,21 +393,21 @@ void MainWindow::loadConfigs() const {
 
     operate.loadSettings();
     updateUserMode();
-    updateCoolerBoostState();
+    updateCoolerBoostState(operate.getCoolerBoostState());
 
-    updateBatteryThreshold();
+    updateBatteryThreshold(operate.getBatteryThreshold());
 
     updateFanSpeedSettings();
 
-    updateKeyboardBacklightMode();
+    updateKeyboardBacklightMode(operate.getKeyboardBacklightMode());
 
-    updateKeyboardBrightness();
+    updateKeyboardBrightness(operate.getKeyboardBrightness());
 
-    updateUsbPowerShareState();
+    updateUsbPowerShareState(operate.getUsbPowerShareState());
 
-    updateTurboMode();
+    updateTurboMode(operate.getTurboMode());
 
-    updateFnMetaSwapState();
+    updateFnMetaSwapState(operate.getFnMetaSwapState());
 }
 
 QString MainWindow::intToQString(const int value) const {
@@ -408,35 +441,31 @@ hide:
     ui->penChargeValueLabel->setVisible(false);
 }
 
-void MainWindow::updateBatteryThreshold() const {
-    if (operate.updateEcData()) {
-        uint8_t batteryThreshold = operate.getBatteryThreshold();
-
-        switch (Settings::getValue("Settings/BatteryThresholdSetting").toInt()) {
-            case 0:
-                ui->bestMobilityRadioButton->click();
-                batteryThreshold = 100;
-                bestMobilityAction->setChecked(true);
-                break;
-            case 1:
-                ui->balancedBatteryRadioButton->click();
-                balancedBatteryAction->setChecked(true);
-                break;
-            case 2:
-                ui->bestBatteryRadioButton->click();
-                bestBatteryAction->setChecked(true);
-                break;
-            default:
-                ui->customBatteryThresholdRadioButton->click();
-                ui->customBatteryApplyButton->setEnabled(
-                        batteryThreshold != ui->customBatteryThresholdSpinBox->value());
-                setCustomBatteryTrayLabel(batteryThreshold);
-                customBatteryAction->setChecked(true);
-                break;
-        }
-
-        ui->batteryThresholdValueLabel->setText(QString::number(batteryThreshold) + " %");
+void MainWindow::updateBatteryThreshold(uint8_t batteryThreshold) const {
+    switch (Settings::getValue("Settings/BatteryThresholdSetting").toInt()) {
+        case 0:
+            ui->bestMobilityRadioButton->click();
+            batteryThreshold = 100;
+            bestMobilityAction->setChecked(true);
+            break;
+        case 1:
+            ui->balancedBatteryRadioButton->click();
+            balancedBatteryAction->setChecked(true);
+            break;
+        case 2:
+            ui->bestBatteryRadioButton->click();
+            bestBatteryAction->setChecked(true);
+            break;
+        default:
+            ui->customBatteryThresholdRadioButton->click();
+            ui->customBatteryApplyButton->setEnabled(
+                    batteryThreshold != ui->customBatteryThresholdSpinBox->value());
+            setCustomBatteryTrayLabel(batteryThreshold);
+            customBatteryAction->setChecked(true);
+            break;
     }
+
+    ui->batteryThresholdValueLabel->setText(QString::number(batteryThreshold) + " %");
 }
 
 void MainWindow::updateChargingStatus() const {
@@ -502,28 +531,25 @@ void MainWindow::updateFan2Speed() const {
     }
 }
 
-void MainWindow::updateKeyboardBacklightMode() const {
-    if (operate.updateEcData()) {
-        const uint8_t index = operate.getKeyboardBacklightMode();
-        ui->keyboardBacklightModeComboBox->setCurrentIndex(index);
-        if (index == 0) {
-            keyboardAlwaysOn->setChecked(true);
-        } else if (index == 1) {
-            keyboardAutoOff->setChecked(true);
-        }
+void MainWindow::updateKeyboardBacklightMode(const uint8_t index) const {
+    ui->keyboardBacklightModeComboBox->setCurrentIndex(index);
+    if (index == 0) {
+        keyboardAlwaysOn->setChecked(true);
+    } else if (index == 1) {
+        keyboardAutoOff->setChecked(true);
     }
 }
 
-void MainWindow::updateKeyboardBrightness() const {
-    ui->keyboardBrightnessSlider->setSliderPosition(operate.getKeyboardBrightness());
+void MainWindow::updateKeyboardBrightness(const uint8_t brightness) const {
+    ui->keyboardBrightnessSlider->setSliderPosition(brightness);
 }
 
-void MainWindow::updateUsbPowerShareState() const {
-    ui->usbPowerShareCheckBox->setChecked(operate.getUsbPowerShareState());
+void MainWindow::updateUsbPowerShareState(const bool state) const {
+    ui->usbPowerShareCheckBox->setChecked(state);
+    usbPowerShareTrayAction->setChecked(state);
 }
 
-void MainWindow::updateTurboMode() const {
-    const bool state = operate.getTurboMode();
+void MainWindow::updateTurboMode(const bool state) const {
     ui->turboModeCheckBox->setChecked(state);
     turboMode->setChecked(state);
 
@@ -534,20 +560,14 @@ void MainWindow::updateTurboMode() const {
     ui->userModeOnBatteryComboBox->setItemText(0, text);
 }
 
-void MainWindow::updateFnMetaSwapState() const {
-    if (operate.updateEcData()) {
-        const bool state = operate.getFnMetaSwapState();
-        ui->fnMetaSwapCheckBox->setChecked(state);
-        fnMetaSwapTrayAction->setChecked(state);
-    }
+void MainWindow::updateFnMetaSwapState(const bool state) const {
+    ui->fnMetaSwapCheckBox->setChecked(state);
+    fnMetaSwapTrayAction->setChecked(state);
 }
 
-void MainWindow::updateCoolerBoostState() const {
-    if (operate.updateEcData()) {
-        const bool state = operate.getCoolerBoostState();
-        ui->coolerBoostCheckBox->setChecked(state);
-        coolerBoostAction->setChecked(state);
-    }
+void MainWindow::updateCoolerBoostState(const bool state) const {
+    ui->coolerBoostCheckBox->setChecked(state);
+    coolerBoostAction->setChecked(state);
 }
 
 void MainWindow::updateUserMode() const {
@@ -610,6 +630,14 @@ void MainWindow::updateFanSpeedSettings() const {
     const QVector fan2SpeedSettings = operate.getFan2SpeedSettings();
     const QVector fan2TempSettings = operate.getFan2TempSettings();
 
+    if (fan1SpeedSettings.size() < 7 ||
+        fan2SpeedSettings.size() < 7 ||
+        fan1TempSettings.size() < 6 ||
+        fan2TempSettings.size() < 6) {
+        qWarning() << "Invalid fan settings received";
+        return;
+    }
+
     ui->fan1Speed1Slider->setValue(fan1SpeedSettings[0]);
     ui->fan1Speed2Slider->setValue(fan1SpeedSettings[1]);
     ui->fan1Speed3Slider->setValue(fan1SpeedSettings[2]);
@@ -648,25 +676,26 @@ void MainWindow::updateFanSpeedSettings() const {
 void MainWindow::setBestMobility() const {
     operate.setBatteryThreshold(100);
     Settings::setValue("Settings/BatteryThresholdSetting", 0);
-    updateBatteryThreshold();
+    updateBatteryThreshold(100);
 }
 
 void MainWindow::setBalancedBattery() const {
     operate.setBatteryThreshold(80);
     Settings::setValue("Settings/BatteryThresholdSetting", 1);
-    updateBatteryThreshold();
+    updateBatteryThreshold(80);
 }
 
 void MainWindow::setBestBattery() const {
     operate.setBatteryThreshold(60);
     Settings::setValue("Settings/BatteryThresholdSetting", 2);
-    updateBatteryThreshold();
+    updateBatteryThreshold(60);
 }
 
 void MainWindow::setCustomBattery() const {
-    operate.setBatteryThreshold(Settings::getValue("Settings/CustomBatteryThreshold").toInt());
+    uint8_t battery_threshold = Settings::getValue("Settings/CustomBatteryThreshold").toInt();
+    operate.setBatteryThreshold(battery_threshold);
     Settings::setValue("Settings/BatteryThresholdSetting", 3);
-    updateBatteryThreshold();
+    updateBatteryThreshold(battery_threshold);
 }
 
 void MainWindow::setCustomBatteryTrayLabel(const uint8_t value) const {
@@ -694,18 +723,18 @@ void MainWindow::setEcoSilentMode() const {
 }
 
 void MainWindow::setCoolerBoostState(const bool enabled) const {
+    updateCoolerBoostState(enabled);
     operate.setCoolerBoostState(enabled);
-    updateCoolerBoostState();
 }
 
 void MainWindow::setKeyboardAlwaysOn() const {
+    updateKeyboardBacklightMode(0);
     operate.setKeyboardBacklightMode(0);
-    updateKeyboardBacklightMode();
 }
 
 void MainWindow::setKeyboardAutoOff() const {
+    updateKeyboardBacklightMode(1);
     operate.setKeyboardBacklightMode(1);
-    updateKeyboardBacklightMode();
 }
 
 QVector<int> MainWindow::getFan1SpeedValues() const {
@@ -927,32 +956,20 @@ void MainWindow::clearSettings() const {
     loadSettings();
 }
 
-void MainWindow::on_ReadValueButton_clicked() const {
-    const QString text = ui->addressEdit->displayText();
-    uint8_t value = operate.getValue(text.toInt());
-    ui->ValueSpinBox->setValue(value);
-}
-
-void MainWindow::on_WriteValueButton_clicked() const {
-    const QString text = ui->addressEdit->displayText();
-    uint8_t address = text.toInt();
-    operate.setValue(address, ui->ValueSpinBox->value());
-}
-
 void MainWindow::on_usbPowerShareCheckBox_clicked(const bool checked) const {
-    ui->usbPowerShareCheckBox->setChecked(checked);
-    usbPowerShareTrayAction->setChecked(checked);
+    updateUsbPowerShareState(checked);
     operate.setUsbPowerShareState(checked);
 }
 
 void MainWindow::on_turboModeCheckBox_clicked(const bool checked) const {
+    updateTurboMode(checked);
     operate.setTurboMode(checked);
-    updateTurboMode();
+    //updateTurboMode(operate.getTurboMode());
 }
 
 void MainWindow::on_fnMetaSwapCheckBox_clicked(const bool checked) const {
+    updateFnMetaSwapState(checked);
     operate.setFnMetaSwapState(checked);
-    updateFnMetaSwapState();
 }
 
 void MainWindow::on_coolerBoostCheckBox_clicked(const bool checked) const {
@@ -961,10 +978,8 @@ void MainWindow::on_coolerBoostCheckBox_clicked(const bool checked) const {
 }
 
 void MainWindow::on_keyboardBrightnessSlider_valueChanged(const int value) const {
+    updateKeyboardBrightness(value);
     operate.setKeyboardBrightness(value);
-    if (operate.updateEcData()) {
-        updateKeyboardBrightness();
-    }
 }
 
 void MainWindow::on_keyboardBacklightModeComboBox_currentIndexChanged(const int index) const {

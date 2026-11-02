@@ -18,27 +18,276 @@
 
 #include "helper.h"
 #include "readwrite.h"
+#include <algorithm>
 #include <QCoreApplication>
 #include <QDBusConnection>
 #include <QDBusError>
 #include <QProcess>
 #include <QTimer>
+#include <QFile>
+#include <string>
 
 ReadWrite rw;
+static QByteArray cachedEcData;
 
 void Helper::quit() const {
     QTimer::singleShot(0, QCoreApplication::instance(), &QCoreApplication::quit);
 }
 
-QByteArray Helper::getData() const {
-    return rw.readFromFile();
+namespace {
+constexpr uint8_t readCpuTempAddress = 0x68, readGpuTempAddress = 0x80, readBatteryChargeAddress = 0x42;
+constexpr uint8_t readBatteryThresholdAddress = 0xD7, readBatteryChargingStatusAddress = 0x31;
+constexpr uint8_t readBatteryNotCharging = 0x01, readBatteryCharging = 0x03, readBatteryDischarging = 0x05;
+constexpr uint8_t readBatteryFullyCharged = 0x09, readBatteryFullyChargedNoPower = 0x0D;
+constexpr uint8_t readKeyboardBacklightModeAddress = 0x2C, readKeyboardBacklightAutoTurnOffBit = 0x08;
+constexpr uint8_t readKeyboardBacklightAddress = 0xD3, readKeyboardBacklightBaseState = 0x80;
+constexpr uint8_t readUsbPowerShareAddress = 0xBF, readUsbPowerShareBit = 0x20;
+constexpr uint8_t readCoolerBoostAddress = 0x98, readCoolerBoostBit = 0x80;
+constexpr uint8_t readFnMetaSwapAddress = 0xE8, readFnMetaSwapBit = 0x10;
+constexpr uint8_t readFan1Address = 0xC9, readFan2Address = 0xCB;
+constexpr uint8_t readFan1SpeedSettingStartAddress = 0x72, readFan2SpeedSettingStartAddress = 0x8A;
+constexpr uint8_t readFan1TempSettingStartAddress = 0x6A, readFan2TempSettingStartAddress = 0x82;
+constexpr int readFanSpeedSettingsCount = 7, readFanTempSettingsCount = 6;
+constexpr uint8_t readShiftModeAddress = 0xD2, readShiftModeTurbo = 0xC5, readShiftModePerformance = 0xC4;
+constexpr uint8_t readShiftModeBalanced = 0xC1, readShiftModeBattery = 0xC2;
+constexpr uint8_t readFanModeAddress = 0xD4, readFanModeAuto = 0x0D, readFanModeSilent = 0x1D;
+constexpr uint8_t readFanModeBasic = 0x4D, readFanModeAdvanced = 0x8D;
+
+QByteArray ecData() { return cachedEcData; }
+uint8_t readValueLocal(const QByteArray &data, uint8_t address) {
+    return address < data.size() ? static_cast<uint8_t>(data.at(address)) : 0;
+}
+QList<int> readSettingsLocal(const QByteArray &data, uint8_t start, int count) {
+    QList<int> values;
+    if (data.size() < static_cast<int>(start) + count) return values;
+    for (int i = 0; i < count; ++i) values.append(readValueLocal(data, static_cast<uint8_t>(start + i)));
+    return values;
+}
 }
 
-void Helper::putValue(const int &address, const int &value) const {
-    if (value < 0 || value >> 8) {
-        fprintf(stderr, "Tried to input invalid value. Address: %d, value: %d\n", address, value);  
+bool Helper::updateData() const {
+    cachedEcData = rw.readFromFile();
+    return cachedEcData.size() == 256;
+}
+
+QVariantMap Helper::getStatusSnapshot() const {
+    const bool valid = updateData();
+    QVariantMap result;
+    result.insert(QStringLiteral("valid"), valid);
+    if (!valid) return result;
+    const auto toVariantList = [](const QList<int> &values) {
+        QVariantList list;
+        list.reserve(values.size());
+        for (const int value : values) list.append(value);
+        return list;
+    };
+    result.insert(QStringLiteral("ecVersion"), getEcVersion());
+    result.insert(QStringLiteral("ecBuild"), getEcBuild());
+    result.insert(QStringLiteral("modelName"), getModelName());
+    result.insert(QStringLiteral("batteryCharge"), getBatteryCharge());
+    result.insert(QStringLiteral("batteryThreshold"), getBatteryThreshold());
+    result.insert(QStringLiteral("chargingStatus"), getChargingStatus());
+    result.insert(QStringLiteral("cpuTemp"), getCpuTemp());
+    result.insert(QStringLiteral("gpuTemp"), getGpuTemp());
+    result.insert(QStringLiteral("fan1Speed"), getFan1Speed());
+    result.insert(QStringLiteral("fan2Speed"), getFan2Speed());
+    result.insert(QStringLiteral("fan1SpeedSettings"), toVariantList(getFan1SpeedSettings()));
+    result.insert(QStringLiteral("fan2SpeedSettings"), toVariantList(getFan2SpeedSettings()));
+    result.insert(QStringLiteral("fan1TempSettings"), toVariantList(getFan1TempSettings()));
+    result.insert(QStringLiteral("fan2TempSettings"), toVariantList(getFan2TempSettings()));
+    result.insert(QStringLiteral("keyboardBacklightMode"), getKeyboardBacklightMode());
+    result.insert(QStringLiteral("keyboardBrightness"), getKeyboardBrightness());
+    result.insert(QStringLiteral("usbPowerShareState"), getUsbPowerShareState());
+    result.insert(QStringLiteral("fnMetaSwapState"), getFnMetaSwapState());
+    result.insert(QStringLiteral("coolerBoostState"), getCoolerBoostState());
+    result.insert(QStringLiteral("userMode"), getUserMode());
+    result.insert(QStringLiteral("fanMode"), getFanMode());
+    result.insert(QStringLiteral("ecModuleLoaded"), isEcModuleLoaded());
+    result.insert(QStringLiteral("isAcpiEc"), isAcpiEc());
+    result.insert(QStringLiteral("isEcSys"), isEcSys());
+    return result;
+}
+QString Helper::getEcVersion() const { return QString::fromLatin1(ecData().mid(0xA0, 12)); }
+QString Helper::getEcBuild() const {
+    const std::string build = ecData().mid(0xAC, 16).toStdString();
+    if (build.size() < 16) return QString::fromStdString(build);
+    return QString::fromStdString(build.substr(0, 2) + "/" + build.substr(2, 2) + "/" + build.substr(4, 4) + " " + build.substr(8, 8));
+}
+QString Helper::getModelName() const {
+    QFile file("/sys/devices/virtual/dmi/id/product_name");
+    if (file.open(QIODevice::ReadOnly)) return QString::fromLocal8Bit(file.readAll()).trimmed();
+    return {};
+}
+int Helper::getBatteryCharge() const { return static_cast<int>(readValueLocal(ecData(), readBatteryChargeAddress)) - 1; }
+int Helper::getBatteryThreshold() const { return readValueLocal(ecData(), readBatteryThresholdAddress) & 0x7F; }
+int Helper::getChargingStatus() const {
+    switch (readValueLocal(ecData(), readBatteryChargingStatusAddress)) {
+    case readBatteryCharging: return 0; case readBatteryDischarging: return 1; case readBatteryNotCharging: return 2;
+    case readBatteryFullyCharged: return 3; case readBatteryFullyChargedNoPower: return 4; default: return 5;
     }
-    rw.writeToFile(address, value);
+}
+int Helper::getCpuTemp() const { return readValueLocal(ecData(), readCpuTempAddress); }
+int Helper::getGpuTemp() const { const auto d = ecData(); return readGpuTempAddress < d.size() ? readValueLocal(d, readGpuTempAddress) : -1; }
+int Helper::getFan1Speed() const {
+    const auto d = ecData(); const int value = (readValueLocal(d, readFan1Address - 1) << 8) | readValueLocal(d, readFan1Address);
+    return value > 0 ? 480000 / value : value;
+}
+int Helper::getFan2Speed() const {
+    const auto d = ecData(); if (d.size() <= readFan2Address) return -1;
+    const int value = (readValueLocal(d, readFan2Address - 1) << 8) | readValueLocal(d, readFan2Address);
+    return value > 0 ? 480000 / value : value;
+}
+QList<int> Helper::getFan1SpeedSettings() const { return readSettingsLocal(ecData(), readFan1SpeedSettingStartAddress, readFanSpeedSettingsCount); }
+QList<int> Helper::getFan2SpeedSettings() const { return readSettingsLocal(ecData(), readFan2SpeedSettingStartAddress, readFanSpeedSettingsCount); }
+QList<int> Helper::getFan1TempSettings() const { return readSettingsLocal(ecData(), readFan1TempSettingStartAddress, readFanTempSettingsCount); }
+QList<int> Helper::getFan2TempSettings() const { return readSettingsLocal(ecData(), readFan2TempSettingStartAddress, readFanTempSettingsCount); }
+int Helper::getKeyboardBacklightMode() const { return (readValueLocal(ecData(), readKeyboardBacklightModeAddress) & readKeyboardBacklightAutoTurnOffBit) ? 1 : 0; }
+int Helper::getKeyboardBrightness() const { return readValueLocal(ecData(), readKeyboardBacklightAddress) & 0x7F; }
+bool Helper::getUsbPowerShareState() const { return readValueLocal(ecData(), readUsbPowerShareAddress) & readUsbPowerShareBit; }
+bool Helper::getFnMetaSwapState() const { return readValueLocal(ecData(), readFnMetaSwapAddress) & readFnMetaSwapBit; }
+bool Helper::getCoolerBoostState() const { return readValueLocal(ecData(), readCoolerBoostAddress) & readCoolerBoostBit; }
+int Helper::getUserMode() const {
+    const auto d = ecData();
+    switch (readValueLocal(d, readShiftModeAddress)) {
+    case readShiftModeTurbo: case readShiftModePerformance: return 0;
+    case readShiftModeBalanced: return readValueLocal(d, readFanModeAddress) == readFanModeSilent ? 2 : 1;
+    case readShiftModeBattery: return 3; default: return 4;
+    }
+}
+int Helper::getFanMode() const {
+    switch (readValueLocal(ecData(), readFanModeAddress)) {
+    case readFanModeAuto: return 0; case readFanModeSilent: return 1; case readFanModeBasic: return 2;
+    case readFanModeAdvanced: return 3; default: return 4;
+    }
+}
+
+namespace {
+constexpr uint8_t batteryThresholdAddress = 0xD7;
+constexpr uint8_t keyboardBacklightModeAddress = 0x2C;
+constexpr uint8_t keyboardBacklightAutoTurnOffBit = 0x08;
+constexpr uint8_t keyboardBacklightAddress = 0xD3;
+constexpr uint8_t keyboardBacklightBaseState = 0x80;
+constexpr int keyboardBacklightMaxState = 3;
+constexpr uint8_t usbPowerShareAddress = 0xBF;
+constexpr uint8_t usbPowerShareBit = 0x20;
+constexpr uint8_t coolerBoostAddress = 0x98;
+constexpr uint8_t coolerBoostBit = 0x80;
+constexpr uint8_t fnMetaSwapAddress = 0xE8;
+constexpr uint8_t fnMetaSwapBit = 0x10;
+constexpr uint8_t shiftModeAddress = 0xD2;
+constexpr uint8_t shiftModeTurbo = 0xC5;
+constexpr uint8_t shiftModePerformance = 0xC4;
+constexpr uint8_t shiftModeBalanced = 0xC1;
+constexpr uint8_t shiftModeBattery = 0xC2;
+constexpr uint8_t fanModeAddress = 0xD4;
+constexpr uint8_t fanModeAuto = 0x0D;
+constexpr uint8_t fanModeSilent = 0x1D;
+constexpr uint8_t fanModeAdvanced = 0x8D;
+constexpr uint8_t fan1SpeedSettingStartAddress = 0x72;
+constexpr uint8_t fan2SpeedSettingStartAddress = 0x8A;
+constexpr uint8_t fan1TempSettingStartAddress = 0x6A;
+constexpr uint8_t fan2TempSettingStartAddress = 0x82;
+constexpr int fanSpeedSettingsCount = 7;
+constexpr int fanTempSettingsCount = 6;
+
+uint8_t readValue(const QByteArray &data, const uint8_t address) {
+    return address < data.size() ? static_cast<uint8_t>(data.at(address)) : 0;
+}
+
+void writeBit(ReadWrite &rw, const uint8_t address, const uint8_t bit, const bool enabled) {
+    const QByteArray data = rw.readFromFile();
+    const uint8_t current = readValue(data, address);
+    rw.writeToFile(address, enabled ? current | bit : current & static_cast<uint8_t>(~bit));
+}
+
+void writeSettings(ReadWrite &rw, const QList<int> &values, const int expectedSize,
+                   const uint8_t startAddress) {
+    if (values.size() != expectedSize || std::any_of(values.cbegin(), values.cend(),
+            [](int value) { return value < 0 || value > 255; }))
+        return;
+    for (int i = 0; i < values.size(); ++i)
+        rw.writeToFile(static_cast<uint8_t>(startAddress + i), static_cast<uint8_t>(values.at(i)));
+}
+}
+
+void Helper::setBatteryThreshold(const int value) const {
+    if (value < 0 || value > 100) return;
+    const uint8_t current = readValue(rw.readFromFile(), batteryThresholdAddress) & 0x7F;
+    if (current != value) rw.writeToFile(batteryThresholdAddress, static_cast<uint8_t>(value | 0x80));
+}
+
+void Helper::setKeyboardBacklightMode(const bool enabled) const {
+    writeBit(rw, keyboardBacklightModeAddress, keyboardBacklightAutoTurnOffBit, enabled);
+}
+
+bool Helper::toggleKeyboardBacklightMode() const {
+    const bool enable = !getKeyboardBacklightMode();
+    writeBit(rw, keyboardBacklightModeAddress, keyboardBacklightAutoTurnOffBit, enable);
+    return enable;
+}
+
+void Helper::setKeyboardBrightness(const int value) const {
+    if (value < 0 || value > keyboardBacklightMaxState) return;
+    rw.writeToFile(keyboardBacklightAddress, static_cast<uint8_t>(keyboardBacklightBaseState | value));
+}
+
+void Helper::setUsbPowerShareState(const bool enabled) const {
+    writeBit(rw, usbPowerShareAddress, usbPowerShareBit, enabled);
+}
+
+void Helper::setFnMetaSwapState(const bool enabled) const {
+    writeBit(rw, fnMetaSwapAddress, fnMetaSwapBit, enabled);
+}
+
+void Helper::setCoolerBoostState(const bool enabled) const {
+    writeBit(rw, coolerBoostAddress, coolerBoostBit, enabled);
+}
+
+void Helper::setTurboMode(const bool enabled) const {
+    const uint8_t current = readValue(rw.readFromFile(), shiftModeAddress);
+    if (enabled && current == shiftModePerformance)
+        rw.writeToFile(shiftModeAddress, shiftModeTurbo);
+    else if (!enabled && current == shiftModeTurbo)
+        rw.writeToFile(shiftModeAddress, shiftModePerformance);
+}
+
+void Helper::setUserMode(const int mode) const {
+    uint8_t shiftMode = 0;
+    uint8_t fanMode = fanModeAuto;
+    switch (mode) {
+        case 0: shiftMode = shiftModePerformance; break; // performance
+        case 1: shiftMode = shiftModeBalanced; break; // balanced
+        case 2: shiftMode = shiftModeBalanced; fanMode = fanModeSilent; break; // silent
+        case 3: shiftMode = shiftModeBattery; fanMode = fanModeSilent; break; // eco silent
+        case 4: shiftMode = shiftModeTurbo; break;
+        default: return;
+    }
+    rw.writeToFile(shiftModeAddress, shiftMode);
+    const uint8_t currentFanMode = readValue(rw.readFromFile(), fanModeAddress);
+    if (currentFanMode != fanModeAdvanced)
+        rw.writeToFile(fanModeAddress, fanMode);
+}
+
+void Helper::setFan1SpeedSettings(const QList<int> &values) const {
+    writeSettings(rw, values, fanSpeedSettingsCount, fan1SpeedSettingStartAddress);
+}
+void Helper::setFan2SpeedSettings(const QList<int> &values) const {
+    writeSettings(rw, values, fanSpeedSettingsCount, fan2SpeedSettingStartAddress);
+}
+void Helper::setFan1TempSettings(const QList<int> &values) const {
+    writeSettings(rw, values, fanTempSettingsCount, fan1TempSettingStartAddress);
+}
+void Helper::setFan2TempSettings(const QList<int> &values) const {
+    writeSettings(rw, values, fanTempSettingsCount, fan2TempSettingStartAddress);
+}
+
+void Helper::setFanModeAdvanced(const bool enabled, const int userMode) const {
+    if (enabled) {
+        rw.writeToFile(fanModeAddress, fanModeAdvanced);
+        return;
+    }
+    const uint8_t fanMode = (userMode == 2 || userMode == 3) ? fanModeSilent : fanModeAuto;
+    rw.writeToFile(fanModeAddress, fanMode);
 }
 
 bool Helper::isEcModuleLoaded() const {
@@ -55,7 +304,7 @@ bool Helper::isEcModuleLoaded() const {
         return true;
     }
     if (isAcpiEc || isEcSys)
-        fprintf(stderr, "%s\n", qPrintable("The acpi_ec and ec_sys kernel modulee are not loaded"));
+        fprintf(stderr, "%s\n", qPrintable("The acpi_ec and ec_sys kernel module are not loaded"));
     return false;
 }
 
@@ -86,7 +335,10 @@ int main(int argc, char *argv[]) {
     auto *helper = new Helper(&obj);
     QObject::connect(&a, &QCoreApplication::aboutToQuit, helper, &Helper::aboutToQuit);
     helper->setProperty("value", "initial value");
-    QDBusConnection::systemBus().registerObject("/", &obj);
+    if (!QDBusConnection::systemBus().registerObject("/", &obj, QDBusConnection::ExportAdaptors)) {
+        fprintf(stderr, "%s\n", qPrintable(QDBusConnection::systemBus().lastError().message()));
+        return 1;
+    }
 
     if (!QDBusConnection::systemBus().registerService(SERVICE_NAME)) {
         fprintf(stderr, "%s\n", qPrintable(QDBusConnection::systemBus().lastError().message()));

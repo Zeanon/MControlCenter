@@ -21,7 +21,14 @@
 
 
 #include <string>
+#include <QtCore/QObject>
+#include <QtDBus/QDBusInterface>
 #include <QVector>
+#include <QByteArray>
+#include <QVariantMap>
+#include <QVariantList>
+#include <optional>
+#include <cstdint>
 
 enum class charging_state {
     battery_charging,
@@ -56,14 +63,16 @@ enum class fan_mode {
     unknown_fan_mode
 };
 
-class Operate {
+class Operate : public QObject {
+    Q_OBJECT
+
 public:
     Operate();
     void closeHelperApp() const;
     [[nodiscard]] bool isEcModuleLoaded() const;
     [[nodiscard]] bool loadEcModule() const;
     [[nodiscard]] bool updateEcData() const;
-    void updateEcDataAsync() const;
+    void updateEcDataAsync();
     [[nodiscard]] QString getEcVersion() const;
     [[nodiscard]] QString getEcBuild() const;
     [[nodiscard]] QString getModelName() const;
@@ -102,16 +111,24 @@ public:
     void setFan2SpeedSettings(QVector<int> value) const;
     void setFan1TempSettings(QVector<int> value) const;
     void setFan2TempSettings(QVector<int> value) const;
-    void setFanMode(uint8_t value) const;
     void setFanModeAdvanced(bool enabled) const;
 
-    [[nodiscard]] uint8_t getValue(uint8_t address) const;
-    void setValue(uint8_t address, uint8_t value) const;
 
     void loadSettings() const;
     void handleWakeEvent() const;
+
+    void quit() const;
+    QDBusInterface *iface = nullptr;
+
+signals:
+    void dataUpdated(bool valid);
+
 private:
-    void setUserModeValues(const uint8_t shiftMode, const uint8_t fanMode, const QString userMode) const;
+    mutable QVariantMap statusSnapshot;
+    QVariant value(const char *key, const QVariant &fallback = QVariant()) const;
+    QVector<int> intList(const char *key) const;
+    void printError(const QDBusError &error) const;
+    bool updatePending = false;
 };
 
 #endif // OPERATE_H
