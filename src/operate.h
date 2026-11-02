@@ -70,8 +70,9 @@ public:
     Operate();
     void closeHelperApp() const;
     [[nodiscard]] bool loadEcModule() const;
-    [[nodiscard]] bool updateEcData() const;
-    void updateEcDataAsync();
+    void startMonitoring() const;
+    void stopMonitoring() const;
+    [[nodiscard]] bool updateEcData();
     [[nodiscard]] bool isEcModuleLoaded() const;
     [[nodiscard]] bool isAcpiEc() const;
     [[nodiscard]] bool isEcSys() const;
@@ -117,17 +118,28 @@ public:
     void loadSettings() const;
     void handleWakeEvent() const;
 
+private:
     QDBusInterface *iface = nullptr;
 
-signals:
-    void dataUpdated(bool valid);
+    QVariantMap metricsSnapshot;
+    QVariantMap configurationSnapshot;
+    QVariantMap staticSnapshot;
 
-private:
-    mutable QVariantMap statusSnapshot;
-    QVariant value(const char *key, const QVariant &fallback = QVariant()) const;
-    QVector<int> intList(const char *key) const;
+    QVariant value(
+        const QVariantMap &snapshot,
+        const char *key,
+        const QVariant &fallback = {}
+    ) const;
+    QVector<int> intList(const QVariantMap &snapshot, const char *key) const;
     void printError(const QDBusError &error) const;
-    bool updatePending = false;
+
+private slots:
+    void onMetricsChanged(const QVariantMap &snapshot);
+    void onConfigurationChanged(const QVariantMap &snapshot);
+
+signals:
+    void metricsUpdated();
+    void configurationUpdated();
 };
 
 #endif // OPERATE_H

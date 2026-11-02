@@ -27,6 +27,7 @@
 #include <QList>
 #include <QString>
 #include <QVariantMap>
+#include <QTimer>
 
 class Helper : public QDBusAbstractAdaptor {
     Q_OBJECT
@@ -39,6 +40,8 @@ signals:
 
 public slots:
     Q_NOREPLY void quit() const;
+    Q_NOREPLY void startMonitoring();
+    Q_NOREPLY void stopMonitoring();
     [[nodiscard]] bool updateData() const;
     [[nodiscard]] QVariantMap getStatusSnapshot() const;
     [[nodiscard]] QString getEcVersion() const;
@@ -80,7 +83,22 @@ public slots:
     [[nodiscard]] bool isEcModuleLoaded() const;
     [[nodiscard]] bool isAcpiEc() const;
     [[nodiscard]] bool isEcSys() const;
-    [[nodiscard]] bool loadEcModule() const;
+    [[nodiscard]] bool loadEcModule();
+
+private:
+    QTimer *statusTimer = nullptr;
+
+    QVariantMap lastMetrics;
+    QVariantMap lastConfiguration;
+    QVariantMap getMetricsSnapshot() const;
+    QVariantMap getConfigurationSnapshot() const;
+
+private slots:
+    void checkStatusChanges();
+
+signals:
+    void MetricsChanged(const QVariantMap &metrics);
+    void ConfigurationChanged(const QVariantMap &configuration);
 };
 
 #endif // HELPER_H

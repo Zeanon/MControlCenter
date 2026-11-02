@@ -43,13 +43,10 @@ private:
     Ui::MainWindow *ui;
 
     void setTabsEnabled(const bool enabled) const;
-    void startRealtimeUpdate() const;
-    void stopRealtimeUpdate() const;
-    void setUpdateInterval(const int msec) const;
     void setModeFromSelection(const PowerProfile profile) const;
-    void realtimeUpdate() const;
     void loadConfigs() const;
     void loadSettings() const;
+
 
     [[nodiscard]] QString intToQString(const int value) const;
     void updateBatteryCharge() const;
@@ -178,5 +175,8 @@ private slots:
     void on_ecoSilentModeRadioButton_toggled(const bool checked) const;
 
     void clearSettings() const;
+
+    void updateMetrics() const;
+    void updateConfiguration() const;
 };
 #endif // MAINWINDOW_H

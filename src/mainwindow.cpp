@@ -22,6 +22,7 @@
 #include "settings.h"
 #include <QTimer>
 #include <QMessageBox>
+#include <syslog.h>
 
 Operate operate;
 PowerMonitor powerMonitor;
@@ -29,23 +30,22 @@ PowerMonitor powerMonitor;
 bool isActive = false;
 bool isUpdateDataError = false;
 
-QTimer *realtimeUpdateTimer = new QTimer;
-
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
-    connect(&operate, &Operate::dataUpdated,
-            this, [this](bool valid) {
-        if (!valid) {
-            setTabsEnabled(false);
-            isActive = false;
-            ui->EcBackendStatusLabel->setText(
-                tr("Failed to load both acpi_ec/ec_sys"));
-            return;
+    connect(&operate, &Operate::metricsUpdated,
+            this, &MainWindow::updateMetrics);
+
+    connect(&operate, &Operate::configurationUpdated,
+            this, [this]() {
+        if (!isActive) {
+            setTabsEnabled(true);
+            loadConfigs();
+            isActive = true;
         }
 
-        updateData();
+        updateConfiguration();
     });
 
     connect(ui->advancedFanControlCheckBox, &QCheckBox::toggled, this, &MainWindow::setFanModeAdvanced);
@@ -225,16 +225,24 @@ MainWindow::MainWindow(QWidget *parent)
     if (!operate.isEcModuleLoaded() && !operate.loadEcModule())
         QMessageBox::critical(nullptr, this->windowTitle(), tr("The ec_sys module could not be detected, it is required to control the embedded controller."));
 
-    if(operate.updateEcData()) {
+    if (operate.updateEcData()) {
         if (operate.getEcVersion() != "2622EMS1.112") {
-            QMessageBox::critical(nullptr, this->windowTitle(), tr("The EC version '") + operate.getEcVersion() + tr("' is not supported."));
+            QMessageBox::critical(
+                nullptr,
+                this->windowTitle(),
+                tr("The EC version '") + operate.getEcVersion() +
+                tr("' is not supported.")
+            );
             return;
         }
-        updateData();
-    }
 
-    connect(realtimeUpdateTimer, &QTimer::timeout, this, &MainWindow::realtimeUpdate);
-    setUpdateInterval(1000);
+        setTabsEnabled(true);
+        isActive = true;
+
+        loadConfigs();
+        updateMetrics();
+        updateConfiguration();
+    }
 
     // Timer to detect sleep and reapply Advanced Mode Fan if necessary
     connect(&timerSleepWatcher, &QTimer::timeout, this, &MainWindow::timerSleepTimeout);
@@ -317,64 +325,48 @@ void MainWindow::setTabsEnabled(const bool enabled) const {
         miscTrayMenu->setEnabled(enabled);
 }
 
-void MainWindow::startRealtimeUpdate() const {
-    realtimeUpdateTimer->start();
-}
-
-void MainWindow::stopRealtimeUpdate() const {
-    realtimeUpdateTimer->stop();
-}
-
-void MainWindow::setUpdateInterval(const int msec) const {
-    realtimeUpdateTimer->setInterval(msec);
-}
-
-void MainWindow::realtimeUpdate() const {
-    operate.updateEcDataAsync();
-}
-
-void MainWindow::updateData() const
+void MainWindow::updateMetrics() const
 {
-    if (isUpdateDataError || !operate.isEcModuleLoaded()) {
-        setTabsEnabled(false);
-
-        ui->EcBackendStatusLabel->setText(
-            tr("Failed to load both acpi_ec/ec_sys")
-        );
-
-        isActive = false;
+    if (!isActive)
         return;
-    }
 
-    if (!isActive) {
-        setTabsEnabled(true);
-        loadConfigs();
-        isActive = true;
-    }
-
-    // Battery
     updateBatteryCharge();
     updatePenCharge();
     updateChargingStatus();
 
-    // Temperatures
     updateCpuTemp();
     updateGpuTemp();
 
-    // Fans
-    updateFanMode();
     updateFan1Speed();
     updateFan2Speed();
+}
 
-    // Keyboard
-    updateKeyboardBrightness(operate.getKeyboardBrightness());
+void MainWindow::updateConfiguration() const
+{
+    if (!isActive)
+        return;
+
+    updateUserMode();
+    updateFanMode();
+
+    updateCoolerBoostState(operate.getCoolerBoostState());
+    updateBatteryThreshold(operate.getBatteryThreshold());
+
+    updateFanSpeedSettings();
+
     updateKeyboardBacklightMode(operate.getKeyboardBacklightMode());
+    updateKeyboardBrightness(operate.getKeyboardBrightness());
 
-    // Other settings
+    updateUsbPowerShareState(operate.getUsbPowerShareState());
+
     updateTurboMode(operate.getTurboMode());
     updateFnMetaSwapState(operate.getFnMetaSwapState());
+}
 
-    // EC backend
+void MainWindow::loadConfigs() const {
+    ui->ecVersionValueLabel->setText(operate.getEcVersion());
+    ui->ecBuildValueLabel->setText(operate.getEcBuild());
+    ui->modelNameValueLabel->setText(operate.getModelName());
     if (operate.isAcpiEc()) {
         ui->EcBackendStatusLabel->setText(tr("acpi_ec"));
     } else if (operate.isEcSys()) {
@@ -384,12 +376,6 @@ void MainWindow::updateData() const
             tr("Failed to load both acpi_ec/ec_sys")
         );
     }
-}
-
-void MainWindow::loadConfigs() const {
-    ui->ecVersionValueLabel->setText(operate.getEcVersion());
-    ui->ecBuildValueLabel->setText(operate.getEcBuild());
-    ui->modelNameValueLabel->setText(operate.getModelName());
 
     operate.loadSettings();
     updateUserMode();
@@ -570,34 +556,36 @@ void MainWindow::updateCoolerBoostState(const bool state) const {
     coolerBoostAction->setChecked(state);
 }
 
-void MainWindow::updateUserMode() const {
-    if (operate.updateEcData()) {
-        switch (operate.getUserMode()) {
-            case user_mode::balanced_mode:
-                ui->balancedModeRadioButton->click();
-                balancedMode->setChecked(true);
-                break;
-            case user_mode::performance_mode:
-                ui->performanceModeRadioButton->click();
-                performanceMode->setChecked(true);
-                break;
-            case user_mode::silent_mode:
-                ui->silentModeRadioButton->click();
-                silentMode->setChecked(true);
-                break;
-            case user_mode::eco_silent_mode:
-                ui->ecoSilentModeRadioButton->click();
-                ecoSilentMode->setChecked(true);
-                break;
-            case user_mode::unknown_mode:
-                //fall to default, happens on some models after booting
-            default:
-                ui->ecoSilentModeRadioButton->setChecked(false);
-                ui->silentModeRadioButton->setChecked(false);
-                ui->balancedModeRadioButton->setChecked(false);
-                ui->performanceModeRadioButton->setChecked(false);
-                break;
-        }
+void MainWindow::updateUserMode() const
+{
+    switch (operate.getUserMode()) {
+        case user_mode::balanced_mode:
+            ui->balancedModeRadioButton->click();
+            balancedMode->setChecked(true);
+            break;
+
+        case user_mode::performance_mode:
+            ui->performanceModeRadioButton->click();
+            performanceMode->setChecked(true);
+            break;
+
+        case user_mode::silent_mode:
+            ui->silentModeRadioButton->click();
+            silentMode->setChecked(true);
+            break;
+
+        case user_mode::eco_silent_mode:
+            ui->ecoSilentModeRadioButton->click();
+            ecoSilentMode->setChecked(true);
+            break;
+
+        case user_mode::unknown_mode:
+        default:
+            ui->ecoSilentModeRadioButton->setChecked(false);
+            ui->silentModeRadioButton->setChecked(false);
+            ui->balancedModeRadioButton->setChecked(false);
+            ui->performanceModeRadioButton->setChecked(false);
+            break;
     }
 }
 
@@ -817,13 +805,13 @@ void MainWindow::checkFanSettingsChanged() const {
 }
 
 void MainWindow::showEvent(QShowEvent *event) {
-    startRealtimeUpdate();
+    operate.startMonitoring();
     activateWindow();
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
     if (trayIcon && trayIcon->isVisible()) {
-        stopRealtimeUpdate();
+        operate.stopMonitoring();
         MainWindow::hide();
         event->ignore();
         return;

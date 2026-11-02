@@ -107,17 +107,65 @@ QVariantMap Helper::getStatusSnapshot() const {
     result.insert(QStringLiteral("isEcSys"), isEcSys());
     return result;
 }
-QString Helper::getEcVersion() const { return QString::fromLatin1(ecData().mid(0xA0, 12)); }
+
+QVariantMap Helper::getMetricsSnapshot() const
+{
+    QVariantMap result;
+
+    result.insert("batteryCharge", getBatteryCharge());
+    result.insert("chargingStatus", getChargingStatus());
+    result.insert("cpuTemp", getCpuTemp());
+    result.insert("gpuTemp", getGpuTemp());
+    result.insert("fan1Speed", getFan1Speed());
+    result.insert("fan2Speed", getFan2Speed());
+
+    return result;
+}
+
+QVariantMap Helper::getConfigurationSnapshot() const
+{
+    QVariantMap result;
+
+    result.insert("batteryThreshold", getBatteryThreshold());
+    result.insert("keyboardBacklightMode", getKeyboardBacklightMode());
+    result.insert("keyboardBrightness", getKeyboardBrightness());
+    result.insert("usbPowerShareState", getUsbPowerShareState());
+    result.insert("fnMetaSwapState", getFnMetaSwapState());
+    result.insert("coolerBoostState", getCoolerBoostState());
+    result.insert("userMode", getUserMode());
+    result.insert("fanMode", getFanMode());
+
+    const auto toVariantList = [](const QList<int> &values) {
+        QVariantList list;
+        for (const int value : values)
+            list.append(value);
+        return list;
+    };
+
+    result.insert("fan1SpeedSettings", toVariantList(getFan1SpeedSettings()));
+    result.insert("fan2SpeedSettings", toVariantList(getFan2SpeedSettings()));
+    result.insert("fan1TempSettings", toVariantList(getFan1TempSettings()));
+    result.insert("fan2TempSettings", toVariantList(getFan2TempSettings()));
+
+    return result;
+}
+
+QString Helper::getEcVersion() const {
+    return QString::fromLatin1(ecData().mid(0xA0, 12));
+}
+
 QString Helper::getEcBuild() const {
     const std::string build = ecData().mid(0xAC, 16).toStdString();
     if (build.size() < 16) return QString::fromStdString(build);
     return QString::fromStdString(build.substr(0, 2) + "/" + build.substr(2, 2) + "/" + build.substr(4, 4) + " " + build.substr(8, 8));
 }
+
 QString Helper::getModelName() const {
     QFile file("/sys/devices/virtual/dmi/id/product_name");
     if (file.open(QIODevice::ReadOnly)) return QString::fromLocal8Bit(file.readAll()).trimmed();
     return {};
 }
+
 int Helper::getBatteryCharge() const { return static_cast<int>(readValueLocal(ecData(), readBatteryChargeAddress)) - 1; }
 int Helper::getBatteryThreshold() const { return readValueLocal(ecData(), readBatteryThresholdAddress) & 0x7F; }
 int Helper::getChargingStatus() const {
@@ -316,16 +364,63 @@ bool Helper::isEcSys() const {
     return rw.isEcSys();
 }
 
-bool Helper::loadEcModule() const {
+bool Helper::loadEcModule() {
     fprintf(stderr, "%s\n", qPrintable("Trying to load the ec_sys kernel module"));
     auto *process = new QProcess();
     process->start("sh", QStringList() << "-c" << "/usr/sbin/modprobe ec_sys write_support=1 2>&1");
     process->waitForFinished(1000);
     if (QByteArray output = process->readAllStandardOutput(); output != "")
         fprintf(stderr, "%s", qPrintable(output));
-    if (isEcModuleLoaded())
+    if (isEcModuleLoaded()) {
         return true;
+    }
     return false;
+}
+
+void Helper::startMonitoring() {
+    if (statusTimer)
+        return;
+
+    if (!updateData()) {
+        return;
+    }
+
+    lastMetrics = getMetricsSnapshot();
+    lastConfiguration = getConfigurationSnapshot();
+
+    statusTimer = new QTimer(this);
+    statusTimer->setInterval(500);
+
+    connect(statusTimer, &QTimer::timeout,
+            this, &Helper::checkStatusChanges);
+
+    statusTimer->start();
+}
+
+void Helper::stopMonitoring() {
+    if (!statusTimer)
+        return;
+    
+    statusTimer->stop();
+    statusTimer = nullptr;
+}
+
+void Helper::checkStatusChanges() {
+    if (!updateData())
+        return;
+
+    const QVariantMap metrics = getMetricsSnapshot();
+    const QVariantMap configuration = getConfigurationSnapshot();
+
+    if (metrics != lastMetrics) {
+        lastMetrics = metrics;
+        emit MetricsChanged(metrics);
+    }
+
+    if (configuration != lastConfiguration) {
+        lastConfiguration = configuration;
+        emit ConfigurationChanged(configuration);
+    }
 }
 
 int main(int argc, char *argv[]) {
@@ -333,8 +428,9 @@ int main(int argc, char *argv[]) {
 
     QObject obj;
     auto *helper = new Helper(&obj);
+
     QObject::connect(&a, &QCoreApplication::aboutToQuit, helper, &Helper::aboutToQuit);
-    helper->setProperty("value", "initial value");
+
     if (!QDBusConnection::systemBus().registerObject("/", &obj, QDBusConnection::ExportAdaptors)) {
         fprintf(stderr, "%s\n", qPrintable(QDBusConnection::systemBus().lastError().message()));
         return 1;
@@ -342,8 +438,10 @@ int main(int argc, char *argv[]) {
 
     if (!QDBusConnection::systemBus().registerService(SERVICE_NAME)) {
         fprintf(stderr, "%s\n", qPrintable(QDBusConnection::systemBus().lastError().message()));
-        exit(1);
+        return 1;
     }
+
+    helper->startMonitoring();
 
     return QCoreApplication::exec();
 }

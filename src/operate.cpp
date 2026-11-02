@@ -34,11 +34,51 @@ inline constexpr uint8_t fanTempSettingsCount = 6;
 const QString settingsGroup = "Settings/";
 
 Operate::Operate() {
-    if (!QDBusConnection::systemBus().isConnected()) {
-        fprintf(stderr, "Cannot connect to the D-Bus system bus");
+    QDBusConnection bus = QDBusConnection::systemBus();
+
+    if (!bus.isConnected()) {
+        fprintf(stderr, "Cannot connect to the D-Bus system bus\n");
         return;
     }
-    iface = new QDBusInterface(SERVICE_NAME, "/", INTERFACE_NAME, QDBusConnection::systemBus(), this);
+
+    iface = new QDBusInterface(
+        SERVICE_NAME,
+        "/",
+        INTERFACE_NAME,
+        bus,
+        this
+    );
+
+    if (!iface->isValid()) {
+        printError(iface->lastError());
+        delete iface;
+        iface = nullptr;
+        return;
+    }
+
+    const bool metricsConnected = bus.connect(
+        SERVICE_NAME,
+        "/",
+        INTERFACE_NAME,
+        "MetricsChanged",
+        this,
+        SLOT(onMetricsChanged(QVariantMap))
+    );
+
+    const bool configurationConnected = bus.connect(
+        SERVICE_NAME,
+        "/",
+        INTERFACE_NAME,
+        "ConfigurationChanged",
+        this,
+        SLOT(onConfigurationChanged(QVariantMap))
+    );
+
+    if (!metricsConnected)
+        fprintf(stderr, "Could not connect MetricsChanged signal\n");
+
+    if (!configurationConnected)
+        fprintf(stderr, "Could not connect ConfigurationChanged signal\n");
 }
 
 void Operate::closeHelperApp() const {
@@ -56,68 +96,91 @@ bool Operate::loadEcModule() const {
     return false;
 }
 
-bool Operate::updateEcData() const {
-    if (!iface) return false;
+void Operate::startMonitoring() const {
+    if (!iface) return;
+    iface->call("startMonitoring");
+    printError(iface->lastError());
+}
 
-    const QDBusReply<QVariantMap> reply = iface->call("getStatusSnapshot");
+void Operate::stopMonitoring() const {
+    if (!iface) return;
+    iface->call("stopMonitoring");
+    printError(iface->lastError());
+}
+
+bool Operate::updateEcData() {
+    if (!iface)
+        return false;
+
+    const QDBusReply<QVariantMap> reply =
+        iface->call("getStatusSnapshot");
 
     if (!reply.isValid()) {
         printError(iface->lastError());
         return false;
     }
 
-    statusSnapshot = reply.value();
-    return statusSnapshot.value("valid").toBool();
+    const QVariantMap snapshot = reply.value();
+
+    if (!snapshot.value("valid").toBool())
+        return false;
+
+    // Häufig wechselnde Messwerte
+    metricsSnapshot = {
+        {"batteryCharge", snapshot.value("batteryCharge")},
+        {"chargingStatus", snapshot.value("chargingStatus")},
+        {"cpuTemp", snapshot.value("cpuTemp")},
+        {"gpuTemp", snapshot.value("gpuTemp")},
+        {"fan1Speed", snapshot.value("fan1Speed")},
+        {"fan2Speed", snapshot.value("fan2Speed")}
+    };
+
+    // Konfiguration und Betriebszustände
+    configurationSnapshot = {
+        {"batteryThreshold", snapshot.value("batteryThreshold")},
+        {"fan1SpeedSettings", snapshot.value("fan1SpeedSettings")},
+        {"fan2SpeedSettings", snapshot.value("fan2SpeedSettings")},
+        {"fan1TempSettings", snapshot.value("fan1TempSettings")},
+        {"fan2TempSettings", snapshot.value("fan2TempSettings")},
+        {"keyboardBacklightMode", snapshot.value("keyboardBacklightMode")},
+        {"keyboardBrightness", snapshot.value("keyboardBrightness")},
+        {"usbPowerShareState", snapshot.value("usbPowerShareState")},
+        {"fnMetaSwapState", snapshot.value("fnMetaSwapState")},
+        {"coolerBoostState", snapshot.value("coolerBoostState")},
+        {"userMode", snapshot.value("userMode")},
+        {"fanMode", snapshot.value("fanMode")}
+    };
+
+    // Statische Informationen
+    staticSnapshot = {
+        {"ecVersion", snapshot.value("ecVersion")},
+        {"ecBuild", snapshot.value("ecBuild")},
+        {"modelName", snapshot.value("modelName")},
+        {"ecModuleLoaded", snapshot.value("ecModuleLoaded")},
+        {"isAcpiEc", snapshot.value("isAcpiEc")},
+        {"isEcSys", snapshot.value("isEcSys")}
+    };
+
+    return true;
 }
 
-void Operate::updateEcDataAsync() {
-    if (!iface)
-        return;
-
-    if (updatePending)
-        return;
-
-    updatePending = true;
-
-    auto *watcher = new QDBusPendingCallWatcher(
-        iface->asyncCall("getStatusSnapshot"), this
-    );
-
-    connect(watcher, &QDBusPendingCallWatcher::finished,
-            this, [this](QDBusPendingCallWatcher *watcher) {
-
-        const QDBusPendingReply<QVariantMap> reply = *watcher;
-
-        bool valid = false;
-
-        if (reply.isValid()) {
-            statusSnapshot = reply.value();
-            valid = statusSnapshot.value("valid").toBool();
-        } else {
-            printError(reply.error());
-        }
-
-        updatePending = false;
-
-        emit dataUpdated(valid);
-
-        watcher->deleteLater();
-    });
+inline QVariant Operate::value(
+    const QVariantMap &snapshot,
+    const char *key,
+    const QVariant &fallback
+) const {
+    return snapshot.value(QString::fromLatin1(key), fallback);
 }
 
-inline QVariant Operate::value(const char *key, const QVariant &fallback) const {
-    return statusSnapshot.value(QString::fromLatin1(key), fallback);
-}
-
-inline QVector<int> Operate::intList(const char *key) const
-{
+QVector<int> Operate::intList(
+    const QVariantMap &snapshot,
+    const char *key
+) const {
     QVector<int> result;
-
-    const QVariant data = value(key);
+    const QVariant data = value(snapshot, key);
 
     if (data.metaType().id() == QMetaType::QVariantList) {
         const QVariantList values = data.toList();
-
         result.reserve(values.size());
 
         for (const QVariant &item : values)
@@ -141,91 +204,93 @@ inline QVector<int> Operate::intList(const char *key) const
 }
 
 bool Operate::isEcModuleLoaded() const {
-    return value("ecModuleLoaded").toBool();
+    return value(staticSnapshot, "ecModuleLoaded").toBool();
 }
 
 bool Operate::isAcpiEc() const {
-    return value("isAcpiEc").toBool();
+    return value(staticSnapshot, "isAcpiEc").toBool();
 }
 
 bool Operate::isEcSys() const {
-    return value("isEcSys").toBool();
+    return value(staticSnapshot, "isEcSys").toBool();
 }
 
 QString Operate::getEcVersion() const {
-    return value("ecVersion").toString();
+    return value(staticSnapshot, "ecVersion").toString();
 }
 
 QString Operate::getEcBuild() const {
-    return value("ecBuild").toString();
+    return value(staticSnapshot, "ecBuild").toString();
 }
 
 QString Operate::getModelName() const {
-    return value("modelName").toString();
+    return value(staticSnapshot, "modelName").toString();
 }
 
 uint8_t Operate::getBatteryCharge() const {
-    return static_cast<uint8_t>(value("batteryCharge", 0).toInt());
-}
-
-uint8_t Operate::getBatteryThreshold() const {
-    return static_cast<uint8_t>(value("batteryThreshold", 0).toInt());
+    return static_cast<uint8_t>(
+        value(metricsSnapshot, "batteryCharge", 0).toInt()
+    );
 }
 
 charging_state Operate::getChargingStatus() const {
-    return static_cast<charging_state>(value("chargingStatus", 5).toInt());
+    return static_cast<charging_state>(
+        value(metricsSnapshot, "chargingStatus", 5).toInt()
+    );
 }
 
 uint8_t Operate::getCpuTemp() const {
-    return static_cast<uint8_t>(value("cpuTemp", 0).toInt());
+    return static_cast<uint8_t>(
+        value(metricsSnapshot, "cpuTemp", 0).toInt()
+    );
 }
 
 std::optional<uint8_t> Operate::getGpuTemp() const {
-    const int t = value("gpuTemp", -1).toInt(); if (t < 0) return std::nullopt; return static_cast<uint8_t>(t);
+    const int t = value(metricsSnapshot, "gpuTemp", -1).toInt();
+    if (t < 0)
+        return std::nullopt;
+    return static_cast<uint8_t>(t);
 }
 
 int Operate::getFan1Speed() const {
-    return value("fan1Speed", 0).toInt();
+    return value(metricsSnapshot, "fan1Speed", 0).toInt();
 }
 
 std::optional<int> Operate::getFan2Speed() const {
-    const int v = value("fan2Speed", -1).toInt(); if (v < 0) return std::nullopt; return v;
+    const int v = value(metricsSnapshot, "fan2Speed", -1).toInt();
+    if (v < 0)
+        return std::nullopt;
+    return v;
 }
 
-QVector<int> Operate::getFan1SpeedSettings() const {
-    return intList("fan1SpeedSettings");
-}
-
-QVector<int> Operate::getFan2SpeedSettings() const {
-    return intList("fan2SpeedSettings");
-}
-
-QVector<int> Operate::getFan1TempSettings() const {
-    return intList("fan1TempSettings");
-}
-
-QVector<int> Operate::getFan2TempSettings() const {
-    return intList("fan2TempSettings");
+uint8_t Operate::getBatteryThreshold() const {
+    return static_cast<uint8_t>(
+        value(configurationSnapshot, "batteryThreshold", 0).toInt()
+    );
 }
 
 uint8_t Operate::getKeyboardBacklightMode() const {
-    return static_cast<uint8_t>(value("keyboardBacklightMode", 0).toInt());
+    return static_cast<uint8_t>(
+        value(configurationSnapshot, "keyboardBacklightMode", 0).toInt()
+    );
 }
 
 uint8_t Operate::getKeyboardBrightness() const {
-    return static_cast<uint8_t>(value("keyboardBrightness", 0).toInt());
+    return static_cast<uint8_t>(
+        value(configurationSnapshot, "keyboardBrightness", 0).toInt()
+    );
 }
 
 bool Operate::getUsbPowerShareState() const {
-    return value("usbPowerShareState", false).toBool();
+    return value(configurationSnapshot, "usbPowerShareState", false).toBool();
 }
 
 bool Operate::getFnMetaSwapState() const {
-    return value("fnMetaSwapState", false).toBool();
+    return value(configurationSnapshot, "fnMetaSwapState", false).toBool();
 }
 
 bool Operate::getCoolerBoostState() const {
-    return value("coolerBoostState", false).toBool();
+    return value(configurationSnapshot, "coolerBoostState", false).toBool();
 }
 
 bool Operate::getTurboMode() const {
@@ -233,11 +298,31 @@ bool Operate::getTurboMode() const {
 }
 
 user_mode Operate::getUserMode() const {
-    return static_cast<user_mode>(value("userMode", 4).toInt());
+    return static_cast<user_mode>(
+        value(configurationSnapshot, "userMode", 4).toInt()
+    );
 }
 
 fan_mode Operate::getFanMode() const {
-    return static_cast<fan_mode>(value("fanMode", 4).toInt());
+    return static_cast<fan_mode>(
+        value(configurationSnapshot, "fanMode", 4).toInt()
+    );
+}
+
+QVector<int> Operate::getFan1SpeedSettings() const {
+    return intList(configurationSnapshot, "fan1SpeedSettings");
+}
+
+QVector<int> Operate::getFan2SpeedSettings() const {
+    return intList(configurationSnapshot, "fan2SpeedSettings");
+}
+
+QVector<int> Operate::getFan1TempSettings() const {
+    return intList(configurationSnapshot, "fan1TempSettings");
+}
+
+QVector<int> Operate::getFan2TempSettings() const {
+    return intList(configurationSnapshot, "fan2TempSettings");
 }
 
 
@@ -281,7 +366,6 @@ void Operate::setCoolerBoostState(const bool enabled) const {
 
 void Operate::setTurboMode(const bool enabled) const {
     if (!iface) return;
-    Settings::setValue("Settings/TurboMode", enabled);
     Settings::setValue("Settings/TurboMode", enabled);
     iface->call("setTurboMode", enabled);
     printError(iface->lastError());
@@ -384,4 +468,14 @@ void Operate::handleWakeEvent() const {
 void Operate::printError(const QDBusError &error) const {
     if (error.isValid())
         fprintf(stderr, "Call failed: %s\n", qPrintable(error.message()));
+}
+
+void Operate::onMetricsChanged(const QVariantMap &snapshot) {
+    metricsSnapshot = snapshot;
+    emit metricsUpdated();
+}
+
+void Operate::onConfigurationChanged(const QVariantMap &snapshot) {
+    configurationSnapshot = snapshot;
+    emit configurationUpdated();
 }
