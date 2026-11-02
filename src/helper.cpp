@@ -46,7 +46,7 @@ bool Helper::isEcModuleLoaded() const {
 }
 
 bool Helper::loadEcModule() const {
-    const QDBusReply<bool> reply = iface->call("loadEcSysModule");
+    const QDBusReply<bool> reply = iface->call("loadEcModule");
     if (reply.isValid())
         return reply.value();
     printError(iface->lastError());
