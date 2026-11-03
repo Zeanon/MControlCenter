@@ -21,13 +21,12 @@
 
 #include "service.h"
 
-#include <QtCore/QObject>
 #include <QtDBus/QDBusAbstractAdaptor>
-#include <QtDBus/QDBusVariant>
-#include <QList>
-#include <QString>
+#include <QtCore/QObject>
 #include <QVariantMap>
+#include <QString>
 #include <QTimer>
+#include <QList>
 
 class Helper : public QDBusAbstractAdaptor {
     Q_OBJECT
