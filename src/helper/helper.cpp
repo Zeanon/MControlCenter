@@ -258,48 +258,59 @@ void writeSettings(ReadWrite &rw, const QList<int> &values, const int expectedSi
 }
 }
 
-void Helper::setBatteryThreshold(const int value) const {
+void Helper::setBatteryThreshold(const int value) {
     if (value < 0 || value > 100) return;
     const uint8_t current = readValue(rw.readFromFile(), batteryThresholdAddress) & 0x7F;
     if (current != value) rw.writeToFile(batteryThresholdAddress, static_cast<uint8_t>(value | 0x80));
+    checkStatusChanges();
 }
 
-void Helper::setKeyboardBacklightMode(const bool enabled) const {
+void Helper::setKeyboardBacklightMode(const bool enabled) {
     writeBit(rw, keyboardBacklightModeAddress, keyboardBacklightAutoTurnOffBit, enabled);
+    checkStatusChanges();
 }
 
-bool Helper::toggleKeyboardBacklightMode() const {
+bool Helper::toggleKeyboardBacklightMode(const bool forceUpdate) {
+    if (forceUpdate && !updateData()) {
+        return false;
+    }
     const bool enable = !getKeyboardBacklightMode();
     writeBit(rw, keyboardBacklightModeAddress, keyboardBacklightAutoTurnOffBit, enable);
+    checkStatusChanges();
     return enable;
 }
 
-void Helper::setKeyboardBrightness(const int value) const {
+void Helper::setKeyboardBrightness(const int value) {
     if (value < 0 || value > keyboardBacklightMaxState) return;
     rw.writeToFile(keyboardBacklightAddress, static_cast<uint8_t>(keyboardBacklightBaseState | value));
+    checkStatusChanges();
 }
 
-void Helper::setUsbPowerShareState(const bool enabled) const {
+void Helper::setUsbPowerShareState(const bool enabled) {
     writeBit(rw, usbPowerShareAddress, usbPowerShareBit, enabled);
+    checkStatusChanges();
 }
 
-void Helper::setFnMetaSwapState(const bool enabled) const {
+void Helper::setFnMetaSwapState(const bool enabled) {
     writeBit(rw, fnMetaSwapAddress, fnMetaSwapBit, enabled);
+    checkStatusChanges();
 }
 
-void Helper::setCoolerBoostState(const bool enabled) const {
+void Helper::setCoolerBoostState(const bool enabled) {
     writeBit(rw, coolerBoostAddress, coolerBoostBit, enabled);
+    checkStatusChanges();
 }
 
-void Helper::setTurboMode(const bool enabled) const {
+void Helper::setTurboMode(const bool enabled) {
     const uint8_t current = readValue(rw.readFromFile(), shiftModeAddress);
     if (enabled && current == shiftModePerformance)
         rw.writeToFile(shiftModeAddress, shiftModeTurbo);
     else if (!enabled && current == shiftModeTurbo)
         rw.writeToFile(shiftModeAddress, shiftModePerformance);
+    checkStatusChanges();
 }
 
-void Helper::setUserMode(const int mode) const {
+void Helper::setUserMode(const int mode) {
     uint8_t shiftMode = 0;
     uint8_t fanMode = fanModeAuto;
     switch (mode) {
@@ -314,28 +325,34 @@ void Helper::setUserMode(const int mode) const {
     const uint8_t currentFanMode = readValue(rw.readFromFile(), fanModeAddress);
     if (currentFanMode != fanModeAdvanced)
         rw.writeToFile(fanModeAddress, fanMode);
+    checkStatusChanges();
 }
 
-void Helper::setFan1SpeedSettings(const QList<int> &values) const {
+void Helper::setFan1SpeedSettings(const QList<int> &values) {
     writeSettings(rw, values, fanSpeedSettingsCount, fan1SpeedSettingStartAddress);
+    checkStatusChanges();
 }
-void Helper::setFan2SpeedSettings(const QList<int> &values) const {
+void Helper::setFan2SpeedSettings(const QList<int> &values) {
     writeSettings(rw, values, fanSpeedSettingsCount, fan2SpeedSettingStartAddress);
+    checkStatusChanges();
 }
-void Helper::setFan1TempSettings(const QList<int> &values) const {
+void Helper::setFan1TempSettings(const QList<int> &values) {
     writeSettings(rw, values, fanTempSettingsCount, fan1TempSettingStartAddress);
+    checkStatusChanges();
 }
-void Helper::setFan2TempSettings(const QList<int> &values) const {
+void Helper::setFan2TempSettings(const QList<int> &values) {
     writeSettings(rw, values, fanTempSettingsCount, fan2TempSettingStartAddress);
+    checkStatusChanges();
 }
 
-void Helper::setFanModeAdvanced(const bool enabled, const int userMode) const {
+void Helper::setFanModeAdvanced(const bool enabled, const int userMode) {
     if (enabled) {
         rw.writeToFile(fanModeAddress, fanModeAdvanced);
-        return;
+    } else {
+        const uint8_t fanMode = (userMode == 2 || userMode == 3) ? fanModeSilent : fanModeAuto;
+        rw.writeToFile(fanModeAddress, fanMode);
     }
-    const uint8_t fanMode = (userMode == 2 || userMode == 3) ? fanModeSilent : fanModeAuto;
-    rw.writeToFile(fanModeAddress, fanMode);
+    checkStatusChanges();
 }
 
 bool Helper::isEcModuleLoaded() const {
