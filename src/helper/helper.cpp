@@ -27,7 +27,6 @@
 
 #include <algorithm>
 #include <string>
-#include <syslog.h>
 
 ReadWrite rw;
 static QByteArray cachedEcData;
@@ -186,8 +185,8 @@ QVariantMap Helper::getStatusSnapshot() const {
     result.insert(QStringLiteral("usbPowerShareState"), getUsbPowerShareState());
     result.insert(QStringLiteral("fnMetaSwapState"), getFnMetaSwapState());
     result.insert(QStringLiteral("coolerBoostState"), getCoolerBoostState());
-    result.insert(QStringLiteral("userMode"), static_cast<int8_t>(getUserMode()));
-    result.insert(QStringLiteral("fanMode"), static_cast<int8_t>(getFanMode()));
+    result.insert(QStringLiteral("userMode"), getUserMode());
+    result.insert(QStringLiteral("fanMode"), getFanMode());
     result.insert(QStringLiteral("ecModuleLoaded"), isEcModuleLoaded());
     result.insert(QStringLiteral("isAcpiEc"), isAcpiEc());
     result.insert(QStringLiteral("isEcSys"), isEcSys());
@@ -217,8 +216,8 @@ QVariantMap Helper::getConfigurationSnapshot() const
     result.insert("usbPowerShareState", getUsbPowerShareState());
     result.insert("fnMetaSwapState", getFnMetaSwapState());
     result.insert("coolerBoostState", getCoolerBoostState());
-    result.insert("userMode", static_cast<int8_t>(getUserMode()));
-    result.insert("fanMode", static_cast<int8_t>(getFanMode()));
+    result.insert("userMode", getUserMode());
+    result.insert("fanMode", getFanMode());
     result.insert("fan1SpeedSettings", toVariantList(getFan1SpeedSettings()));
     result.insert("fan2SpeedSettings", toVariantList(getFan2SpeedSettings()));
     result.insert("fan1TempSettings", toVariantList(getFan1TempSettings()));
@@ -327,34 +326,34 @@ bool Helper::getCoolerBoostState() const {
     return readValue(ecData(), coolerBoostAddress) & coolerBoostBit;
 }
 
-UserMode Helper::getUserMode() const {
+int Helper::getUserMode() const {
     const auto data = ecData();
     switch (readValue(data, shiftModeAddress)) {
         case shiftModeTurbo:
-            return UserMode::Turbo;
+            return static_cast<int>(UserMode::Turbo);
         case shiftModePerformance:
-            return UserMode::Performance;
+            return static_cast<int>(UserMode::Performance);
         case shiftModeBalanced:
-            return readValue(data, fanModeAddress) == fanModeSilent ? UserMode::Silent : UserMode::Balanced;
+            return static_cast<int>(readValue(data, fanModeAddress) == fanModeSilent ? UserMode::Silent : UserMode::Balanced);
         case shiftModeEco:
-            return UserMode::Eco;
+            return static_cast<int>(UserMode::Eco);
         default:
-            return UserMode::Unknown;
+            return static_cast<int>(UserMode::Unknown);
     }
 }
 
-FanMode Helper::getFanMode() const {
+int Helper::getFanMode() const {
     switch (readValue(ecData(), fanModeAddress)) {
         case fanModeAuto:
-            return FanMode::Auto;
+            return static_cast<int>(FanMode::Auto);
         case fanModeSilent:
-            return FanMode::Silent;
+            return static_cast<int>(FanMode::Silent);
         case fanModeBasic:
-            return FanMode::Basic;
+            return static_cast<int>(FanMode::Basic);
         case fanModeAdvanced:
-            return FanMode::Advanced;
+            return static_cast<int>(FanMode::Advanced);
         default:
-            return FanMode::Unknown;
+            return static_cast<int>(FanMode::Unknown);
     }
 }
 
@@ -536,7 +535,6 @@ bool Helper::isEcSys() const {
 }
 
 bool Helper::loadEcModule() {
-    fprintf(stderr, "%s\n", qPrintable("Trying to load the ec_sys kernel module"));
     auto *process = new QProcess();
     process->start("sh", QStringList() << "-c" << "/usr/sbin/modprobe ec_sys write_support=1 2>&1");
     process->waitForFinished(1000);

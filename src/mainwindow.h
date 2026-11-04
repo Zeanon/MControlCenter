@@ -20,11 +20,13 @@
 #define MAINWINDOW_H
 
 #include "powermonitor.h"
-#include <QMainWindow>
-#include <QCloseEvent>
-#include <QSystemTrayIcon>
-#include <QtWidgets>
+#include "operate.h"
+
 #include <QDBusPendingCallWatcher>
+#include <QSystemTrayIcon>
+#include <QCloseEvent>
+#include <QMainWindow>
+#include <QtWidgets>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -57,13 +59,13 @@ private:
     void updateGpuTemp() const;
     void updateFan1Speed() const;
     void updateFan2Speed() const;
-    void updateKeyboardBacklightMode(const uint8_t index) const;
-    void updateKeyboardBrightness(const uint8_t value) const;
-    void updateUsbPowerShareState(const bool state) const;
-    void updateTurboMode(const bool state) const;
-    void updateFnMetaSwapState(const bool state) const;
-    void updateCoolerBoostState(const bool state) const;
-    void updateUserMode() const;
+    void updateKeyboardBacklightMode(const uint8_t &index) const;
+    void updateKeyboardBrightness(const uint8_t &value) const;
+    void updateUsbPowerShareState(const bool &state) const;
+    void updateTurboMode(const bool &state) const;
+    void updateFnMetaSwapState(const bool &state) const;
+    void updateCoolerBoostState(const bool &state) const;
+    void updateUserMode(const UserMode &userMode) const;
 
     void updateFanMode() const;
     void updateFanSpeedSettings() const;
@@ -144,10 +146,10 @@ private slots:
     void on_ChargerStateChange(const bool isCharging) const;
     void on_PowerProfileChange(const PowerProfile profile) const;
 
-    void on_bestMobilityRadioButton_toggled(const bool checked) const;
-    void on_balancedBatteryRadioButton_toggled(const bool checked) const;
-    void on_bestBatteryRadioButton_toggled(const bool checked) const;
-    void on_customBatteryThresholdRadioButton_toggled(const bool checked) const;
+    void on_bestMobilityRadioButton_clicked(const bool checked) const;
+    void on_balancedBatteryRadioButton_clicked(const bool checked) const;
+    void on_bestBatteryRadioButton_clicked(const bool checked) const;
+    void on_customBatteryThresholdRadioButton_clicked(const bool checked) const;
     void on_customBatteryThresholdSpinBox_valueChanged(const int arg1) const;
     void on_customBatteryApplyButton_clicked() const;
     void on_clearSettingsButton_clicked() const;
@@ -166,13 +168,13 @@ private slots:
 
     void on_userModeOnBatteryComboBox_currentIndexChanged(const int index) const;
     void on_userModeOnChargerComboBox_currentIndexChanged(const int index) const;
-    void on_autoPPDCheckBox_toggled(const bool checked) const;
-    void on_autoAcDcProfilesGroupBox_toggled(const bool active) const;
+    void on_autoPPDCheckBox_clicked(const bool checked) const;
+    void on_autoAcDcProfilesGroupBox_clicked(const bool active) const;
 
-    void on_performanceModeRadioButton_toggled(const bool checked) const;
-    void on_balancedModeRadioButton_toggled(const bool checked) const;
-    void on_silentModeRadioButton_toggled(const bool checked) const;
-    void on_ecoSilentModeRadioButton_toggled(const bool checked) const;
+    void on_performanceModeRadioButton_clicked(const bool checked) const;
+    void on_balancedModeRadioButton_clicked(const bool checked) const;
+    void on_silentModeRadioButton_clicked(const bool checked) const;
+    void on_ecoSilentModeRadioButton_clicked(const bool checked) const;
 
     void clearSettings() const;
 

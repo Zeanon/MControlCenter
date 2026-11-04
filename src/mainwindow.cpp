@@ -17,12 +17,12 @@
  */
 
 #include "mainwindow.h"
+
 #include "./ui_mainwindow.h"
-#include "operate.h"
 #include "settings.h"
-#include <QTimer>
+
 #include <QMessageBox>
-#include <syslog.h>
+#include <QTimer>
 
 Operate operate;
 PowerMonitor powerMonitor;
@@ -259,7 +259,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::loadSettings() const {
-    ui->autoAcDcProfilesGroupBox->setChecked(Settings::getValue("Settings/autoAcDcProfilesState").toBool());
+    on_autoAcDcProfilesGroupBox_clicked(Settings::getValue("Settings/autoAcDcProfilesState").toBool());
     if (!Settings::isValueExist("Settings/UserModeOnBattery")) {
         Settings::setValue("Settings/UserModeOnBattery", ui->userModeOnBatteryComboBox->currentIndex());
     }
@@ -268,7 +268,7 @@ void MainWindow::loadSettings() const {
         Settings::setValue("Settings/UserModeOnCharger", ui->userModeOnChargerComboBox->currentIndex());
     }
     ui->userModeOnChargerComboBox->setCurrentIndex(Settings::getValue("Settings/UserModeOnCharger").toInt());
-    ui->autoPPDCheckBox->setChecked(Settings::getValue("Settings/autoPPDstate").toBool());
+    on_autoPPDCheckBox_clicked(Settings::getValue("Settings/autoPPDstate").toBool());
 
     // init the custom battery threshold
     if (!Settings::isValueExist("Settings/CustomBatteryThreshold")) {
@@ -346,7 +346,7 @@ void MainWindow::updateConfiguration() const
     if (!isActive)
         return;
 
-    updateUserMode();
+    updateUserMode(operate.getUserMode());
     updateFanMode();
 
     updateCoolerBoostState(operate.getCoolerBoostState());
@@ -383,7 +383,7 @@ void MainWindow::loadConfigs() const {
     }
 
     operate.loadSettings();
-    updateUserMode();
+    updateUserMode(operate.getUserMode());
     updateCoolerBoostState(operate.getCoolerBoostState());
 
     updateBatteryThreshold(operate.getBatteryThreshold());
@@ -435,20 +435,20 @@ hide:
 void MainWindow::updateBatteryThreshold(uint8_t batteryThreshold) const {
     switch (Settings::getValue("Settings/BatteryThresholdSetting").toInt()) {
         case 0:
-            ui->bestMobilityRadioButton->click();
+            ui->bestMobilityRadioButton->setChecked(true);
             batteryThreshold = 100;
             bestMobilityAction->setChecked(true);
             break;
         case 1:
-            ui->balancedBatteryRadioButton->click();
+            ui->balancedBatteryRadioButton->setChecked(true);
             balancedBatteryAction->setChecked(true);
             break;
         case 2:
-            ui->bestBatteryRadioButton->click();
+            ui->bestBatteryRadioButton->setChecked(true);
             bestBatteryAction->setChecked(true);
             break;
         default:
-            ui->customBatteryThresholdRadioButton->click();
+            ui->customBatteryThresholdRadioButton->setChecked(true);
             ui->customBatteryApplyButton->setEnabled(
                     batteryThreshold != ui->customBatteryThresholdSpinBox->value());
             setCustomBatteryTrayLabel(batteryThreshold);
@@ -522,7 +522,7 @@ void MainWindow::updateFan2Speed() const {
     }
 }
 
-void MainWindow::updateKeyboardBacklightMode(const uint8_t index) const {
+void MainWindow::updateKeyboardBacklightMode(const uint8_t &index) const {
     ui->keyboardBacklightModeComboBox->setCurrentIndex(index);
     if (index == 0) {
         keyboardAlwaysOn->setChecked(true);
@@ -531,16 +531,16 @@ void MainWindow::updateKeyboardBacklightMode(const uint8_t index) const {
     }
 }
 
-void MainWindow::updateKeyboardBrightness(const uint8_t brightness) const {
+void MainWindow::updateKeyboardBrightness(const uint8_t &brightness) const {
     ui->keyboardBrightnessSlider->setSliderPosition(brightness);
 }
 
-void MainWindow::updateUsbPowerShareState(const bool state) const {
+void MainWindow::updateUsbPowerShareState(const bool &state) const {
     ui->usbPowerShareCheckBox->setChecked(state);
     usbPowerShareTrayAction->setChecked(state);
 }
 
-void MainWindow::updateTurboMode(const bool state) const {
+void MainWindow::updateTurboMode(const bool &state) const {
     ui->turboModeCheckBox->setChecked(state);
     turboMode->setChecked(state);
 
@@ -555,36 +555,36 @@ void MainWindow::updateTurboMode(const bool state) const {
     ui->performanceModeDescription->setText(description);
 }
 
-void MainWindow::updateFnMetaSwapState(const bool state) const {
+void MainWindow::updateFnMetaSwapState(const bool &state) const {
     ui->fnMetaSwapCheckBox->setChecked(state);
     fnMetaSwapTrayAction->setChecked(state);
 }
 
-void MainWindow::updateCoolerBoostState(const bool state) const {
+void MainWindow::updateCoolerBoostState(const bool &state) const {
     ui->coolerBoostCheckBox->setChecked(state);
     coolerBoostAction->setChecked(state);
 }
 
-void MainWindow::updateUserMode() const {
-    switch (operate.getUserMode()) {
+void MainWindow::updateUserMode(const UserMode &userMode) const {
+    switch (userMode) {
         case UserMode::Turbo:
         case UserMode::Performance:
-            ui->performanceModeRadioButton->click();
+            ui->performanceModeRadioButton->setChecked(true);
             performanceMode->setChecked(true);
             break;
 
         case UserMode::Balanced:
-            ui->balancedModeRadioButton->click();
+            ui->balancedModeRadioButton->setChecked(true);
             balancedMode->setChecked(true);
             break;
 
         case UserMode::Silent:
-            ui->silentModeRadioButton->click();
+            ui->silentModeRadioButton->setChecked(true);
             silentMode->setChecked(true);
             break;
 
         case UserMode::Eco:
-            ui->ecoSilentModeRadioButton->click();
+            ui->ecoSilentModeRadioButton->setChecked(true);
             ecoSilentMode->setChecked(true);
             break;
 
@@ -701,28 +701,26 @@ void MainWindow::setCustomBatteryTrayLabel(const uint8_t value) const {
 
 void MainWindow::setPerformanceMode() const {
     if (operate.getTurboMode()) {
-        syslog(LOG_ERR, "WOOF");
         operate.setUserMode(UserMode::Turbo);
     } else {
-        syslog(LOG_ERR, "TETS");
         operate.setUserMode(UserMode::Performance);
     }
-    updateUserMode();
+    updateUserMode(UserMode::Performance);
 }
 
 void MainWindow::setBalancedMode() const {
     operate.setUserMode(UserMode::Balanced);
-    updateUserMode();
+    updateUserMode(UserMode::Balanced);
 }
 
 void MainWindow::setSilentMode() const {
     operate.setUserMode(UserMode::Silent);
-    updateUserMode();
+    updateUserMode(UserMode::Silent);
 }
 
 void MainWindow::setEcoSilentMode() const {
     operate.setUserMode(UserMode::Eco);
-    updateUserMode();
+    updateUserMode(UserMode::Eco);
 }
 
 void MainWindow::setCoolerBoostState(const bool enabled) const {
@@ -914,22 +912,22 @@ void MainWindow::on_PowerProfileChange(const PowerProfile profile) const {
     }
 }
 
-void MainWindow::on_bestMobilityRadioButton_toggled(const bool checked) const {
+void MainWindow::on_bestMobilityRadioButton_clicked(const bool checked) const {
     if (checked)
         setBestMobility();
 }
 
-void MainWindow::on_balancedBatteryRadioButton_toggled(const bool checked) const {
+void MainWindow::on_balancedBatteryRadioButton_clicked(const bool checked) const {
     if (checked)
         setBalancedBattery();
 }
 
-void MainWindow::on_bestBatteryRadioButton_toggled(const bool checked) const {
+void MainWindow::on_bestBatteryRadioButton_clicked(const bool checked) const {
     if (checked)
         setBestBattery();
 }
 
-void MainWindow::on_customBatteryThresholdRadioButton_toggled(const bool checked) const {
+void MainWindow::on_customBatteryThresholdRadioButton_clicked(const bool checked) const {
     if (checked) {
         ui->customBatteryThresholdSpinBox->setEnabled(true);
         setCustomBattery();
@@ -1004,7 +1002,7 @@ void MainWindow::on_userModeOnChargerComboBox_currentIndexChanged(const int inde
     powerMonitor.queryChargerState();
 }
 
-void MainWindow::on_autoAcDcProfilesGroupBox_toggled(const bool checked) const {
+void MainWindow::on_autoAcDcProfilesGroupBox_clicked(const bool checked) const {
     if(checked) {
         if (!powerMonitor.connectToUpower()) {
             QMessageBox::critical(nullptr, this->windowTitle(), tr("Couldn't connect to UPower to get charger status.\n"
@@ -1035,7 +1033,7 @@ void MainWindow::on_autoAcDcProfilesGroupBox_toggled(const bool checked) const {
     Settings::setValue("Settings/autoAcDcProfilesState", checked);
 }
 
-void MainWindow::on_autoPPDCheckBox_toggled(const bool checked) const {
+void MainWindow::on_autoPPDCheckBox_clicked(const bool checked) const {
     if (checked) {
         if (!powerMonitor.connectToPowerProfiles()) {
             QMessageBox::critical(nullptr, this->windowTitle(), tr("Couldn't connect to Power Profiles Daemon.\n"
@@ -1076,22 +1074,22 @@ void MainWindow::on_autoPPDCheckBox_toggled(const bool checked) const {
     Settings::setValue("Settings/autoPPDstate", checked);
 }
 
-void MainWindow::on_performanceModeRadioButton_toggled(const bool checked) const {
+void MainWindow::on_performanceModeRadioButton_clicked(const bool checked) const {
     if (checked)
         setPerformanceMode();
 }
 
-void MainWindow::on_balancedModeRadioButton_toggled(const bool checked) const {
+void MainWindow::on_balancedModeRadioButton_clicked(const bool checked) const {
     if (checked)
         setBalancedMode();
 }
 
-void MainWindow::on_silentModeRadioButton_toggled(const bool checked) const {
+void MainWindow::on_silentModeRadioButton_clicked(const bool checked) const {
     if (checked)
         setSilentMode();
 }
 
-void MainWindow::on_ecoSilentModeRadioButton_toggled(const bool checked) const {
+void MainWindow::on_ecoSilentModeRadioButton_clicked(const bool checked) const {
     if (checked)
         setEcoSilentMode();
 }
@@ -1215,8 +1213,8 @@ void MainWindow::createActions() {
     ecoSilentMode = new QAction(ui->ecoSilentModeRadioButton->text(), this);
     ecoSilentMode->setCheckable(true);
 
-    connect(autoPPDMode, &QAction::triggered, this, &MainWindow::on_autoPPDCheckBox_toggled);
-    connect(autoAcDcMode, &QAction::triggered, this, &MainWindow::on_autoAcDcProfilesGroupBox_toggled);
+    connect(autoPPDMode, &QAction::triggered, this, &MainWindow::on_autoPPDCheckBox_clicked);
+    connect(autoAcDcMode, &QAction::triggered, this, &MainWindow::on_autoAcDcProfilesGroupBox_clicked);
     connect(turboMode, &QAction::triggered, this, &MainWindow::on_turboModeCheckBox_clicked);
     connect(performanceMode, &QAction::triggered, this, &MainWindow::setPerformanceMode);
     connect(balancedMode, &QAction::triggered, this, &MainWindow::setBalancedMode);

@@ -79,8 +79,8 @@ public slots:
     [[nodiscard]] bool getUsbPowerShareState() const;
     [[nodiscard]] bool getFnMetaSwapState() const;
     [[nodiscard]] bool getCoolerBoostState() const;
-    [[nodiscard]] UserMode getUserMode() const;
-    [[nodiscard]] FanMode getFanMode() const;
+    [[nodiscard]] int getUserMode() const;
+    [[nodiscard]] int getFanMode() const;
     // Typed EC operations. Raw EC addresses are intentionally not exposed over D-Bus.
     Q_NOREPLY void setBatteryThreshold(int value);
     Q_NOREPLY void setKeyboardBacklightMode(bool enabled);
