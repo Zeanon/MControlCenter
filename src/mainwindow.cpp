@@ -544,11 +544,15 @@ void MainWindow::updateTurboMode(const bool state) const {
     ui->turboModeCheckBox->setChecked(state);
     turboMode->setChecked(state);
 
-    const QString text = state ? "Full Performance" : "Performance";
-    ui->performanceModeRadioButton->setText(text);
-    performanceMode->setText(text);
-    ui->userModeOnChargerComboBox->setItemText(0, text);
-    ui->userModeOnBatteryComboBox->setItemText(0, text);
+    const QString label = state ? "Maximum\nPerformance" : "Performance";
+    const QString description = state ?
+            "Maximum performance at the cost of heat and increased power consumption" :
+            "Full performance at the cost of heat and increased power consumption";
+    ui->performanceModeRadioButton->setText(label);
+    performanceMode->setText(label);
+    ui->userModeOnChargerComboBox->setItemText(0, label);
+    ui->userModeOnBatteryComboBox->setItemText(0, label);
+    ui->performanceModeDescription->setText(description);
 }
 
 void MainWindow::updateFnMetaSwapState(const bool state) const {
@@ -571,7 +575,7 @@ void MainWindow::updateUserMode() const
             break;
 
         case UserMode::Balanced:
-            ui->balancedModeRadioButton->click();
+            ui->balancedModeRadioButton->setChecked(true);
             balancedMode->setChecked(true);
             break;
 

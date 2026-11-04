@@ -363,7 +363,7 @@
             <item>
              <widget class="QCheckBox" name="turboModeCheckBox">
               <property name="text">
-               <string>Full Performance</string>
+               <string>Maximum Performance</string>
               </property>
              </widget>
             </item>
@@ -441,9 +441,15 @@
         </item>
         <item row="2" column="0">
          <widget class="QWidget" name="modeFormWidget" native="true">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>25</height>
+           </size>
+          </property>
           <layout class="QFormLayout" name="formLayout_5">
            <property name="fieldGrowthPolicy">
-            <enum>QFormLayout::FieldGrowthPolicy::AllNonFixedFieldsGrow</enum>
+            <enum>QFormLayout::FieldGrowthPolicy::FieldsStayAtSizeHint</enum>
            </property>
            <property name="rowWrapPolicy">
             <enum>QFormLayout::RowWrapPolicy::WrapLongRows</enum>
@@ -458,33 +464,91 @@
             <number>45</number>
            </property>
            <property name="verticalSpacing">
-            <number>15</number>
+            <number>0</number>
            </property>
            <property name="leftMargin">
-            <number>0</number>
+            <number>15</number>
            </property>
            <property name="topMargin">
             <number>0</number>
            </property>
            <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
             <number>15</number>
            </property>
-           <item row="2" column="0">
+           <property name="bottomMargin">
+            <number>5</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QCheckBox" name="autoPPDCheckBox">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="text">
+              <string>Follow system's power profile</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QWidget" name="modeFormWidget" native="true">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>165</height>
+           </size>
+          </property>
+          <layout class="QFormLayout" name="formLayout_6">
+           <property name="fieldGrowthPolicy">
+            <enum>QFormLayout::FieldGrowthPolicy::AllNonFixedFieldsGrow</enum>
+           </property>
+           <property name="rowWrapPolicy">
+            <enum>QFormLayout::RowWrapPolicy::WrapLongRows</enum>
+           </property>
+           <property name="labelAlignment">
+            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+           </property>
+           <property name="formAlignment">
+            <set>Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignBottom</set>
+           </property>
+           <property name="horizontalSpacing">
+            <number>45</number>
+           </property>
+           <property name="verticalSpacing">
+            <number>5</number>
+           </property>
+           <property name="leftMargin">
+            <number>15</number>
+           </property>
+           <property name="topMargin">
+            <number>15</number>
+           </property>
+           <property name="rightMargin">
+            <number>15</number>
+           </property>
+           <property name="bottomMargin">
+            <number>5</number>
+           </property>
+           <item row="0" column="0">
             <widget class="QRadioButton" name="performanceModeRadioButton">
+             <property name="minimumSize">
+              <size>
+               <width>26</width>
+               <height>35</height>
+              </size>
+             </property>
              <property name="text">
               <string>Performance</string>
              </property>
             </widget>
            </item>
-           <item row="2" column="1">
-            <widget class="QLabel" name="label_15">
+           <item row="0" column="1">
+            <widget class="QLabel" name="performanceModeDescription">
              <property name="minimumSize">
               <size>
                <width>26</width>
-               <height>0</height>
+               <height>35</height>
               </size>
              </property>
              <property name="text">
@@ -498,15 +562,27 @@
              </property>
             </widget>
            </item>
-           <item row="3" column="0">
+           <item row="1" column="0">
             <widget class="QRadioButton" name="balancedModeRadioButton">
+             <property name="minimumSize">
+              <size>
+               <width>26</width>
+               <height>35</height>
+              </size>
+             </property>
              <property name="text">
               <string>Balanced</string>
              </property>
             </widget>
            </item>
-           <item row="3" column="1">
-            <widget class="QLabel" name="label_16">
+           <item row="1" column="1">
+            <widget class="QLabel" name="balancedModeDescription">
+             <property name="minimumSize">
+              <size>
+               <width>26</width>
+               <height>35</height>
+              </size>
+             </property>
              <property name="text">
               <string>The middle spot between fan noise and power usage</string>
              </property>
@@ -518,15 +594,27 @@
              </property>
             </widget>
            </item>
-           <item row="4" column="0">
+           <item row="2" column="0">
             <widget class="QRadioButton" name="silentModeRadioButton">
+             <property name="minimumSize">
+              <size>
+               <width>26</width>
+               <height>35</height>
+              </size>
+             </property>
              <property name="text">
               <string>Silent</string>
              </property>
             </widget>
            </item>
-           <item row="4" column="1">
-            <widget class="QLabel" name="label_17">
+           <item row="2" column="1">
+            <widget class="QLabel" name="silentModeDescription">
+             <property name="minimumSize">
+              <size>
+               <width>26</width>
+               <height>35</height>
+              </size>
+             </property>
              <property name="text">
               <string>Low fan noise and moderate power usage</string>
              </property>
@@ -538,15 +626,27 @@
              </property>
             </widget>
            </item>
-           <item row="5" column="0">
+           <item row="3" column="0">
             <widget class="QRadioButton" name="ecoSilentModeRadioButton">
+             <property name="minimumSize">
+              <size>
+               <width>26</width>
+               <height>35</height>
+              </size>
+             </property>
              <property name="text">
               <string>Eco Silent</string>
              </property>
             </widget>
            </item>
-           <item row="5" column="1">
-            <widget class="QLabel" name="label_18">
+           <item row="3" column="1">
+            <widget class="QLabel" name="ecoSilentModeDescription">
+             <property name="minimumSize">
+              <size>
+               <width>26</width>
+               <height>35</height>
+              </size>
+             </property>
              <property name="text">
               <string>Limits performance and turns off fans at lower temperatures</string>
              </property>
@@ -555,16 +655,6 @@
              </property>
              <property name="wordWrap">
               <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QCheckBox" name="autoPPDCheckBox">
-             <property name="enabled">
-              <bool>true</bool>
-             </property>
-             <property name="text">
-              <string>Follow system's power profile</string>
              </property>
             </widget>
            </item>
