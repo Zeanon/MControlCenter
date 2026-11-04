@@ -91,10 +91,12 @@ public slots:
     Q_NOREPLY void setCoolerBoostState(bool enabled);
     Q_NOREPLY void setTurboMode(bool enabled);
     Q_NOREPLY void setUserMode(int mode);
-    Q_NOREPLY void setFan1SpeedSettings(const QList<int> &values);
-    Q_NOREPLY void setFan2SpeedSettings(const QList<int> &values);
-    Q_NOREPLY void setFan1TempSettings(const QList<int> &values);
-    Q_NOREPLY void setFan2TempSettings(const QList<int> &values);
+    [[nodiscard]] bool setFanSettings(
+        const QList<int> &fan1Speed,
+        const QList<int> &fan2Speed,
+        const QList<int> &fan1Temp,
+        const QList<int> &fan2Temp
+    );
     Q_NOREPLY void setFanModeAdvanced(bool enabled);
     [[nodiscard]] bool isEcModuleLoaded() const;
     [[nodiscard]] bool isAcpiEc() const;

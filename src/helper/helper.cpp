@@ -100,6 +100,20 @@ namespace {
         rw.writeToFile(address, enabled ? current | bit : current & static_cast<uint8_t>(~bit));
     }
 
+    static bool isValidSettings(
+        const QList<int> &values,
+        const int expectedSize
+    ) {
+        return values.size() == expectedSize &&
+            std::all_of(
+                values.cbegin(),
+                values.cend(),
+                [](const int value) {
+                    return value >= 0 && value <= 255;
+                }
+            );
+    }
+
     static inline void writeSettings(ReadWrite &rw, const QList<int> &values, const int expectedSize,
                     const uint8_t startAddress) {
         if (
@@ -416,21 +430,41 @@ void Helper::setUserMode(const int mode) {
     checkStatusChanges();
 }
 
-void Helper::setFan1SpeedSettings(const QList<int> &values) {
-    writeSettings(rw, values, fanSpeedSettingsCount, fan1SpeedSettingStartAddress);
+bool Helper::setFanSettings(
+    const QList<int> &fan1Speed,
+    const QList<int> &fan2Speed,
+    const QList<int> &fan1Temp,
+    const QList<int> &fan2Temp
+) {
+    // Alle vier Kurven vor dem Schreiben validieren.
+    if (!isValidSettings(fan1Speed, fanSpeedSettingsCount) ||
+        !isValidSettings(fan2Speed, fanSpeedSettingsCount) ||
+        !isValidSettings(fan1Temp, fanTempSettingsCount) ||
+        !isValidSettings(fan2Temp, fanTempSettingsCount)) {
+        return false;
+    }
+
+    // Alle vier Kurven schreiben.
+    writeSettings(rw, fan1Speed,
+                  fanSpeedSettingsCount,
+                  fan1SpeedSettingStartAddress);
+
+    writeSettings(rw, fan2Speed,
+                  fanSpeedSettingsCount,
+                  fan2SpeedSettingStartAddress);
+
+    writeSettings(rw, fan1Temp,
+                  fanTempSettingsCount,
+                  fan1TempSettingStartAddress);
+
+    writeSettings(rw, fan2Temp,
+                  fanTempSettingsCount,
+                  fan2TempSettingStartAddress);
+
+    // Status nur einmal aktualisieren.
     checkStatusChanges();
-}
-void Helper::setFan2SpeedSettings(const QList<int> &values) {
-    writeSettings(rw, values, fanSpeedSettingsCount, fan2SpeedSettingStartAddress);
-    checkStatusChanges();
-}
-void Helper::setFan1TempSettings(const QList<int> &values) {
-    writeSettings(rw, values, fanTempSettingsCount, fan1TempSettingStartAddress);
-    checkStatusChanges();
-}
-void Helper::setFan2TempSettings(const QList<int> &values) {
-    writeSettings(rw, values, fanTempSettingsCount, fan2TempSettingStartAddress);
-    checkStatusChanges();
+
+    return true;
 }
 
 void Helper::setFanModeAdvanced(const bool enabled) {

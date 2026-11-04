@@ -110,10 +110,12 @@ public:
     void setCoolerBoostState(bool enabled) const;
     void setTurboMode(bool enabled) const;
     void setUserMode(UserMode userMode) const;
-    void setFan1SpeedSettings(QVector<int> value) const;
-    void setFan2SpeedSettings(QVector<int> value) const;
-    void setFan1TempSettings(QVector<int> value) const;
-    void setFan2TempSettings(QVector<int> value) const;
+    void setFanSettings(
+        const QVector<int> &fan1Speed,
+        const QVector<int> &fan2Speed,
+        const QVector<int> &fan1Temp,
+        const QVector<int> &fan2Temp
+    ) const;
     void setFanModeAdvanced(bool enabled) const;
 
 

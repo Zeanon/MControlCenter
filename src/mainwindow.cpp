@@ -352,7 +352,12 @@ void MainWindow::updateConfiguration() const
     updateCoolerBoostState(operate.getCoolerBoostState());
     updateBatteryThreshold(operate.getBatteryThreshold());
 
-    updateFanSpeedSettings();
+    // Preserve locally edited fan curves while they are not yet applied.
+    if (ui->fanSpeedApplyButton->isEnabled())
+        checkFanSettingsChanged();
+
+    if (!ui->fanSpeedApplyButton->isEnabled())
+        updateFanSpeedSettings();
 
     updateKeyboardBacklightMode(operate.getKeyboardBacklightMode());
     updateKeyboardBrightness(operate.getKeyboardBrightness());
@@ -619,10 +624,10 @@ void MainWindow::updateFanSpeedSettings() const {
     const QVector fan2SpeedSettings = operate.getFan2SpeedSettings();
     const QVector fan2TempSettings = operate.getFan2TempSettings();
 
-    if (fan1SpeedSettings.size() < 7 ||
-        fan2SpeedSettings.size() < 7 ||
-        fan1TempSettings.size() < 6 ||
-        fan2TempSettings.size() < 6) {
+    if (fan1SpeedSettings.size() != 7 ||
+        fan2SpeedSettings.size() != 7 ||
+        fan1TempSettings.size() != 6 ||
+        fan2TempSettings.size() != 6) {
         qWarning() << "Invalid fan settings received";
         return;
     }
@@ -716,18 +721,18 @@ void MainWindow::setEcoSilentMode() const {
 }
 
 void MainWindow::setCoolerBoostState(const bool enabled) const {
-    updateCoolerBoostState(enabled);
     operate.setCoolerBoostState(enabled);
+    updateCoolerBoostState(enabled);
 }
 
 void MainWindow::setKeyboardAlwaysOn() const {
-    updateKeyboardBacklightMode(0);
     operate.setKeyboardBacklightMode(0);
+    updateKeyboardBacklightMode(0);
 }
 
 void MainWindow::setKeyboardAutoOff() const {
-    updateKeyboardBacklightMode(1);
     operate.setKeyboardBacklightMode(1);
+    updateKeyboardBacklightMode(1);
 }
 
 QVector<int> MainWindow::getFan1SpeedValues() const {
@@ -785,12 +790,13 @@ QVector<int> MainWindow::getFan2TempValues() const {
 }
 
 void MainWindow::setFanSpeedSettings() const {
-    operate.setFan1SpeedSettings(getFan1SpeedValues());
-    operate.setFan1TempSettings(getFan1TempValues());
-    operate.setFan2SpeedSettings(getFan2SpeedValues());
-    operate.setFan2TempSettings(getFan2TempValues());
-    if (operate.updateEcData())
-        checkFanSettingsChanged();
+    operate.setFanSettings(
+        getFan1SpeedValues(),
+        getFan2SpeedValues(),
+        getFan1TempValues(),
+        getFan2TempValues()
+    );
+    updateFanSpeedSettings();
 }
 
 void MainWindow::setFanModeAdvanced(const bool enabled) const {

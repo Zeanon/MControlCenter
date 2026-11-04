@@ -28,6 +28,8 @@
 #include <QDBusPendingReply>
 #include <QDBusPendingCallWatcher>
 
+#include <algorithm>
+
 inline constexpr uint8_t fanSpeedSettingsCount = 7;
 inline constexpr uint8_t fanTempSettingsCount = 6;
 
@@ -385,40 +387,53 @@ void Operate::setUserMode(const UserMode userMode) const {
     printError(iface->lastError());
 }
 
-void Operate::setFan1SpeedSettings(const QVector<int> value) const {
-    if (!iface) return;
-    if (value.size() != fanSpeedSettingsCount) return;
+void Operate::setFanSettings(
+    const QVector<int> &fan1Speed,
+    const QVector<int> &fan2Speed,
+    const QVector<int> &fan1Temp,
+    const QVector<int> &fan2Temp
+) const {
+    if (!iface)
+        return;
 
-    Settings::setValue("Settings/fan1SpeedSettings", value);
-    iface->call("setFan1SpeedSettings", QVariant::fromValue(QList<int>(value.cbegin(), value.cend())));
-    printError(iface->lastError());
-}
+    const auto isValidSettings = [](const QVector<int> &values, const qsizetype expectedSize) {
+        return values.size() == expectedSize &&
+            std::all_of(values.cbegin(), values.cend(), [](const int value) {
+                return value >= 0 && value <= 255;
+            });
+    };
 
-void Operate::setFan2SpeedSettings(const QVector<int> value) const {
-    if (!iface) return;
-    if (value.size() != fanSpeedSettingsCount) return;
+    if (!isValidSettings(fan1Speed, fanSpeedSettingsCount) ||
+        !isValidSettings(fan2Speed, fanSpeedSettingsCount) ||
+        !isValidSettings(fan1Temp, fanTempSettingsCount) ||
+        !isValidSettings(fan2Temp, fanTempSettingsCount))
+        return;
 
-    Settings::setValue("Settings/fan2SpeedSettings", value);
-    iface->call("setFan2SpeedSettings", QVariant::fromValue(QList<int>(value.cbegin(), value.cend())));
-    printError(iface->lastError());
-}
+    const QList<int> fan1SpeedList(fan1Speed.cbegin(), fan1Speed.cend());
+    const QList<int> fan2SpeedList(fan2Speed.cbegin(), fan2Speed.cend());
+    const QList<int> fan1TempList(fan1Temp.cbegin(), fan1Temp.cend());
+    const QList<int> fan2TempList(fan2Temp.cbegin(), fan2Temp.cend());
 
-void Operate::setFan1TempSettings(const QVector<int> value) const {
-    if (!iface) return;
-    if (value.size() != fanTempSettingsCount) return;
+    const QDBusReply<bool> reply = iface->call(
+        "setFanSettings",
+        QVariant::fromValue(fan1SpeedList),
+        QVariant::fromValue(fan2SpeedList),
+        QVariant::fromValue(fan1TempList),
+        QVariant::fromValue(fan2TempList)
+    );
 
-    Settings::setValue("Settings/fan1TempSettings", value);
-    iface->call("setFan1TempSettings", QVariant::fromValue(QList<int>(value.cbegin(), value.cend())));
-    printError(iface->lastError());
-}
+    if (!reply.isValid()) {
+        printError(reply.error());
+        return;
+    }
 
-void Operate::setFan2TempSettings(const QVector<int> value) const {
-    if (!iface) return;
-    if (value.size() != fanTempSettingsCount) return;
+    if (!reply.value())
+        return;
 
-    Settings::setValue("Settings/fan2TempSettings", value);
-    iface->call("setFan2TempSettings", QVariant::fromValue(QList<int>(value.cbegin(), value.cend())));
-    printError(iface->lastError());
+    Settings::setValue("Settings/fan1SpeedSettings", fan1Speed);
+    Settings::setValue("Settings/fan2SpeedSettings", fan2Speed);
+    Settings::setValue("Settings/fan1TempSettings", fan1Temp);
+    Settings::setValue("Settings/fan2TempSettings", fan2Temp);
 }
 
 void Operate::setFanModeAdvanced(const bool enabled) const {
@@ -433,22 +448,8 @@ void Operate::setFanModeAdvanced(const bool enabled) const {
 void Operate::loadSettings() const {
     if (getUserMode() != UserMode::Unknown && Settings::isValueExist("Settings/UserMode")) {
         const UserMode userMode = static_cast<UserMode>(Settings::getValue("Settings/UserMode").toInt());
-        switch (userMode) {
-            case UserMode::Balanced:
-                setUserMode(UserMode::Balanced);
-                break;
-            case UserMode::Performance:
-                setUserMode(UserMode::Performance);
-                break;
-            case UserMode::Silent:
-                setUserMode(UserMode::Silent);
-                break;
-            case UserMode::Eco:
-                setUserMode(UserMode::Eco);
-                break;
-            default:
-                break;
-
+        if (userMode != UserMode::Unknown) {
+            setUserMode(userMode);
         }
     }
 
@@ -457,16 +458,39 @@ void Operate::loadSettings() const {
     if (Settings::isValueExist("Settings/UsbPowerShare"))
         setUsbPowerShareState(Settings::getValue("Settings/UsbPowerShare").toBool());
 
-    if (Settings::isValueExist("Settings/fan1SpeedSettings"))
-        setFan1SpeedSettings(Settings::getValueVector("Settings/fan1SpeedSettings"));
-    if (Settings::isValueExist("Settings/fan2SpeedSettings"))
-        setFan2SpeedSettings(Settings::getValueVector("Settings/fan2SpeedSettings"));
-    if (Settings::isValueExist("Settings/fan1TempSettings"))
-        setFan1TempSettings(Settings::getValueVector("Settings/fan1TempSettings"));
-    if (Settings::isValueExist("Settings/fan2TempSettings"))
-        setFan2TempSettings(Settings::getValueVector("Settings/fan2TempSettings"));
     if (Settings::isValueExist("Settings/fanModeAdvanced"))
         setFanModeAdvanced(Settings::getValue("Settings/fanModeAdvanced").toBool());
+
+    QVector<int> fan1Speed = getFan1SpeedSettings();
+    QVector<int> fan2Speed = getFan2SpeedSettings();
+    QVector<int> fan1Temp = getFan1TempSettings();
+    QVector<int> fan2Temp = getFan2TempSettings();
+
+    bool hasFanSettings = false;
+
+    if (Settings::isValueExist("Settings/fan1SpeedSettings")) {
+        fan1Speed = Settings::getValueVector("Settings/fan1SpeedSettings");
+        hasFanSettings = true;
+    }
+
+    if (Settings::isValueExist("Settings/fan2SpeedSettings")) {
+        fan2Speed = Settings::getValueVector("Settings/fan2SpeedSettings");
+        hasFanSettings = true;
+    }
+
+    if (Settings::isValueExist("Settings/fan1TempSettings")) {
+        fan1Temp = Settings::getValueVector("Settings/fan1TempSettings");
+        hasFanSettings = true;
+    }
+
+    if (Settings::isValueExist("Settings/fan2TempSettings")) {
+        fan2Temp = Settings::getValueVector("Settings/fan2TempSettings");
+        hasFanSettings = true;
+    }
+
+    if (hasFanSettings) {
+        setFanSettings(fan1Speed, fan2Speed, fan1Temp, fan2Temp);
+    }
 }
 
 void Operate::handleWakeEvent() const {
