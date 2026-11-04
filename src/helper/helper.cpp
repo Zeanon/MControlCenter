@@ -27,6 +27,7 @@
 
 #include <algorithm>
 #include <string>
+#include <syslog.h>
 
 ReadWrite rw;
 static QByteArray cachedEcData;
@@ -94,10 +95,14 @@ namespace {
         return values;
     }
 
-    static inline void writeBit(ReadWrite &rw, const uint8_t address, const uint8_t bit, const bool enabled) {
-        const QByteArray data = rw.readFromFile();
-        const uint8_t current = readValue(data, address);
-        rw.writeToFile(address, enabled ? current | bit : current & static_cast<uint8_t>(~bit));
+    static inline bool writeBit(ReadWrite &rw, const uint8_t address, const uint8_t bit, const bool enabled) {
+        const uint8_t current = readValue(ecData(), address);
+        const uint8_t new_value = enabled ? current | bit : current & ~bit;
+        if (new_value != current) {
+            rw.writeToFile(address, new_value);
+            return true;
+        }
+        return false;
     }
 
     static bool isValidSettings(
@@ -125,10 +130,17 @@ namespace {
                     return value < 0 || value > 255;
                 }
             )
-        )
-            return;
+        ) {
+            throw QDBusError(
+                QDBusError::Failed,
+                QStringLiteral("Value out of range (0-255)")
+            );
+        }
         for (int i = 0; i < values.size(); ++i) {
-            rw.writeToFile(static_cast<uint8_t>(startAddress + i), static_cast<uint8_t>(values.at(i)));
+            const uint8_t current = readValue(ecData(), startAddress + i);
+            const uint8_t new_value = static_cast<uint8_t>(values.at(i));
+            if (current != new_value)
+                rw.writeToFile(startAddress + i, new_value);
         }
     }
 }
@@ -348,21 +360,28 @@ FanMode Helper::getFanMode() const {
 
 void Helper::setBatteryThreshold(const int value) {
     if (value < 0 || value > 100)
-        return;
-    const uint8_t current = readValue(rw.readFromFile(), batteryThresholdAddress) & 0x7F;
-    if (current != value)
-        rw.writeToFile(batteryThresholdAddress, static_cast<uint8_t>(value | 0x80));
-    checkStatusChanges();
+        throw QDBusError(
+            QDBusError::Failed,
+            QStringLiteral("Value out of range (0-100)")
+        );
+    const uint8_t new_value = value | 0x80;
+    if (new_value != readValue(ecData(), batteryThresholdAddress)) {
+        rw.writeToFile(batteryThresholdAddress, new_value);
+        checkStatusChanges();
+    }
 }
 
 void Helper::setKeyboardBacklightMode(const bool enabled) {
-    writeBit(rw, keyboardBacklightModeAddress, keyboardBacklightAutoTurnOffBit, enabled);
-    checkStatusChanges();
+    if (writeBit(rw, keyboardBacklightModeAddress, keyboardBacklightAutoTurnOffBit, enabled))
+        checkStatusChanges();
 }
 
 bool Helper::toggleKeyboardBacklightMode(const bool forceUpdate) {
     if (forceUpdate && !updateData())
-        return false;
+        throw QDBusError(
+            QDBusError::Failed,
+            QStringLiteral("Data could not be updated")
+        );
     const bool enable = !getKeyboardBacklightMode();
     writeBit(rw, keyboardBacklightModeAddress, keyboardBacklightAutoTurnOffBit, enable);
     checkStatusChanges();
@@ -371,33 +390,41 @@ bool Helper::toggleKeyboardBacklightMode(const bool forceUpdate) {
 
 void Helper::setKeyboardBrightness(const int value) {
     if (value < 0 || value > keyboardBacklightMaxState)
-        return;
-    rw.writeToFile(keyboardBacklightAddress, static_cast<uint8_t>(keyboardBacklightBaseState | value));
-    checkStatusChanges();
+        throw QDBusError(
+            QDBusError::Failed,
+            QStringLiteral("Value out of range (0-3)")
+        );
+    const uint8_t new_value = keyboardBacklightBaseState | value;
+    if (new_value != readValue(ecData(), keyboardBacklightAddress)) {
+        rw.writeToFile(keyboardBacklightAddress, new_value);
+        checkStatusChanges();
+    }
 }
 
 void Helper::setUsbPowerShareState(const bool enabled) {
-    writeBit(rw, usbPowerShareAddress, usbPowerShareBit, enabled);
-    checkStatusChanges();
+    if (writeBit(rw, usbPowerShareAddress, usbPowerShareBit, enabled))
+        checkStatusChanges();
 }
 
 void Helper::setFnMetaSwapState(const bool enabled) {
-    writeBit(rw, fnMetaSwapAddress, fnMetaSwapBit, enabled);
-    checkStatusChanges();
+    if (writeBit(rw, fnMetaSwapAddress, fnMetaSwapBit, enabled))
+        checkStatusChanges();
 }
 
 void Helper::setCoolerBoostState(const bool enabled) {
-    writeBit(rw, coolerBoostAddress, coolerBoostBit, enabled);
-    checkStatusChanges();
+    if (writeBit(rw, coolerBoostAddress, coolerBoostBit, enabled))
+        checkStatusChanges();
 }
 
 void Helper::setTurboMode(const bool enabled) {
-    const uint8_t current = readValue(rw.readFromFile(), shiftModeAddress);
-    if (enabled && current == shiftModePerformance)
+    const uint8_t current = readValue(ecData(), shiftModeAddress);
+    if (enabled && current == shiftModePerformance) {
         rw.writeToFile(shiftModeAddress, shiftModeTurbo);
-    else if (!enabled && current == shiftModeTurbo)
+        checkStatusChanges();
+    } else if (!enabled && current == shiftModeTurbo) {
         rw.writeToFile(shiftModeAddress, shiftModePerformance);
-    checkStatusChanges();
+        checkStatusChanges();
+    }
 }
 
 void Helper::setUserMode(const int mode) {
@@ -468,13 +495,18 @@ bool Helper::setFanSettings(
 }
 
 void Helper::setFanModeAdvanced(const bool enabled) {
-    if (enabled) {
+    const uint8_t current = readValue(ecData(), fanModeAddress);
+    if (enabled && current != fanModeAdvanced) {
         rw.writeToFile(fanModeAddress, fanModeAdvanced);
+        checkStatusChanges();
     } else {
         UserMode userMode = static_cast<UserMode>(getUserMode());
-        rw.writeToFile(fanModeAddress, (userMode == UserMode::Silent || userMode == UserMode::Eco) ? fanModeSilent : fanModeAuto);
+        const uint8_t new_value = (userMode == UserMode::Silent || userMode == UserMode::Eco) ? fanModeSilent : fanModeAuto;
+        if (current != new_value) {
+            rw.writeToFile(fanModeAddress, new_value);
+            checkStatusChanges();
+        }
     }
-    checkStatusChanges();
 }
 
 bool Helper::isEcModuleLoaded() const {
@@ -578,7 +610,11 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    helper->startMonitoring();
+    //helper->startMonitoring();
+    if (!helper->loadEcModule()) {
+        fprintf(stderr, "%s\n", "Could not load the EC module");
+        return 1;
+    }
 
     return QCoreApplication::exec();
 }

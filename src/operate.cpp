@@ -20,6 +20,8 @@
 #include "settings.h"
 #include "helper/service.h"
 
+#include <syslog.h>
+
 #include <QFile>
 #include <QVariant>
 #include <QDBusReply>
@@ -382,6 +384,7 @@ void Operate::setUserMode(const UserMode userMode) const {
     if (!iface) return;
     if (userMode == UserMode::Unknown) return;
 
+    syslog(LOG_ERR, std::to_string(static_cast<int>(userMode)).c_str());
     Settings::setValue("Settings/UserMode", userMode);
     iface->call("setUserMode", static_cast<int>(userMode));
     printError(iface->lastError());
@@ -449,6 +452,7 @@ void Operate::loadSettings() const {
     if (getUserMode() != UserMode::Unknown && Settings::isValueExist("Settings/UserMode")) {
         const UserMode userMode = static_cast<UserMode>(Settings::getValue("Settings/UserMode").toInt());
         if (userMode != UserMode::Unknown) {
+            syslog(LOG_ERR, "MIAU");
             setUserMode(userMode);
         }
     }

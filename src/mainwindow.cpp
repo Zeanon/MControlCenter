@@ -565,8 +565,7 @@ void MainWindow::updateCoolerBoostState(const bool state) const {
     coolerBoostAction->setChecked(state);
 }
 
-void MainWindow::updateUserMode() const
-{
+void MainWindow::updateUserMode() const {
     switch (operate.getUserMode()) {
         case UserMode::Turbo:
         case UserMode::Performance:
@@ -575,7 +574,7 @@ void MainWindow::updateUserMode() const
             break;
 
         case UserMode::Balanced:
-            ui->balancedModeRadioButton->setChecked(true);
+            ui->balancedModeRadioButton->click();
             balancedMode->setChecked(true);
             break;
 
@@ -702,8 +701,10 @@ void MainWindow::setCustomBatteryTrayLabel(const uint8_t value) const {
 
 void MainWindow::setPerformanceMode() const {
     if (operate.getTurboMode()) {
+        syslog(LOG_ERR, "WOOF");
         operate.setUserMode(UserMode::Turbo);
     } else {
+        syslog(LOG_ERR, "TETS");
         operate.setUserMode(UserMode::Performance);
     }
     updateUserMode();
