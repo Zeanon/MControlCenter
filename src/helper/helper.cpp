@@ -69,22 +69,22 @@ namespace {
     constexpr uint8_t shiftModeTurbo = 0xC5;
     constexpr uint8_t shiftModePerformance = 0xC4;
     constexpr uint8_t shiftModeBalanced = 0xC1;
-    constexpr uint8_t shiftModeBattery = 0xC2;
+    constexpr uint8_t shiftModeEco = 0xC2;
     constexpr uint8_t fanModeAddress = 0xD4;
     constexpr uint8_t fanModeAuto = 0x0D;
     constexpr uint8_t fanModeSilent = 0x1D;
     constexpr uint8_t fanModeBasic = 0x4D;
     constexpr uint8_t fanModeAdvanced = 0x8D;
 
-    QByteArray ecData() {
+    inline QByteArray ecData() {
         return cachedEcData;
     }
 
-    uint8_t readValue(const QByteArray &data, const uint8_t address) {
+    static inline uint8_t readValue(const QByteArray &data, const uint8_t address) {
         return address < data.size() ? static_cast<uint8_t>(data.at(address)) : 0;
     }
 
-    QList<int> readValueList(const QByteArray &data, uint8_t start, int count) {
+    static inline QList<int> readValueList(const QByteArray &data, uint8_t start, int count) {
         QList<int> values;
         if (data.size() < static_cast<int>(start) + count)
             return values;
@@ -94,19 +94,28 @@ namespace {
         return values;
     }
 
-    void writeBit(ReadWrite &rw, const uint8_t address, const uint8_t bit, const bool enabled) {
+    static inline void writeBit(ReadWrite &rw, const uint8_t address, const uint8_t bit, const bool enabled) {
         const QByteArray data = rw.readFromFile();
         const uint8_t current = readValue(data, address);
         rw.writeToFile(address, enabled ? current | bit : current & static_cast<uint8_t>(~bit));
     }
 
-    void writeSettings(ReadWrite &rw, const QList<int> &values, const int expectedSize,
+    static inline void writeSettings(ReadWrite &rw, const QList<int> &values, const int expectedSize,
                     const uint8_t startAddress) {
-        if (values.size() != expectedSize || std::any_of(values.cbegin(), values.cend(),
-                [](int value) { return value < 0 || value > 255; }))
+        if (
+            values.size() != expectedSize ||
+            std::any_of(
+                values.cbegin(),
+                values.cend(),
+                [](int value) {
+                    return value < 0 || value > 255;
+                }
+            )
+        )
             return;
-        for (int i = 0; i < values.size(); ++i)
+        for (int i = 0; i < values.size(); ++i) {
             rw.writeToFile(static_cast<uint8_t>(startAddress + i), static_cast<uint8_t>(values.at(i)));
+        }
     }
 }
 
@@ -115,21 +124,22 @@ bool Helper::updateData() const {
     return cachedEcData.size() == 256;
 }
 
+static inline QVariantList toVariantList(const QList<int> &values) {
+    QVariantList list;
+    list.reserve(values.size());
+    for (const int value : values) {
+        list.append(value);
+    }
+    return list;
+}
+
 QVariantMap Helper::getStatusSnapshot() const {
     QVariantMap result;
     const bool valid = updateData();
 
     result.insert(QStringLiteral("valid"), valid);
-    if (!valid) {
+    if (!valid)
         return result;
-    }
-
-    const auto toVariantList = [](const QList<int> &values) {
-        QVariantList list;
-        list.reserve(values.size());
-        for (const int value : values) list.append(value);
-        return list;
-    };
 
     result.insert(QStringLiteral("ecVersion"), getEcVersion());
     result.insert(QStringLiteral("ecBuild"), getEcBuild());
@@ -150,8 +160,8 @@ QVariantMap Helper::getStatusSnapshot() const {
     result.insert(QStringLiteral("usbPowerShareState"), getUsbPowerShareState());
     result.insert(QStringLiteral("fnMetaSwapState"), getFnMetaSwapState());
     result.insert(QStringLiteral("coolerBoostState"), getCoolerBoostState());
-    result.insert(QStringLiteral("userMode"), getUserMode());
-    result.insert(QStringLiteral("fanMode"), getFanMode());
+    result.insert(QStringLiteral("userMode"), static_cast<int8_t>(getUserMode()));
+    result.insert(QStringLiteral("fanMode"), static_cast<int8_t>(getFanMode()));
     result.insert(QStringLiteral("ecModuleLoaded"), isEcModuleLoaded());
     result.insert(QStringLiteral("isAcpiEc"), isAcpiEc());
     result.insert(QStringLiteral("isEcSys"), isEcSys());
@@ -168,7 +178,6 @@ QVariantMap Helper::getMetricsSnapshot() const
     result.insert("gpuTemp", getGpuTemp());
     result.insert("fan1Speed", getFan1Speed());
     result.insert("fan2Speed", getFan2Speed());
-
     return result;
 }
 
@@ -182,26 +191,17 @@ QVariantMap Helper::getConfigurationSnapshot() const
     result.insert("usbPowerShareState", getUsbPowerShareState());
     result.insert("fnMetaSwapState", getFnMetaSwapState());
     result.insert("coolerBoostState", getCoolerBoostState());
-    result.insert("userMode", getUserMode());
-    result.insert("fanMode", getFanMode());
-
-    const auto toVariantList = [](const QList<int> &values) {
-        QVariantList list;
-        for (const int value : values)
-            list.append(value);
-        return list;
-    };
-
+    result.insert("userMode", static_cast<int8_t>(getUserMode()));
+    result.insert("fanMode", static_cast<int8_t>(getFanMode()));
     result.insert("fan1SpeedSettings", toVariantList(getFan1SpeedSettings()));
     result.insert("fan2SpeedSettings", toVariantList(getFan2SpeedSettings()));
     result.insert("fan1TempSettings", toVariantList(getFan1TempSettings()));
     result.insert("fan2TempSettings", toVariantList(getFan2TempSettings()));
-
     return result;
 }
 
 QString Helper::getEcVersion() const {
-    return QString::fromLatin1(ecData().mid(0xA0, 12));
+    return QString::fromLocal8Bit(ecData().mid(0xA0, 12));
 }
 
 QString Helper::getEcBuild() const {
@@ -246,22 +246,22 @@ int Helper::getCpuTemp() const {
 }
 
 int Helper::getGpuTemp() const {
-    const auto d = ecData();
-    return gpuTempAddress < d.size() ? readValue(d, gpuTempAddress) : -1;
+    const auto data = ecData();
+    return gpuTempAddress < data.size() ? readValue(data, gpuTempAddress) : -1;
 }
 
 int Helper::getFan1Speed() const {
-    const auto d = ecData();
-    const int value = (readValue(d, fan1Address - 1) << 8) | readValue(d, fan1Address);
+    const auto data = ecData();
+    const int value = (readValue(data, fan1Address - 1) << 8) | readValue(data, fan1Address);
     return value > 0 ? 480000 / value : value;
 }
 
 int Helper::getFan2Speed() const {
-    const auto d = ecData();
-    if (d.size() <= fan2Address) {
+    const auto data = ecData();
+    if (data.size() <= fan2Address) {
         return -1;
     }
-    const int value = (readValue(d, fan2Address - 1) << 8) | readValue(d, fan2Address);
+    const int value = (readValue(data, fan2Address - 1) << 8) | readValue(data, fan2Address);
     return value > 0 ? 480000 / value : value;
 }
 
@@ -301,33 +301,34 @@ bool Helper::getCoolerBoostState() const {
     return readValue(ecData(), coolerBoostAddress) & coolerBoostBit;
 }
 
-int Helper::getUserMode() const {
-    const auto d = ecData();
-    switch (readValue(d, shiftModeAddress)) {
+UserMode Helper::getUserMode() const {
+    const auto data = ecData();
+    switch (readValue(data, shiftModeAddress)) {
         case shiftModeTurbo:
-            return 4;
+            return UserMode::Turbo;
         case shiftModePerformance:
-            return 0;
+            return UserMode::Performance;
         case shiftModeBalanced:
-            return readValue(d, fanModeAddress) == fanModeSilent ? 2 : 1;
-        case shiftModeBattery:
-            return 3;
+            return readValue(data, fanModeAddress) == fanModeSilent ? UserMode::Silent : UserMode::Balanced;
+        case shiftModeEco:
+            return UserMode::Eco;
         default:
-            return -1;
+            return UserMode::Unknown;
     }
 }
-int Helper::getFanMode() const {
+
+FanMode Helper::getFanMode() const {
     switch (readValue(ecData(), fanModeAddress)) {
         case fanModeAuto:
-            return 0;
+            return FanMode::Auto;
         case fanModeSilent:
-            return 1;
+            return FanMode::Silent;
         case fanModeBasic:
-            return 2;
+            return FanMode::Basic;
         case fanModeAdvanced:
-            return 3;
+            return FanMode::Advanced;
         default:
-            return -1;
+            return FanMode::Unknown;
     }
 }
 
@@ -388,30 +389,29 @@ void Helper::setTurboMode(const bool enabled) {
 void Helper::setUserMode(const int mode) {
     uint8_t shiftMode = 0;
     uint8_t fanMode = fanModeAuto;
-    switch (mode) {
-        case 0: // performance
+    switch (static_cast<UserMode>(mode)) {
+        case UserMode::Turbo: // turbo
+            shiftMode = shiftModeTurbo;
+            break;
+        case UserMode::Performance: // performance
             shiftMode = shiftModePerformance;
             break;
-        case 1: // balanced
+        case UserMode::Balanced: // balanced
             shiftMode = shiftModeBalanced;
             break;
-        case 2: // silent
+        case UserMode::Silent: // silent
             shiftMode = shiftModeBalanced;
             fanMode = fanModeSilent;
             break;
-        case 3: // eco silent
-            shiftMode = shiftModeBattery;
+        case UserMode::Eco: // eco silent
+            shiftMode = shiftModeEco;
             fanMode = fanModeSilent;
-            break;
-        case 4: // turbo
-            shiftMode = shiftModeTurbo;
             break;
         default:
             return;
     }
     rw.writeToFile(shiftModeAddress, shiftMode);
-    const uint8_t currentFanMode = readValue(rw.readFromFile(), fanModeAddress);
-    if (currentFanMode != fanModeAdvanced)
+    if (readValue(rw.readFromFile(), fanModeAddress) != fanModeAdvanced)
         rw.writeToFile(fanModeAddress, fanMode);
     checkStatusChanges();
 }
@@ -433,12 +433,12 @@ void Helper::setFan2TempSettings(const QList<int> &values) {
     checkStatusChanges();
 }
 
-void Helper::setFanModeAdvanced(const bool enabled, const int userMode) {
+void Helper::setFanModeAdvanced(const bool enabled) {
     if (enabled) {
         rw.writeToFile(fanModeAddress, fanModeAdvanced);
     } else {
-        const uint8_t fanMode = (userMode == 2 || userMode == 3) ? fanModeSilent : fanModeAuto;
-        rw.writeToFile(fanModeAddress, fanMode);
+        UserMode userMode = static_cast<UserMode>(getUserMode());
+        rw.writeToFile(fanModeAddress, (userMode == UserMode::Silent || userMode == UserMode::Eco) ? fanModeSilent : fanModeAuto);
     }
     checkStatusChanges();
 }

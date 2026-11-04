@@ -457,17 +457,17 @@ void MainWindow::updateBatteryThreshold(uint8_t batteryThreshold) const {
 void MainWindow::updateChargingStatus() const {
     QString chargingStatus;
     switch (operate.getChargingStatus()) {
-        case charging_state::battery_not_charging:
+        case ChargingState::NotCharging:
             chargingStatus = tr("Not charging");
             break;
-        case charging_state::battery_charging:
+        case ChargingState::Charging:
             chargingStatus = tr("Charging");
             break;
-        case charging_state::battery_fully_charged:
+        case ChargingState::FullyCharged:
             chargingStatus = tr("Fully charged");
             break;
-        case charging_state::battery_discharging:
-        case charging_state::battery_fully_charged_no_power:
+        case ChargingState::Discharging:
+        case ChargingState::battery_fully_charged_no_power:
             chargingStatus = tr("Discharging");
             break;
         default:
@@ -559,27 +559,28 @@ void MainWindow::updateCoolerBoostState(const bool state) const {
 void MainWindow::updateUserMode() const
 {
     switch (operate.getUserMode()) {
-        case user_mode::balanced_mode:
-            ui->balancedModeRadioButton->click();
-            balancedMode->setChecked(true);
-            break;
-
-        case user_mode::performance_mode:
+        case UserMode::Turbo:
+        case UserMode::Performance:
             ui->performanceModeRadioButton->click();
             performanceMode->setChecked(true);
             break;
 
-        case user_mode::silent_mode:
+        case UserMode::Balanced:
+            ui->balancedModeRadioButton->click();
+            balancedMode->setChecked(true);
+            break;
+
+        case UserMode::Silent:
             ui->silentModeRadioButton->click();
             silentMode->setChecked(true);
             break;
 
-        case user_mode::eco_silent_mode:
+        case UserMode::Eco:
             ui->ecoSilentModeRadioButton->click();
             ecoSilentMode->setChecked(true);
             break;
 
-        case user_mode::unknown_mode:
+        case UserMode::Unknown:
         default:
             ui->ecoSilentModeRadioButton->setChecked(false);
             ui->silentModeRadioButton->setChecked(false);
@@ -593,13 +594,13 @@ static inline const char* getFanModeString() {
     if (operate.getCoolerBoostState())
         return "Turbotastic";
     switch (operate.getFanMode()) {
-        case fan_mode::auto_fan_mode:
+        case FanMode::Auto:
             return "Auto";
-        case fan_mode::silent_fan_mode:
+        case FanMode::Silent:
             return "Silent";
-        case fan_mode::basic_fan_mode:
+        case FanMode::Basic:
             return "Basic";
-        case fan_mode::advanced_fan_mode:
+        case FanMode::Advanced:
             return "Advanced";
         default:
             return "Unknown";
@@ -611,7 +612,7 @@ void MainWindow::updateFanMode() const {
 }
 
 void MainWindow::updateFanSpeedSettings() const {
-    ui->advancedFanControlCheckBox->setChecked(operate.getFanMode() == fan_mode::advanced_fan_mode);
+    ui->advancedFanControlCheckBox->setChecked(operate.getFanMode() == FanMode::Advanced);
 
     const QVector fan1SpeedSettings = operate.getFan1SpeedSettings();
     const QVector fan1TempSettings = operate.getFan1TempSettings();
@@ -663,26 +664,26 @@ void MainWindow::updateFanSpeedSettings() const {
 
 void MainWindow::setBestMobility() const {
     operate.setBatteryThreshold(100);
-    Settings::setValue("Settings/BatteryThresholdSetting", 0);
+    Settings::setValue("Settings/BatteryThresholdSetting", BatteryThreshold::Mobility);
     updateBatteryThreshold(100);
 }
 
 void MainWindow::setBalancedBattery() const {
     operate.setBatteryThreshold(80);
-    Settings::setValue("Settings/BatteryThresholdSetting", 1);
+    Settings::setValue("Settings/BatteryThresholdSetting", BatteryThreshold::Balanced);
     updateBatteryThreshold(80);
 }
 
 void MainWindow::setBestBattery() const {
     operate.setBatteryThreshold(60);
-    Settings::setValue("Settings/BatteryThresholdSetting", 2);
+    Settings::setValue("Settings/BatteryThresholdSetting", BatteryThreshold::BestBattery);
     updateBatteryThreshold(60);
 }
 
 void MainWindow::setCustomBattery() const {
     uint8_t battery_threshold = Settings::getValue("Settings/CustomBatteryThreshold").toInt();
     operate.setBatteryThreshold(battery_threshold);
-    Settings::setValue("Settings/BatteryThresholdSetting", 3);
+    Settings::setValue("Settings/BatteryThresholdSetting", BatteryThreshold::Custom);
     updateBatteryThreshold(battery_threshold);
 }
 
@@ -691,22 +692,26 @@ void MainWindow::setCustomBatteryTrayLabel(const uint8_t value) const {
 }
 
 void MainWindow::setPerformanceMode() const {
-    operate.setUserMode(user_mode::performance_mode);
+    if (operate.getTurboMode()) {
+        operate.setUserMode(UserMode::Turbo);
+    } else {
+        operate.setUserMode(UserMode::Performance);
+    }
     updateUserMode();
 }
 
 void MainWindow::setBalancedMode() const {
-    operate.setUserMode(user_mode::balanced_mode);
+    operate.setUserMode(UserMode::Balanced);
     updateUserMode();
 }
 
 void MainWindow::setSilentMode() const {
-    operate.setUserMode(user_mode::silent_mode);
+    operate.setUserMode(UserMode::Silent);
     updateUserMode();
 }
 
 void MainWindow::setEcoSilentMode() const {
-    operate.setUserMode(user_mode::eco_silent_mode);
+    operate.setUserMode(UserMode::Eco);
     updateUserMode();
 }
 

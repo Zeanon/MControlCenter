@@ -41,6 +41,14 @@ QVector<int> Settings::getValueVector(const QString &key) {
     return value;
 }
 
+void Settings::setValue(const QString &key, const UserMode &value) {
+    setValue(key, static_cast<int8_t>(value));
+}
+
+void Settings::setValue(const QString &key, const BatteryThreshold &value) {
+    setValue(key, static_cast<int8_t>(value));
+}
+
 void Settings::setValue(const QString &key, const QVariant &value) {
     if (settings.value(key) == value)
         return;

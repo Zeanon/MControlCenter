@@ -28,6 +28,23 @@
 #include <QTimer>
 #include <QList>
 
+enum class UserMode : int8_t {
+    Unknown = -1,
+    Eco,
+    Silent,
+    Balanced,
+    Performance,
+    Turbo,
+};
+
+enum class FanMode : int8_t {
+    Unknown = -1,
+    Auto,
+    Silent,
+    Basic,
+    Advanced,
+};
+
 class Helper : public QDBusAbstractAdaptor {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", INTERFACE_NAME)
@@ -62,8 +79,8 @@ public slots:
     [[nodiscard]] bool getUsbPowerShareState() const;
     [[nodiscard]] bool getFnMetaSwapState() const;
     [[nodiscard]] bool getCoolerBoostState() const;
-    [[nodiscard]] int getUserMode() const;
-    [[nodiscard]] int getFanMode() const;
+    [[nodiscard]] UserMode getUserMode() const;
+    [[nodiscard]] FanMode getFanMode() const;
     // Typed EC operations. Raw EC addresses are intentionally not exposed over D-Bus.
     Q_NOREPLY void setBatteryThreshold(int value);
     Q_NOREPLY void setKeyboardBacklightMode(bool enabled);
@@ -78,7 +95,7 @@ public slots:
     Q_NOREPLY void setFan2SpeedSettings(const QList<int> &values);
     Q_NOREPLY void setFan1TempSettings(const QList<int> &values);
     Q_NOREPLY void setFan2TempSettings(const QList<int> &values);
-    Q_NOREPLY void setFanModeAdvanced(bool enabled, int userMode);
+    Q_NOREPLY void setFanModeAdvanced(bool enabled);
     [[nodiscard]] bool isEcModuleLoaded() const;
     [[nodiscard]] bool isAcpiEc() const;
     [[nodiscard]] bool isEcSys() const;

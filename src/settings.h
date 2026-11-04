@@ -22,11 +22,15 @@
 
 #include <QString>
 
+#include "operate.h"
+
 class Settings {
 public:
     static QVariant getValue(const QString &key);
     static void clear();
     static QVector<int> getValueVector(const QString &key);
+    static void setValue(const QString &key, const UserMode &value);
+    static void setValue(const QString &key, const BatteryThreshold &value);
     static void setValue(const QString &key, const QVariant &value);
     static void setValue(const QString &key, const QVector<int> &value);
     static bool isValueExist(const QString &key);

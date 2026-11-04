@@ -20,47 +20,49 @@
 #define OPERATE_H
 
 
-#include <string>
-#include <QtCore/QObject>
 #include <QtDBus/QDBusInterface>
-#include <QVector>
-#include <QByteArray>
-#include <QVariantMap>
+#include <QtCore/QObject>
 #include <QVariantList>
+#include <QVariantMap>
+#include <QByteArray>
+#include <QVector>
+
 #include <optional>
 #include <cstdint>
+#include <string>
 
-enum class charging_state {
-    battery_charging,
-    battery_discharging,
-    battery_not_charging,
-    battery_fully_charged,
+enum class ChargingState : int8_t {
+    Unknown = -1,
+    Charging,
+    Discharging,
+    NotCharging,
+    FullyCharged,
     battery_fully_charged_no_power,
-    battery_unknown
 };
 
-enum class shift_mode {
-    eco_mode,
-    comfort_mode,
-    sport_mode,
-    turbo_mode,
-    unknown_mode
+enum class UserMode : int8_t {
+    Unknown = -1,
+    Eco,
+    Silent,
+    Balanced,
+    Performance,
+    Turbo,
 };
 
-enum class user_mode {
-    performance_mode,
-    balanced_mode,
-    silent_mode,
-    eco_silent_mode,
-    unknown_mode
+enum class FanMode : int8_t {
+    Unknown = -1,
+    Auto,
+    Silent,
+    Basic,
+    Advanced,
 };
 
-enum class fan_mode {
-    auto_fan_mode,
-    silent_fan_mode,
-    basic_fan_mode,
-    advanced_fan_mode,
-    unknown_fan_mode
+enum class BatteryThreshold : int8_t {
+    Unknown = -1,
+    Mobility,
+    Balanced,
+    BestBattery,
+    Custom,
 };
 
 class Operate : public QObject {
@@ -81,7 +83,7 @@ public:
     [[nodiscard]] QString getModelName() const;
     [[nodiscard]] uint8_t getBatteryCharge() const;
     [[nodiscard]] uint8_t getBatteryThreshold() const;
-    [[nodiscard]] charging_state getChargingStatus() const;
+    [[nodiscard]] ChargingState getChargingStatus() const;
     [[nodiscard]] uint8_t getCpuTemp() const;
     [[nodiscard]] std::optional<uint8_t> getGpuTemp() const;
     [[nodiscard]] int getFan1Speed() const;
@@ -97,8 +99,8 @@ public:
     [[nodiscard]] bool getFnMetaSwapState() const;
     [[nodiscard]] bool getCoolerBoostState() const;
     [[nodiscard]] bool getTurboMode() const;
-    [[nodiscard]] user_mode getUserMode() const;
-    [[nodiscard]] fan_mode getFanMode() const;
+    [[nodiscard]] UserMode getUserMode() const;
+    [[nodiscard]] FanMode getFanMode() const;
 
     void setBatteryThreshold(uint8_t value) const;
     void setKeyboardBacklightMode(uint8_t value) const;
@@ -107,7 +109,7 @@ public:
     void setFnMetaSwapState(bool enabled) const;
     void setCoolerBoostState(bool enabled) const;
     void setTurboMode(bool enabled) const;
-    void setUserMode(user_mode userMode) const;
+    void setUserMode(UserMode userMode) const;
     void setFan1SpeedSettings(QVector<int> value) const;
     void setFan2SpeedSettings(QVector<int> value) const;
     void setFan1TempSettings(QVector<int> value) const;
